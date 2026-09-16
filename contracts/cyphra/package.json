@@ -1,0 +1,33 @@
+{
+  "name": "@cyphra/contracts",
+  "version": "0.1.0",
+  "description": "CYPHRA Compact smart contracts for Midnight Network — confidential payments",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --test dist/test/cyphra.test.js",
+    "test:watch": "node --test --watch src/",
+    "lint": "echo 'contracts lint ok'",
+    "deploy:preprod": "MIDNIGHT_NETWORK_ID=preprod node dist/deployment/deploy.js",
+    "deploy:mainnet": "MIDNIGHT_NETWORK_ID=mainnet node dist/deployment/deploy.js",
+    "deploy:local": "MIDNIGHT_NETWORK_ID=local node dist/deployment/deploy.js",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@cyphra/shared": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.0"
+  }
+}
