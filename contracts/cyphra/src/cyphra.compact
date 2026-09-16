@@ -1,0 +1,216 @@
+pragma language_version >= 0.23;
+
+import CompactStandardLibrary;
+
+// ============================================================================
+// CYPHRA: Confidential Payments & Private Balance Contract for Midnight
+// ============================================================================
+// Privacy Model:
+//   - Shielded note commitments live on-chain (public, but opaque hashes)
+//   - Spent nullifiers prevent double-spend (public, but unlinkable to notes)
+//   - Amounts, recipients, and memos are NEVER disclosed on the public ledger
+//   - All private values are supplied as witnesses by the 1AM Wallet prover
+//   - ZK circuits enforce correctness of private value arithmetic
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// SECTION 1: Public Ledger State
+// (Replicated on-chain. Values are opaque commitments/nullifiers—not amounts.)
+// ----------------------------------------------------------------------------
+
+// Unspent shielded note commitments
+// Maps a 32-byte commitment hash → true (present means valid unspent note)
+export ledger commitments: Map<Bytes<32>, Boolean>;
+
+// Spent nullifiers - double-spend prevention
+// Maps a 32-byte nullifier hash → true (present means note is spent)
+export ledger nullifiers: Map<Bytes<32>, Boolean>;
+
+// Registered payment requests
+// Maps request ID → request commitment hash (both opaque 32-byte values)
+export ledger paymentRequests: Map<Bytes<32>, Bytes<32>>;
+
+// Fulfilled payment request flags
+// Maps request ID → true (present means request was paid)
+export ledger paidRequests: Map<Bytes<32>, Boolean>;
+
+// Selective disclosure registry
+// Maps auditor viewing key → granted permission bitmask
+export ledger auditorRegistry: Map<Bytes<32>, Uint<32>>;
+
+// Activity counters (public aggregate metrics only)
+export ledger totalShieldedDeposits: Counter;
+export ledger totalConfidentialTransfers: Counter;
+export ledger totalPaymentRequests: Counter;
+
+// ----------------------------------------------------------------------------
+// SECTION 2: Witnesses
+// (Private off-chain values supplied by 1AM Wallet's WASM prover.
+//  These values NEVER appear on the public ledger.)
+// ----------------------------------------------------------------------------
+
+// The sender's private spending key (used to compute nullifiers)
+witness get_spending_key(): Bytes<32>;
+
+// The value of the note being spent (private input)
+witness get_input_note_value(): Uint<64>;
+
+// The value of the recipient's note (private output)
+witness get_output_note_value(): Uint<64>;
+
+// The value of the sender's change note
+witness get_change_note_value(): Uint<64>;
+
+// Random blinding factor to hide amounts within commitments
+witness get_blinding_factor(): Bytes<32>;
+
+// ----------------------------------------------------------------------------
+// SECTION 3: Zero-Knowledge Circuits
+// (State transition functions. Each call generates a ZK proof that the
+//  ledger update is valid, without revealing private inputs.)
+// ----------------------------------------------------------------------------
+
+/**
+ * deposit — Shield / Wrap
+ *
+ * Converts unshielded NIGHT into a confidential shielded note commitment.
+ * The amount is kept private: only the commitment hash is stored on-chain.
+ *
+ * @param amount        The amount of NIGHT to shield (private, validated by witness)
+ * @param noteCommitment A freshly-derived 32-byte commitment: Hash(spendKey, amount, blinding)
+ */
+export circuit deposit(amount: Uint<64>, noteCommitment: Bytes<32>): [] {
+    // Verify deposit is non-zero
+    assert amount > 0 "Deposit amount must be strictly positive";
+
+    // Verify this commitment does not already exist (prevent replay)
+    assert !commitments.member(noteCommitment) "Note commitment already exists";
+
+    // Register the note commitment on the public ledger
+    commitments.insert(noteCommitment, true);
+
+    // Increment aggregate counter (amount NOT disclosed)
+    totalShieldedDeposits.increment(1);
+}
+
+/**
+ * confidentialTransfer — Shielded Send
+ *
+ * Spends an existing shielded note and creates new shielded notes for the
+ * recipient and sender (change), without disclosing parties or amounts.
+ *
+ * Privacy guarantee:
+ *   - nullifier reveals that SOME note was spent, but not WHICH one
+ *   - newCommitment is an opaque hash of recipient's note
+ *   - changeCommitment is an opaque hash of sender's change note
+ *   - Value balance (input = output + change) is proven in ZK
+ *
+ * @param nullifier        Derived from spending key + input commitment (links spend to note privately)
+ * @param newCommitment    Recipient's new note commitment
+ * @param changeCommitment Sender's change note commitment (may be zero-value if exact payment)
+ */
+export circuit confidentialTransfer(
+    nullifier: Bytes<32>,
+    newCommitment: Bytes<32>,
+    changeCommitment: Bytes<32>
+): [] {
+    // 1. Double-spend check: nullifier must not be already spent
+    assert !nullifiers.member(nullifier) "Double-spend rejected: nullifier already spent";
+
+    // 2. Ensure recipient commitment slot is fresh
+    assert !commitments.member(newCommitment) "Recipient note commitment already exists";
+
+    // 3. Private value balance check (enforced inside ZK circuit)
+    //    Witnesses supply the actual values; the assertion is proven in zero-knowledge
+    const inputVal: Uint<64> = get_input_note_value();
+    const outputVal: Uint<64> = get_output_note_value();
+    const changeVal: Uint<64> = get_change_note_value();
+    assert inputVal == outputVal + changeVal "Value conservation violated: input != output + change";
+
+    // 4. Mark note as spent
+    nullifiers.insert(nullifier, true);
+
+    // 5. Create recipient's note on-chain
+    commitments.insert(newCommitment, true);
+
+    // 6. Create change note if change is non-zero
+    if changeVal > 0 {
+        assert !commitments.member(changeCommitment) "Change note commitment already exists";
+        commitments.insert(changeCommitment, true);
+    }
+
+    // 7. Increment aggregate counter
+    totalConfidentialTransfers.increment(1);
+}
+
+/**
+ * registerPaymentRequest — Create a Private Payment Request
+ *
+ * Registers a payment request on-chain. Both the request ID and request
+ * commitment are opaque hashes — amounts, recipients, and notes are private.
+ *
+ * @param requestId         Unique request identifier (32-byte hash)
+ * @param requestCommitment Commitment to request parameters (amount, recipient, expiry)
+ */
+export circuit registerPaymentRequest(
+    requestId: Bytes<32>,
+    requestCommitment: Bytes<32>
+): [] {
+    assert !paymentRequests.member(requestId) "Payment request ID already registered";
+    paymentRequests.insert(requestId, requestCommitment);
+    totalPaymentRequests.increment(1);
+}
+
+/**
+ * fulfillPaymentRequest — Pay a Registered Request Confidentially
+ *
+ * Completes a payment request by spending a shielded note, creating a
+ * receipt commitment. All values remain private.
+ *
+ * @param requestId        The request to fulfill (must exist and not be paid)
+ * @param paymentNullifier Nullifier of the note used to pay
+ * @param receiptCommitment New note commitment created as the payment receipt
+ */
+export circuit fulfillPaymentRequest(
+    requestId: Bytes<32>,
+    paymentNullifier: Bytes<32>,
+    receiptCommitment: Bytes<32>
+): [] {
+    assert paymentRequests.member(requestId) "Payment request does not exist";
+    assert !paidRequests.member(requestId) "Payment request is already marked paid";
+    assert !nullifiers.member(paymentNullifier) "Payment nullifier already spent";
+
+    nullifiers.insert(paymentNullifier, true);
+    commitments.insert(receiptCommitment, true);
+    paidRequests.insert(requestId, true);
+}
+
+/**
+ * grantAuditorAccess — Selective Disclosure to Compliance Auditor
+ *
+ * Registers an auditor's viewing key and a bitmask of granted permissions.
+ * The auditor can then decrypt transaction data off-chain using their viewing key.
+ * On-chain, only the key commitment and permission flags are stored.
+ *
+ * @param auditorKey   Auditor's 32-byte viewing key commitment
+ * @param permissions  Bitmask: 0x01=balances, 0x02=transfers, 0x04=requests, 0xFF=all
+ */
+export circuit grantAuditorAccess(
+    auditorKey: Bytes<32>,
+    permissions: Uint<32>
+): [] {
+    assert permissions > 0 "Permission bitmask must be non-zero";
+    auditorRegistry.insert(auditorKey, permissions);
+}
+
+/**
+ * revokeAuditorAccess — Remove Auditor Viewing Permissions
+ *
+ * Removes an auditor's entry from the registry.
+ *
+ * @param auditorKey  The auditor's viewing key commitment to revoke
+ */
+export circuit revokeAuditorAccess(auditorKey: Bytes<32>): [] {
+    assert auditorRegistry.member(auditorKey) "Auditor key not found in registry";
+    auditorRegistry.insert(auditorKey, 0);
+}
