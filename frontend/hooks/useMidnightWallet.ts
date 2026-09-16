@@ -91,6 +91,7 @@ export function useMidnightWallet() {
     clearError,
     connect,
     disconnect,
+    setNetwork: (network: SupportedNetwork) => oneAMWallet.setNetwork(network),
     refreshBalances: () => oneAMWallet.refreshBalances(),
   };
 }

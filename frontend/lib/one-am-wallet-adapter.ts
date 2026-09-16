@@ -148,8 +148,27 @@ export class OneAMWalletAdapter {
 
   constructor() {
     if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('cyphra_midnight_network') as SupportedNetwork | null;
+        if (saved && (saved === 'preview' || saved === 'preprod' || saved === 'mainnet')) {
+          this.currentNetwork = saved;
+        }
+      } catch {}
       this.detectWallet();
     }
+  }
+
+  /**
+   * Set active Midnight network (preview, preprod, mainnet)
+   */
+  public setNetwork(network: SupportedNetwork): void {
+    this.currentNetwork = network;
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('cyphra_midnight_network', network);
+      } catch {}
+    }
+    this.notify();
   }
 
   /**

@@ -21,11 +21,58 @@ import {
   ChevronRight,
   ShieldCheck,
   EyeOff,
+  Globe,
 } from 'lucide-react';
+import { useMidnightWallet } from '../../hooks/useMidnightWallet';
+import { SupportedNetwork } from '../../lib/one-am-wallet-adapter';
 
 export default function MarketingPage() {
+  const { network, setNetwork, isConnected, connect } = useMidnightWallet();
   const [demoAmount, setDemoAmount] = useState('250.00');
   const [demoToken, setDemoToken] = useState<'NIGHT' | 'DUST' | 'tCYPHRA'>('NIGHT');
+  const [isSwitchingNetwork, setIsSwitchingNetwork] = useState(false);
+
+  const activeNetwork: SupportedNetwork = (network as SupportedNetwork) || 'preview';
+
+  const networkOptions: {
+    id: SupportedNetwork;
+    label: string;
+    badge: string;
+    description: string;
+  }[] = [
+    {
+      id: 'preview',
+      label: 'Preview',
+      badge: 'Testnet',
+      description: 'Pre-release sandbox environment with test faucet',
+    },
+    {
+      id: 'preprod',
+      label: 'Preprod',
+      badge: 'Staging',
+      description: 'Multi-validator staging network for dapp rehearsals',
+    },
+    {
+      id: 'mainnet',
+      label: 'Mainnet',
+      badge: 'Production',
+      description: 'Live confidential settlement consensus ledger',
+    },
+  ];
+
+  const handleNetworkSelect = async (net: SupportedNetwork) => {
+    if (net === activeNetwork) return;
+    setIsSwitchingNetwork(true);
+    setNetwork(net);
+    if (isConnected) {
+      try {
+        await connect(net);
+      } catch (e) {
+        console.warn('Network switch error:', e);
+      }
+    }
+    setIsSwitchingNetwork(false);
+  };
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -62,12 +109,70 @@ export default function MarketingPage() {
             <motion.div variants={itemVariants}>
               <Link
                 href="/settings"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 border border-zinc-200/90 text-xs font-medium text-zinc-800 transition-colors mb-8 shadow-xs group"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 border border-zinc-200/90 text-xs font-medium text-zinc-800 transition-colors mb-4 shadow-xs group"
               >
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>Midnight Network • Official 1AM Wallet DApp Connector</span>
                 <ChevronRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-black transition-transform group-hover:translate-x-0.5" />
               </Link>
+            </motion.div>
+
+            {/* Midnight Network Toggle: Preview, Preprod, Mainnet */}
+            <motion.div variants={itemVariants} className="mb-8 flex flex-col items-center">
+              <div className="inline-flex items-center p-1.5 rounded-2xl bg-zinc-100/90 border border-zinc-200/90 shadow-xs backdrop-blur-sm">
+                <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                  <Globe className="w-3.5 h-3.5 text-zinc-700" />
+                  <span>Network:</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  {networkOptions.map((net) => {
+                    const isSelected = activeNetwork === net.id;
+                    return (
+                      <button
+                        key={net.id}
+                        type="button"
+                        onClick={() => handleNetworkSelect(net.id)}
+                        disabled={isSwitchingNetwork}
+                        className={`relative px-4 py-1.5 rounded-xl text-xs font-mono font-bold transition-all select-none cursor-pointer flex items-center gap-2 ${
+                          isSelected
+                            ? 'text-black shadow-xs'
+                            : 'text-zinc-600 hover:text-black hover:bg-zinc-200/50'
+                        }`}
+                        title={`Select Midnight ${net.label}`}
+                      >
+                        {isSelected && (
+                          <motion.div
+                            layoutId="homepage-network-toggle-indicator"
+                            transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                            className="absolute inset-0 bg-[#FFD400] rounded-xl border border-black/15 -z-0"
+                          />
+                        )}
+                        <span
+                          className={`relative z-10 w-2 h-2 rounded-full ${
+                            isSelected ? 'bg-black animate-pulse' : 'bg-zinc-400'
+                          }`}
+                        />
+                        <span className="relative z-10">{net.label}</span>
+                        <span
+                          className={`relative z-10 text-[9px] uppercase px-1.5 py-0.5 rounded font-sans font-semibold tracking-wide ${
+                            isSelected
+                              ? 'bg-black/10 text-black'
+                              : 'bg-zinc-200/80 text-zinc-600'
+                          }`}
+                        >
+                          {net.badge}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="mt-2 text-[11px] font-mono text-zinc-500 flex items-center gap-1.5">
+                <span className="text-zinc-400">Target RPC:</span>
+                <span className="text-zinc-800 font-medium">
+                  {networkOptions.find((n) => n.id === activeNetwork)?.description}
+                </span>
+              </div>
             </motion.div>
 
             {/* Headline */}
@@ -123,7 +228,9 @@ export default function MarketingPage() {
                     </div>
                     <div>
                       <h4 className="text-xs font-bold text-black">Confidential Transfer</h4>
-                      <p className="text-[10px] text-zinc-500 font-mono">Midnight Shielded Circuit</p>
+                      <p className="text-[10px] text-zinc-500 font-mono">
+                        Midnight {activeNetwork.toUpperCase()} Circuit
+                      </p>
                     </div>
                   </div>
                   <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold flex items-center gap-1">
