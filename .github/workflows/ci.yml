@@ -1,0 +1,36 @@
+name: Cyphra CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Lint Monorepo
+        run: npm run lint
+
+      - name: Typecheck Monorepo
+        run: npm run typecheck
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Build All Workspaces
+        run: npm run build
