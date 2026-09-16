@@ -1,0 +1,29 @@
+{
+  "name": "cyphra-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cyphra - Privacy-First Payment Application Built on Midnight",
+  "workspaces": [
+    "shared",
+    "contracts/cyphra",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=@cyphra/shared && npm run build --workspace=@cyphra/contracts && npm run build --workspace=@cyphra/backend && npm run build --workspace=@cyphra/frontend",
+    "test": "npm test --workspace=@cyphra/shared && npm test --workspace=@cyphra/contracts && npm test --workspace=@cyphra/backend",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "dev": "npm run dev --workspaces",
+    "dev:backend": "npm run dev --workspace=@cyphra/backend",
+    "dev:frontend": "npm run dev --workspace=@cyphra/frontend",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,compact}\"",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "prettier": "^3.5.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.0"
+  }
+}
