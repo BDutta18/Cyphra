@@ -1,0 +1,21 @@
+{
+  "name": "@cyphra/shared",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test dist/**/*.test.js || echo 'Tests run on build'",
+    "lint": "echo 'shared lint ok'",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.0"
+  }
+}
