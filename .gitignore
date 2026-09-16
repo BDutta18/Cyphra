@@ -44,3 +44,4 @@ Thumbs.db
 *.bzk
 *.zkir
 .midnight
+*git-creds*
