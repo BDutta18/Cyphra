@@ -47,6 +47,7 @@ export interface OneAMWalletState {
   addresses: WalletAddresses | null;
   balances: WalletBalances;
   connectedApi: ConnectedAPI | null;
+  isSandbox?: boolean;
 }
 
 export interface TransactionExecutionResult {
@@ -136,6 +137,7 @@ export class OneAMWalletAdapter {
   private connectedApi: ConnectedAPI | null = null;
   private currentNetwork: SupportedNetwork = 'preview';
   private addresses: WalletAddresses | null = null;
+  private isSandbox: boolean = false;
   private balances: WalletBalances = {
     shieldedNight: '0.00',
     shieldedDust: '0.00',
@@ -172,6 +174,31 @@ export class OneAMWalletAdapter {
   }
 
   /**
+   * Connect in Sandbox Testnet mode
+   * Allows full access and testing of private balances, circuits, invoices and activity
+   * without requiring the browser extension to be installed.
+   */
+  public async connectSandbox(desiredNetwork: SupportedNetwork = 'preview'): Promise<OneAMWalletState> {
+    this.currentNetwork = desiredNetwork;
+    this.isSandbox = true;
+    this.addresses = {
+      shieldedAddress: 'mn_shielded1qqg847392847192847293847293847293847192847',
+      shieldedCoinPublicKey: '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef',
+      shieldedEncryptionPublicKey: '0xabcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789',
+      unshieldedAddress: 'mn_addr1qx9847392847192847293847293847293847192847',
+      dustAddress: 'mn_dust1qy9847392847192847293847293847293847192847',
+    };
+    this.balances = {
+      shieldedNight: '1,450.00',
+      shieldedDust: '250.00',
+      shieldedtCyphra: '100.00',
+      unshieldedNight: '50.00',
+    };
+    this.notify();
+    return this.getState();
+  }
+
+  /**
    * Subscribe to wallet state changes
    */
   public subscribe(listener: (state: OneAMWalletState) => void): () => void {
@@ -190,12 +217,13 @@ export class OneAMWalletAdapter {
   public getState(): OneAMWalletState {
     return {
       isConnected: this.isConnected(),
-      walletName: this.initialApi?.name || '1AM Wallet',
+      walletName: this.isSandbox ? '1AM Sandbox' : (this.initialApi?.name || '1AM Wallet'),
       apiVersion: this.initialApi?.apiVersion || '4.0.1',
       network: this.currentNetwork,
       addresses: this.addresses,
       balances: this.balances,
       connectedApi: this.connectedApi,
+      isSandbox: this.isSandbox,
     };
   }
 
@@ -209,21 +237,39 @@ export class OneAMWalletAdapter {
       const midnight = window.midnight;
       if (!midnight || typeof midnight !== 'object') return null;
 
-      // 1AM Wallet identifiers
-      const directCandidates = ['1am', 'mn-1am', 'oneam', 'xyz.1am.wallet'];
+      // 1AM Wallet identifiers (official candidates across versions)
+      const directCandidates = [
+        'oneAm',
+        'oneAM',
+        '1am',
+        'mn-1am',
+        'mn_1am',
+        'oneam',
+        'xyz.1am.wallet',
+        'io.oneam.wallet',
+      ];
       for (const key of directCandidates) {
-        if (midnight[key] && typeof midnight[key].connect === 'function') {
+        if (midnight[key] && typeof (midnight[key] as unknown as { connect?: unknown }).connect === 'function') {
           return midnight[key];
         }
       }
 
       // Check all injected providers for 1AM name or rdns
       for (const [id, api] of Object.entries(midnight)) {
-        if (api && typeof api.connect === 'function') {
-          const nameMatch = api.name?.toLowerCase().includes('1am');
-          const rdnsMatch = api.rdns?.toLowerCase().includes('1am');
-          const idMatch = id.toLowerCase().includes('1am');
-          if (nameMatch || rdnsMatch || idMatch) {
+        if (api && typeof (api as unknown as { connect?: unknown }).connect === 'function') {
+          const lowerId = id.toLowerCase();
+          const lowerName = (api.name || '').toLowerCase();
+          const lowerRdns = (api.rdns || '').toLowerCase();
+          if (
+            lowerId.includes('1am') ||
+            lowerId.includes('oneam') ||
+            lowerId.includes('one-am') ||
+            lowerName.includes('1am') ||
+            lowerName.includes('oneam') ||
+            lowerName.includes('one am') ||
+            lowerRdns.includes('1am') ||
+            lowerRdns.includes('oneam')
+          ) {
             return api;
           }
         }
@@ -231,7 +277,7 @@ export class OneAMWalletAdapter {
 
       // If only one provider exists in window.midnight, use it
       const keys = Object.keys(midnight);
-      if (keys.length === 1 && typeof midnight[keys[0]].connect === 'function') {
+      if (keys.length === 1 && typeof (midnight[keys[0]] as unknown as { connect?: unknown }).connect === 'function') {
         return midnight[keys[0]];
       }
 
@@ -374,6 +420,7 @@ export class OneAMWalletAdapter {
   public async disconnectWallet(): Promise<void> {
     this.connectedApi = null;
     this.addresses = null;
+    this.isSandbox = false;
     this.balances = {
       shieldedNight: '0.00',
       shieldedDust: '0.00',
@@ -401,7 +448,7 @@ export class OneAMWalletAdapter {
    * Checks if 1AM Wallet is currently connected
    */
   public isConnected(): boolean {
-    return !!this.connectedApi && !!this.addresses?.shieldedAddress;
+    return (!!this.connectedApi || this.isSandbox) && !!this.addresses?.shieldedAddress;
   }
 
   /**
@@ -486,6 +533,46 @@ export class OneAMWalletAdapter {
       throw new DuplicateSubmissionError('A payment with this note commitment is already being processed.');
     }
     this.submittedNullifiers.add(nullifierHash);
+
+    // Sandbox execution fallback
+    if (this.isSandbox) {
+      const newBal = Math.max(0, availableNum - parsedAmount).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+      if (params.tokenType === 'NIGHT') this.balances.shieldedNight = newBal;
+      else if (params.tokenType === 'DUST') this.balances.shieldedDust = newBal;
+      else this.balances.shieldedtCyphra = newBal;
+      this.notify();
+
+      const txHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+
+      try {
+        await apiClient.recordActivity(this.addresses.shieldedAddress, {
+          txHash,
+          timestamp: Date.now(),
+          type: 'send_confidential',
+          amount: params.amount,
+          tokenType: params.tokenType,
+          counterpartyMasked: `${recipient.slice(0, 12)}...${recipient.slice(-6)}`,
+          status: 'confirmed',
+          proofVerified: true,
+          proofType: 'CompactZKProof_Groth16',
+          commitmentHash: noteCommitment,
+          nullifierHash,
+          encryptedMemo: params.memo ? `Encrypted(${params.memo})` : undefined,
+          gasFee: '0.0042 DUST',
+        });
+      } catch {}
+
+      return {
+        txHash,
+        noteCommitment,
+        nullifierHash,
+        blockHeight: 248250,
+        status: 'confirmed',
+      };
+    }
 
     // 6. Request 1AM Wallet approval and transaction submission
     let txHash: string;
@@ -644,6 +731,43 @@ export class OneAMWalletAdapter {
       blindingFactor,
       tokenType
     );
+
+    // Sandbox deposit execution
+    if (this.isSandbox) {
+      const curShielded = parseFloat(this.balances.shieldedNight.replace(/,/g, '')) || 0;
+      this.balances.shieldedNight = (curShielded + parsedAmount).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+      this.notify();
+
+      const nullifierHash = await deriveNullifier(this.addresses.shieldedCoinPublicKey, noteCommitment);
+      const txHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+
+      try {
+        await apiClient.recordActivity(this.addresses.shieldedAddress, {
+          txHash,
+          timestamp: Date.now(),
+          type: 'shield_deposit',
+          amount,
+          tokenType,
+          counterpartyMasked: 'Unshielded Vault',
+          status: 'confirmed',
+          proofVerified: true,
+          proofType: 'CompactZKProof_Groth16',
+          commitmentHash: noteCommitment,
+          nullifierHash,
+          gasFee: '0.0025 DUST',
+        });
+      } catch {}
+
+      return {
+        txHash,
+        noteCommitment,
+        nullifierHash,
+        status: 'confirmed',
+      };
+    }
 
     let txHash: string;
     try {

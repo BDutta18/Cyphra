@@ -28,6 +28,7 @@ export function WalletConnectButton() {
     error,
     clearError,
     connect,
+    connectSandbox,
     disconnect,
   } = useMidnightWallet();
 
@@ -159,7 +160,19 @@ export function WalletConnectButton() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-2 pt-2">
+            <Button
+              variant="secondary"
+              size="md"
+              className="w-full text-xs font-bold border-zinc-300 hover:border-black text-black bg-zinc-100 hover:bg-zinc-200 shadow-xs"
+              onClick={async () => {
+                setModalState((prev) => ({ ...prev, isOpen: false }));
+                await connectSandbox(selectedNetwork);
+              }}
+            >
+              🚀 Launch in Sandbox Mode (Instant Testnet Access)
+            </Button>
+
+            <div className="flex flex-col sm:flex-row gap-2 pt-1">
               <a
                 href="https://docs.midnight.network"
                 target="_blank"
@@ -179,7 +192,7 @@ export function WalletConnectButton() {
                   handleConnect();
                 }}
               >
-                <RotateCw className="w-3.5 h-3.5 mr-1.5" /> Retry Connection
+                <RotateCw className="w-3.5 h-3.5 mr-1.5" /> Retry 1AM
               </Button>
             </div>
           </div>

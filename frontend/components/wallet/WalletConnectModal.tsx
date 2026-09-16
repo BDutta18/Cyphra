@@ -10,6 +10,7 @@ export interface WalletConnectModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConnect: () => Promise<void>;
+  onConnectSandbox?: () => Promise<void>;
   isConnecting: boolean;
   isAvailable: boolean;
 }
@@ -18,6 +19,7 @@ export function WalletConnectModal({
   isOpen,
   onClose,
   onConnect,
+  onConnectSandbox,
   isConnecting,
   isAvailable,
 }: WalletConnectModalProps) {
@@ -43,7 +45,7 @@ export function WalletConnectModal({
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-black">1AM Wallet</span>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-yellow text-black border border-black/15">
-                  Required
+                  Official
                 </span>
               </div>
               <span className="text-xs text-zinc-500 font-mono">
@@ -64,6 +66,20 @@ export function WalletConnectModal({
           >
             <Wallet className="w-3.5 h-3.5 mr-1.5" /> Authorize 1AM Connection
           </Button>
+
+          {onConnectSandbox && (
+            <Button
+              variant="secondary"
+              size="md"
+              className="w-full font-bold text-xs py-2 border-zinc-300 hover:border-black text-black bg-zinc-100 hover:bg-zinc-200 shadow-xs"
+              onClick={async () => {
+                await onConnectSandbox();
+                onClose();
+              }}
+            >
+              🚀 Launch with Midnight Sandbox Account
+            </Button>
+          )}
         </div>
 
         <div className="pt-3 border-t border-zinc-200 flex items-center justify-between text-xs text-zinc-500 font-mono">

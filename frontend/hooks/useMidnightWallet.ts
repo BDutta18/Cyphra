@@ -69,7 +69,7 @@ export function useMidnightWallet() {
   // Format account details for components
   const account = walletState.isConnected && walletState.addresses ? {
     isConnected: true,
-    walletName: '1AM Wallet',
+    walletName: walletState.walletName || '1AM Wallet',
     networkId: walletState.network,
     shieldedAddress: walletState.addresses.shieldedAddress,
     shieldedCoinPublicKey: walletState.addresses.shieldedCoinPublicKey,
@@ -77,7 +77,7 @@ export function useMidnightWallet() {
     unshieldedAddress: walletState.addresses.unshieldedAddress,
     dustAddress: walletState.addresses.dustAddress,
     balances: walletState.balances,
-    isSimulated: false,
+    isSimulated: walletState.isSandbox || false,
   } : null;
 
   return {
@@ -85,11 +85,13 @@ export function useMidnightWallet() {
     isConnected: walletState.isConnected,
     isConnecting,
     isWalletAvailable,
+    isSandbox: walletState.isSandbox || false,
     network: walletState.network,
     balances: walletState.balances,
     error,
     clearError,
     connect,
+    connectSandbox: (network?: SupportedNetwork) => oneAMWallet.connectSandbox(network),
     disconnect,
     setNetwork: (network: SupportedNetwork) => oneAMWallet.setNetwork(network),
     refreshBalances: () => oneAMWallet.refreshBalances(),

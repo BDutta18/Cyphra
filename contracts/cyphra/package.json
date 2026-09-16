@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "dev": "echo 'contracts ready'",
     "typecheck": "tsc --noEmit",
     "test": "npm run build && node --test dist/test/cyphra.test.js",
     "test:watch": "node --test --watch src/",

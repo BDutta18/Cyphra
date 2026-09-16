@@ -14,7 +14,7 @@
     "test": "npm test --workspace=@cyphra/shared && npm test --workspace=@cyphra/contracts && npm test --workspace=@cyphra/backend",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "dev": "npm run dev --workspaces",
+    "dev": "npm run dev --workspaces --if-present",
     "dev:backend": "npm run dev --workspace=@cyphra/backend",
     "dev:frontend": "npm run dev --workspace=@cyphra/frontend",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md,compact}\"",

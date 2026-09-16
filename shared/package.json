@@ -5,6 +5,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "dev": "echo 'shared ready'",
     "typecheck": "tsc --noEmit",
     "test": "node --test dist/**/*.test.js || echo 'Tests run on build'",
     "lint": "echo 'shared lint ok'",
