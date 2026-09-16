@@ -11,6 +11,9 @@
   ],
   "scripts": {
     "build": "npm run build --workspace=@cyphra/shared && npm run build --workspace=@cyphra/contracts && npm run build --workspace=@cyphra/backend && npm run build --workspace=@cyphra/frontend",
+    "start": "npm run start --workspace=@cyphra/frontend",
+    "start:frontend": "npm run start --workspace=@cyphra/frontend",
+    "start:backend": "npm run start --workspace=@cyphra/backend",
     "test": "npm test --workspace=@cyphra/shared && npm test --workspace=@cyphra/contracts && npm test --workspace=@cyphra/backend",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",

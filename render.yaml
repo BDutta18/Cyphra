@@ -1,0 +1,42 @@
+﻿services:
+  # ── CYPHRA Frontend (Next.js) ─────────────────────────────────────────────
+  - type: web
+    name: cyphra-frontend
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: cyphra-backend
+          type: web
+          property: host
+          prefix: https://
+
+  # ── CYPHRA Backend (Express) ──────────────────────────────────────────────
+  - type: web
+    name: cyphra-backend
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: MIDNIGHT_NETWORK
+        value: preprod
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 60000
+      - key: RATE_LIMIT_MAX
+        value: 100
