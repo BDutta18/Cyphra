@@ -21,7 +21,7 @@ import {
   PaymentRequest,
   DecodedPaymentRequest,
   ValidationResult,
-} from '@cyphra/shared';
+} from '../../lib/cyphra-types';
 import {
   QrCode,
   Plus,

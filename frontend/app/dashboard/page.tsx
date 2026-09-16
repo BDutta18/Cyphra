@@ -16,7 +16,7 @@ import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 import { usePrivateBalance } from '../../hooks/usePrivateBalance';
 import { apiClient } from '../../lib/api-client';
 import { oneAMWallet } from '../../lib/one-am-wallet-adapter';
-import { TransactionActivity } from '@cyphra/shared';
+import { TransactionActivity } from '../../lib/cyphra-types';
 import {
   ArrowUpRight,
   ArrowDownLeft,

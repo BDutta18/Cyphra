@@ -10,7 +10,7 @@ import { Modal } from '../../components/ui/Modal';
 import { Badge } from '../../components/ui/Badge';
 import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 import { apiClient } from '../../lib/api-client';
-import { TransactionActivity, AuditorDisclosedReport } from '@cyphra/shared';
+import { TransactionActivity, AuditorDisclosedReport } from '../../lib/cyphra-types';
 import {
   ShieldCheck,
   ArrowUpRight,

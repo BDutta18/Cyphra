@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { ProofGenerationStep, TokenType } from '@cyphra/shared';
+import { ProofGenerationStep, TokenType } from '../lib/cyphra-types';
 import {
   oneAMWallet,
   TransactionExecutionResult,

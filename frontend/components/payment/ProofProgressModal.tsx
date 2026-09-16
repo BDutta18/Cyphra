@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Modal } from '../ui/Modal';
-import { ProofGenerationStep } from '@cyphra/shared';
+import { ProofGenerationStep } from '../../lib/cyphra-types';
 import { ShieldCheck, Cpu, Key, Lock, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 

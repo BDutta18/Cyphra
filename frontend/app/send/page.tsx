@@ -10,7 +10,7 @@ import { ProofProgressModal } from '../../components/payment/ProofProgressModal'
 import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 import { usePrivateBalance } from '../../hooks/usePrivateBalance';
 import { useConfidentialTransfer } from '../../hooks/useConfidentialTransfer';
-import { TokenType } from '@cyphra/shared';
+import { TokenType } from '../../lib/cyphra-types';
 import {
   Send,
   Lock,

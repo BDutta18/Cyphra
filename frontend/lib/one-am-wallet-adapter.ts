@@ -14,12 +14,12 @@ import {
   TokenType as DappTokenType,
   DesiredOutput,
 } from '@midnight-ntwrk/dapp-connector-api';
-import { TokenType } from '@cyphra/shared';
 import {
+  TokenType,
   createNoteCommitment,
   deriveNullifier,
   generateBlindingFactor,
-} from '@cyphra/contracts';
+} from './cyphra-types';
 import { apiClient } from './api-client';
 
 export type SupportedNetwork = 'preview' | 'preprod' | 'mainnet';

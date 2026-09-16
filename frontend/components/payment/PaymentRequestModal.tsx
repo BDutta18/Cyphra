@@ -5,7 +5,7 @@ import { Modal } from '../ui/Modal';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { QRCodeDisplay } from './QRCodeDisplay';
-import { TokenType, PaymentRequest, encodePaymentRequest } from '@cyphra/shared';
+import { TokenType, PaymentRequest, encodePaymentRequest } from '../../lib/cyphra-types';
 import { usePaymentRequest } from '../../hooks/usePaymentRequest';
 import { QrCode, Copy, Check, Share2, AlertCircle } from 'lucide-react';
 

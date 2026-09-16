@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import { PaymentRequest, CreatePaymentRequestInput, FulfillPaymentRequestInput } from '@cyphra/shared';
+import { PaymentRequest, CreatePaymentRequestInput, FulfillPaymentRequestInput } from '../lib/cyphra-types';
 import { apiClient } from '../lib/api-client';
 
 export interface AccountForRequests {
