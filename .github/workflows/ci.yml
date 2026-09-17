@@ -37,6 +37,9 @@ jobs:
 
       - name: Run Tests
         run: pnpm test
+        env:
+          CYPHRA_DEPLOYMENT_ENV: test
+          NODE_ENV: test
 
       - name: Build All Workspaces
         run: pnpm build
