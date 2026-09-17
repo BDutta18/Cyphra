@@ -75,7 +75,10 @@ export const deploymentConfigs: Record<string, DeploymentConfig> = {
       process.env.MIDNIGHT_EXPLORER_URL ||
       'https://preprod.midnightexplorer.com',
     oneAmExplorerUrl: 'https://explorer.1am.xyz?network=preprod',
-    contractAddress: process.env.CONTRACT_ADDRESS || process.env.CYPHRA_CONTRACT_ADDRESS,
+    contractAddress:
+      process.env.CONTRACT_ADDRESS ||
+      process.env.CYPHRA_CONTRACT_ADDRESS ||
+      '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f',
     gasLimit: 50_000_000n,
   },
 

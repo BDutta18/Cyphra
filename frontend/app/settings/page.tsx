@@ -107,6 +107,50 @@ export default function SettingsPage() {
           </div>
         </Card>
 
+        {/* Verified Preprod Contract */}
+        <Card className="space-y-4 bg-white border-zinc-200 shadow-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
+            <div className="flex items-center gap-2">
+              <Cpu className="w-4 h-4 text-black" />
+              <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-700 font-bold">
+                Midnight Preprod Contract
+              </h3>
+            </div>
+            <Badge variant="green" size="sm">Verified</Badge>
+          </div>
+
+          <div className="space-y-3 text-xs font-mono">
+            <div>
+              <span className="text-zinc-500 block mb-1 font-semibold">Contract Address:</span>
+              <div className="p-2 rounded-lg bg-zinc-50 border border-zinc-200 font-mono text-[11px] text-black break-all select-all font-bold">
+                0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <a
+                href="https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-zinc-200 hover:border-black bg-zinc-50 hover:bg-zinc-100 transition-colors font-sans text-xs font-semibold text-black"
+              >
+                <span>1AM Explorer</span>
+                <span className="text-[11px] font-mono text-zinc-500">View &rarr;</span>
+              </a>
+
+              <a
+                href="https://preprod.midnightexplorer.com/address/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-zinc-200 hover:border-black bg-zinc-50 hover:bg-zinc-100 transition-colors font-sans text-xs font-semibold text-black"
+              >
+                <span>Midnight Explorer</span>
+                <span className="text-[11px] font-mono text-zinc-500">View &rarr;</span>
+              </a>
+            </div>
+          </div>
+        </Card>
+
         {/* 1AM Wallet Keys Inspection */}
         <Card className="space-y-4 bg-white border-zinc-200 shadow-sm">
           <div className="flex items-center justify-between pb-3 border-b border-zinc-200">

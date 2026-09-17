@@ -23,7 +23,7 @@ if (process.env.MIDNIGHT_RPC_URL !== 'https://rpc.preprod.midnight.network') {
   throw new Error('MIDNIGHT_RPC_URL must be the official Midnight Preprod RPC endpoint.');
 }
 
-if (!/^[0-9a-f]{64}$/i.test(process.env.CONTRACT_ADDRESS)) {
+if (!/^(0x)?[0-9a-f]{64}$/i.test(process.env.CONTRACT_ADDRESS)) {
   throw new Error('CONTRACT_ADDRESS must be the 64-hex address returned by Midnight deployContract.');
 }
 

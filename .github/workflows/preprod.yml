@@ -72,7 +72,7 @@ jobs:
         if: env.CONTRACT_ADDRESS != ''
         run: |
           test -n "$CONTRACT_ADDRESS"
-          printf '%s' "$CONTRACT_ADDRESS" | grep -Eq '^[[:xdigit:]]{64}$'
+          printf '%s' "$CONTRACT_ADDRESS" | grep -Eq '^(0x)?[[:xdigit:]]{64}$'
           echo "Using finalized Midnight Preprod contract: $CONTRACT_ADDRESS"
 
       - name: Deploy Frontend

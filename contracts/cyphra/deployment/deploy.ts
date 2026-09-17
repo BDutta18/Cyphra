@@ -26,6 +26,7 @@ async function main() {
 
   const config = deploymentConfigs[network] ?? deploymentConfigs.preprod;
   const deployerAddress = process.env.MIDNIGHT_DEPLOYER_ADDRESS || 'mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl';
+  const contractAddress = config.contractAddress || '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f';
   console.log('====================================================');
   console.log(`CYPHRA Smart Contract Deployment — Midnight ${network.toUpperCase()}`);
   console.log('====================================================');
@@ -34,8 +35,10 @@ async function main() {
   console.log(`Indexer GraphQL:   ${config.indexerUrl}`);
   console.log(`Indexer WS:        ${config.indexerWsUrl}`);
   console.log(`Proof Server:      ${config.proverUrl ?? 'http://localhost:6300'}`);
-  console.log(`Midnight Explorer: ${config.explorerUrl}/address/${deployerAddress}`);
-  console.log(`1AM Explorer:      https://explorer.1am.xyz/address/${deployerAddress}?network=${network}`);
+  console.log(`Contract Address:  ${contractAddress}`);
+  console.log(`1AM Contract:      https://explorer.1am.xyz/contract/${contractAddress}?network=${network}`);
+  console.log(`1AM Deployer:      https://explorer.1am.xyz/address/${deployerAddress}?network=${network}`);
+  console.log(`Midnight Explorer: ${config.explorerUrl}/address/${contractAddress}`);
   console.log(`Deployer Address:  ${deployerAddress}`);
   console.log('====================================================\n');
 

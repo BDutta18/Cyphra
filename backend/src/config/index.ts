@@ -17,8 +17,9 @@ const env = process.env.NODE_ENV ?? 'development';
 const isProd = env === 'production';
 const deploymentEnvironment = process.env.CYPHRA_DEPLOYMENT_ENV ?? '';
 const midnightNetwork = process.env.MIDNIGHT_NETWORK ?? process.env.MIDNIGHT_NETWORK_ID ?? 'preview';
+export const DEFAULT_PREPROD_CONTRACT_ADDRESS = '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f';
 const midnightRpcUrl = process.env.MIDNIGHT_RPC_URL ?? process.env.MIDNIGHT_NODE_URI;
-const contractAddress = process.env.CONTRACT_ADDRESS ?? process.env.CYPHRA_CONTRACT_ADDRESS ?? '';
+const contractAddress = process.env.CONTRACT_ADDRESS ?? process.env.CYPHRA_CONTRACT_ADDRESS ?? DEFAULT_PREPROD_CONTRACT_ADDRESS;
 
 const isTest = process.env.NODE_ENV === 'test' || process.argv.some((a) => a.includes('test'));
 

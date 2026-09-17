@@ -4,6 +4,7 @@ packages:
   - 'backend'
   - 'frontend'
 allowBuilds:
+  classic-level: set this to true or false
   esbuild: true
   msgpackr-extract: true
   unrs-resolver: true

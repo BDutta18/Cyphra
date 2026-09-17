@@ -11,12 +11,14 @@ CYPHRA connects to the official Midnight Preprod infrastructure:
 | Parameter | Configuration |
 |---|---|
 | **Network ID** | `preprod` |
+| **Verified Contract Address** | `0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f` |
+| **1AM Explorer Contract Link** | [explorer.1am.xyz/contract/0xcc4a...](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod) |
+| **Midnight Explorer Contract Link** | [preprod.midnightexplorer.com/address/0xcc4a...](https://preprod.midnightexplorer.com/address/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) |
+| **Deployer Preprod Address** | `mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl` |
 | **Node RPC Endpoint** | `https://rpc.preprod.midnight.network` |
 | **Indexer GraphQL Endpoint** | `https://indexer.preprod.midnight.network/api/v4/graphql` |
 | **Indexer WebSocket** | `wss://indexer.preprod.midnight.network/api/v4/graphql/ws` |
 | **Local Proof Server** | `http://localhost:6300` |
-| **Midnight Explorer** | [https://preprod.midnightexplorer.com](https://preprod.midnightexplorer.com) |
-| **1AM Explorer** | [https://explorer.1am.xyz](https://explorer.1am.xyz?network=preprod) |
 | **Supported Wallet** | 1AM Wallet (DApp Connector API v4.x) |
 
 ---

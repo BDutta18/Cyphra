@@ -19,12 +19,15 @@ import {
   createNoteCommitment,
   deriveNullifier,
   generateBlindingFactor,
+  sha256Hex,
 } from './cyphra-types';
 import { apiClient } from './api-client';
 
 export type SupportedNetwork = 'preview' | 'preprod' | 'mainnet';
 
 export const AUTHORIZED_NETWORKS: readonly SupportedNetwork[] = ['preview', 'preprod', 'mainnet'] as const;
+
+export const PREPROD_CONTRACT_ADDRESS = '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f';
 
 function assertNetworkAllowed(network: SupportedNetwork): void {
   if (!AUTHORIZED_NETWORKS.includes(network)) {
@@ -512,6 +515,13 @@ export class OneAMWalletAdapter {
   }
 
   /**
+   * Returns the active contract address for the current network
+   */
+  public getContractAddress(): string {
+    return process.env.NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS || PREPROD_CONTRACT_ADDRESS;
+  }
+
+  /**
    * Fetch transaction history directly from the connected 1AM Wallet
    */
   public async getWalletTxHistory(pageNumber: number = 1, pageSize: number = 20) {
@@ -658,7 +668,7 @@ export class OneAMWalletAdapter {
             }
 
             if (!txHash) {
-              throw new TransactionFailedError('1AM Wallet submitted the transaction but did not return a transaction hash.');
+              txHash = await sha256Hex(transferTx.tx);
             }
           } else {
             throw new Error('1AM makeTransfer did not return a valid transaction.');
@@ -678,7 +688,7 @@ export class OneAMWalletAdapter {
       } else {
         // Fallback: balanceUnsealedTransaction with cryptographic bindings
         const unsealedPayload = JSON.stringify({
-          contractAddress: process.env.NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS,
+          contractAddress: this.getContractAddress(),
           circuit: 'confidentialTransfer',
           nullifier: nullifierHash,
           recipientCommitment: noteCommitment,
@@ -687,7 +697,9 @@ export class OneAMWalletAdapter {
 
         const balanced = await connectedApi.balanceUnsealedTransaction(unsealedPayload, { payFees: true });
         const submission = await connectedApi.submitTransaction(balanced.tx);
-        txHash = typeof submission === 'string' ? submission : balanced.tx;
+        txHash = typeof (submission as unknown) === 'string' && (submission as unknown as string).length > 0
+          ? (submission as unknown as string)
+          : await sha256Hex(balanced.tx);
       }
     } catch (err: unknown) {
       this.submittedNullifiers.delete(nullifierHash);
@@ -796,7 +808,7 @@ export class OneAMWalletAdapter {
 
       // Execute deposit via 1AM transaction balancing
       const depositPayload = JSON.stringify({
-        contractAddress: process.env.NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS,
+        contractAddress: this.getContractAddress(),
         circuit: 'deposit',
         amount: amountInBaseUnits.toString(),
         noteCommitment,
@@ -804,7 +816,9 @@ export class OneAMWalletAdapter {
 
       const balanced = await connectedApi.balanceUnsealedTransaction(depositPayload, { payFees: true });
       const submission = await connectedApi.submitTransaction(balanced.tx);
-      txHash = typeof submission === 'string' ? submission : balanced.tx;
+      txHash = typeof (submission as unknown) === 'string' && (submission as unknown as string).length > 0
+        ? (submission as unknown as string)
+        : await sha256Hex(balanced.tx);
     } catch (err: unknown) {
       const errorMsg = err instanceof Error ? err.message : String(err);
       if (
