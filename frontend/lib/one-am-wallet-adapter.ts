@@ -24,6 +24,14 @@ import { apiClient } from './api-client';
 
 export type SupportedNetwork = 'preview' | 'preprod' | 'mainnet';
 
+export const AUTHORIZED_NETWORKS: readonly SupportedNetwork[] = ['preview', 'preprod', 'mainnet'] as const;
+
+function assertNetworkAllowed(network: SupportedNetwork): void {
+  if (!AUTHORIZED_NETWORKS.includes(network)) {
+    throw new WrongNetworkError('preview | preprod', network);
+  }
+}
+
 export interface WalletAddresses {
   shieldedAddress: string;
   shieldedCoinPublicKey: string;
@@ -137,7 +145,6 @@ export class OneAMWalletAdapter {
   private connectedApi: ConnectedAPI | null = null;
   private currentNetwork: SupportedNetwork = 'preview';
   private addresses: WalletAddresses | null = null;
-  private isSandbox: boolean = false;
   private balances: WalletBalances = {
     shieldedNight: '0.00',
     shieldedDust: '0.00',
@@ -163,39 +170,29 @@ export class OneAMWalletAdapter {
   /**
    * Set active Midnight network (preview, preprod, mainnet)
    */
-  public setNetwork(network: SupportedNetwork): void {
+  public async setNetwork(network: SupportedNetwork): Promise<void> {
+    assertNetworkAllowed(network);
     this.currentNetwork = network;
     if (typeof window !== 'undefined') {
       try {
         localStorage.setItem('cyphra_midnight_network', network);
       } catch {}
     }
+    if (this.connectedApi && this.initialApi) {
+      try {
+        await this.connectWallet(network);
+      } catch (err) {
+        console.warn('Network switch reconnection notification:', err);
+      }
+    }
     this.notify();
   }
 
   /**
-   * Connect in Sandbox Testnet mode
-   * Allows full access and testing of private balances, circuits, invoices and activity
-   * without requiring the browser extension to be installed.
+   * Connects to 1AM Wallet on desired network
    */
   public async connectSandbox(desiredNetwork: SupportedNetwork = 'preview'): Promise<OneAMWalletState> {
-    this.currentNetwork = desiredNetwork;
-    this.isSandbox = true;
-    this.addresses = {
-      shieldedAddress: 'mn_shielded1qqg847392847192847293847293847293847192847',
-      shieldedCoinPublicKey: '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef',
-      shieldedEncryptionPublicKey: '0xabcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789',
-      unshieldedAddress: 'mn_addr1qx9847392847192847293847293847293847192847',
-      dustAddress: 'mn_dust1qy9847392847192847293847293847293847192847',
-    };
-    this.balances = {
-      shieldedNight: '1,450.00',
-      shieldedDust: '250.00',
-      shieldedtCyphra: '100.00',
-      unshieldedNight: '50.00',
-    };
-    this.notify();
-    return this.getState();
+    return this.connectWallet(desiredNetwork);
   }
 
   /**
@@ -217,14 +214,18 @@ export class OneAMWalletAdapter {
   public getState(): OneAMWalletState {
     return {
       isConnected: this.isConnected(),
-      walletName: this.isSandbox ? '1AM Sandbox' : (this.initialApi?.name || '1AM Wallet'),
+      walletName: this.initialApi?.name || '1AM Wallet',
       apiVersion: this.initialApi?.apiVersion || '4.0.1',
       network: this.currentNetwork,
       addresses: this.addresses,
       balances: this.balances,
       connectedApi: this.connectedApi,
-      isSandbox: this.isSandbox,
+      isSandbox: false,
     };
+  }
+
+  public getInitialApi(): InitialAPI | null {
+    return this.initialApi;
   }
 
   /**
@@ -313,6 +314,7 @@ export class OneAMWalletAdapter {
   public async connectWallet(
     desiredNetwork: SupportedNetwork = 'preview'
   ): Promise<OneAMWalletState> {
+    assertNetworkAllowed(desiredNetwork);
     const api = await this.detectWallet(1200);
 
     if (!api) {
@@ -399,11 +401,33 @@ export class OneAMWalletAdapter {
         return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 });
       };
 
+      const findTokenBalance = (balRecord: Record<string, bigint> | undefined, candidates: string[]): bigint => {
+        if (!balRecord) return 0n;
+        for (const c of candidates) {
+          if (balRecord[c] !== undefined) return balRecord[c];
+        }
+        for (const [k, v] of Object.entries(balRecord)) {
+          for (const c of candidates) {
+            if (k.toLowerCase() === c.toLowerCase() || k.toLowerCase().includes(c.toLowerCase())) {
+              return v;
+            }
+          }
+        }
+        return 0n;
+      };
+
+      const nightCandidates = ['NIGHT', 'night', '0000000000000000000000000000000000000000000000000000000000000000'];
+      const cyphraCandidates = ['tCYPHRA', 'CYPHRA', 'tcyphra', 'cyphra'];
+
+      const shieldedNightRaw = findTokenBalance(shieldedBal, nightCandidates) || (shieldedBal && Object.values(shieldedBal)[0]) || 0n;
+      const unshieldedNightRaw = findTokenBalance(unshieldedBal, nightCandidates) || (unshieldedBal && Object.values(unshieldedBal)[0]) || 0n;
+      const shieldedCyphraRaw = findTokenBalance(shieldedBal, cyphraCandidates);
+
       this.balances = {
-        shieldedNight: formatBigIntUnits(shieldedBal['NIGHT' as TokenType]),
-        shieldedDust: formatBigIntUnits(dustBal.balance),
-        shieldedtCyphra: formatBigIntUnits(shieldedBal['tCYPHRA' as TokenType] || shieldedBal['CYPHRA' as TokenType]),
-        unshieldedNight: formatBigIntUnits(unshieldedBal['NIGHT' as TokenType]),
+        shieldedNight: formatBigIntUnits(shieldedNightRaw),
+        shieldedDust: formatBigIntUnits(dustBal?.balance),
+        shieldedtCyphra: formatBigIntUnits(shieldedCyphraRaw),
+        unshieldedNight: formatBigIntUnits(unshieldedNightRaw),
       };
 
       this.notify();
@@ -420,7 +444,6 @@ export class OneAMWalletAdapter {
   public async disconnectWallet(): Promise<void> {
     this.connectedApi = null;
     this.addresses = null;
-    this.isSandbox = false;
     this.balances = {
       shieldedNight: '0.00',
       shieldedDust: '0.00',
@@ -448,7 +471,7 @@ export class OneAMWalletAdapter {
    * Checks if 1AM Wallet is currently connected
    */
   public isConnected(): boolean {
-    return (!!this.connectedApi || this.isSandbox) && !!this.addresses?.shieldedAddress;
+    return !!this.connectedApi && !!this.addresses?.shieldedAddress;
   }
 
   /**
@@ -463,6 +486,21 @@ export class OneAMWalletAdapter {
    */
   public isWalletAvailable(): boolean {
     return !!this.initialApi || (typeof window !== 'undefined' && !!window.midnight);
+  }
+
+  /**
+   * Fetch transaction history directly from the connected 1AM Wallet
+   */
+  public async getWalletTxHistory(pageNumber: number = 1, pageSize: number = 20) {
+    if (!this.connectedApi || typeof this.connectedApi.getTxHistory !== 'function') {
+      return [];
+    }
+    try {
+      return await this.connectedApi.getTxHistory(pageNumber, pageSize);
+    } catch (e) {
+      console.warn('Failed to fetch tx history from 1AM Wallet:', e);
+      return [];
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -534,48 +572,8 @@ export class OneAMWalletAdapter {
     }
     this.submittedNullifiers.add(nullifierHash);
 
-    // Sandbox execution fallback
-    if (this.isSandbox) {
-      const newBal = Math.max(0, availableNum - parsedAmount).toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-      if (params.tokenType === 'NIGHT') this.balances.shieldedNight = newBal;
-      else if (params.tokenType === 'DUST') this.balances.shieldedDust = newBal;
-      else this.balances.shieldedtCyphra = newBal;
-      this.notify();
-
-      const txHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
-
-      try {
-        await apiClient.recordActivity(this.addresses.shieldedAddress, {
-          txHash,
-          timestamp: Date.now(),
-          type: 'send_confidential',
-          amount: params.amount,
-          tokenType: params.tokenType,
-          counterpartyMasked: `${recipient.slice(0, 12)}...${recipient.slice(-6)}`,
-          status: 'confirmed',
-          proofVerified: true,
-          proofType: 'CompactZKProof_Groth16',
-          commitmentHash: noteCommitment,
-          nullifierHash,
-          encryptedMemo: params.memo ? `Encrypted(${params.memo})` : undefined,
-          gasFee: '0.0042 DUST',
-        });
-      } catch {}
-
-      return {
-        txHash,
-        noteCommitment,
-        nullifierHash,
-        blockHeight: 248250,
-        status: 'confirmed',
-      };
-    }
-
     // 6. Request 1AM Wallet approval and transaction submission
-    let txHash: string;
+    let txHash = '';
 
     try {
       const connectedApi = this.connectedApi!;
@@ -583,11 +581,29 @@ export class OneAMWalletAdapter {
       // Inform 1AM Wallet of planned transaction methods
       if (typeof connectedApi.hintUsage === 'function') {
         try {
-          await connectedApi.hintUsage(['makeTransfer', 'balanceUnsealedTransaction', 'submitTransaction']);
+          await connectedApi.hintUsage(['makeTransfer', 'balanceUnsealedTransaction', 'submitTransaction', 'getTxHistory']);
         } catch {
           // Non-blocking
         }
       }
+
+      // Determine matching token type key from wallet balances
+      let targetTokenType: string = params.tokenType;
+      try {
+        const shieldedBals = await connectedApi.getShieldedBalances();
+        if (params.tokenType === 'NIGHT') {
+          for (const k of Object.keys(shieldedBals)) {
+            if (
+              k === 'NIGHT' ||
+              k === '0000000000000000000000000000000000000000000000000000000000000000' ||
+              k.toLowerCase().includes('night')
+            ) {
+              targetTokenType = k;
+              break;
+            }
+          }
+        }
+      } catch {}
 
       // Try makeTransfer (1AM official high-level confidential transfer API)
       if (typeof connectedApi.makeTransfer === 'function') {
@@ -596,7 +612,7 @@ export class OneAMWalletAdapter {
             [
               {
                 kind: 'shielded',
-                type: params.tokenType,
+                type: targetTokenType,
                 value: amountInBaseUnits,
                 recipient: recipient,
               },
@@ -605,9 +621,22 @@ export class OneAMWalletAdapter {
           );
 
           if (transferTx && transferTx.tx) {
-            // Submit the balanced transaction
-            const submission = await connectedApi.submitTransaction(transferTx.tx);
-            txHash = typeof submission === 'string' ? submission : transferTx.tx;
+            // Submit the balanced transaction to Midnight
+            const submission: unknown = await connectedApi.submitTransaction(transferTx.tx);
+            if (typeof submission === 'string' && submission.length > 0) {
+              txHash = submission;
+            } else if (typeof connectedApi.getTxHistory === 'function') {
+              try {
+                const history = await connectedApi.getTxHistory(1, 1);
+                if (history && history.length > 0 && history[0].txHash) {
+                  txHash = history[0].txHash;
+                }
+              } catch {}
+            }
+
+            if (!txHash) {
+              throw new TransactionFailedError('1AM Wallet submitted the transaction but did not return a transaction hash.');
+            }
           } else {
             throw new Error('1AM makeTransfer did not return a valid transaction.');
           }
@@ -621,7 +650,6 @@ export class OneAMWalletAdapter {
             this.submittedNullifiers.delete(nullifierHash);
             throw new WalletRejectionError('Transaction was declined by user in 1AM Wallet.');
           }
-          // If makeTransfer is unsupported or failed with technical error, fallback to unsealed balancing
           throw apiErr;
         }
       } else {
@@ -732,49 +760,12 @@ export class OneAMWalletAdapter {
       tokenType
     );
 
-    // Sandbox deposit execution
-    if (this.isSandbox) {
-      const curShielded = parseFloat(this.balances.shieldedNight.replace(/,/g, '')) || 0;
-      this.balances.shieldedNight = (curShielded + parsedAmount).toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-      this.notify();
-
-      const nullifierHash = await deriveNullifier(this.addresses.shieldedCoinPublicKey, noteCommitment);
-      const txHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
-
-      try {
-        await apiClient.recordActivity(this.addresses.shieldedAddress, {
-          txHash,
-          timestamp: Date.now(),
-          type: 'shield_deposit',
-          amount,
-          tokenType,
-          counterpartyMasked: 'Unshielded Vault',
-          status: 'confirmed',
-          proofVerified: true,
-          proofType: 'CompactZKProof_Groth16',
-          commitmentHash: noteCommitment,
-          nullifierHash,
-          gasFee: '0.0025 DUST',
-        });
-      } catch {}
-
-      return {
-        txHash,
-        noteCommitment,
-        nullifierHash,
-        status: 'confirmed',
-      };
-    }
-
     let txHash: string;
     try {
       const connectedApi = this.connectedApi!;
       if (typeof connectedApi.hintUsage === 'function') {
         try {
-          await connectedApi.hintUsage(['balanceUnsealedTransaction', 'submitTransaction']);
+          await connectedApi.hintUsage(['balanceUnsealedTransaction', 'submitTransaction', 'getTxHistory']);
         } catch {
           // non-blocking
         }

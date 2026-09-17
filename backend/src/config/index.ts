@@ -15,6 +15,22 @@ function requireEnv(key: string, fallback?: string): string {
 
 const env = process.env.NODE_ENV ?? 'development';
 const isProd = env === 'production';
+const deploymentEnvironment = process.env.CYPHRA_DEPLOYMENT_ENV ?? '';
+const midnightNetwork = process.env.MIDNIGHT_NETWORK ?? process.env.MIDNIGHT_NETWORK_ID ?? 'preview';
+const midnightRpcUrl = process.env.MIDNIGHT_RPC_URL ?? process.env.MIDNIGHT_NODE_URI;
+const contractAddress = process.env.CONTRACT_ADDRESS ?? process.env.CYPHRA_CONTRACT_ADDRESS ?? '';
+
+if (deploymentEnvironment === 'preprod') {
+  if (midnightNetwork !== 'preprod') {
+    throw new Error(`Preprod backend must use Midnight Preprod, received '${midnightNetwork}'.`);
+  }
+  if (!midnightRpcUrl || !contractAddress) {
+    throw new Error('Preprod backend requires MIDNIGHT_RPC_URL and CONTRACT_ADDRESS.');
+  }
+  if (/preview|mainnet|production/i.test(`${midnightRpcUrl} ${contractAddress}`)) {
+    throw new Error('Preprod backend configuration contains a Preview or Production value.');
+  }
+}
 
 export const config = {
   // -------------------------------------------------------------------------
@@ -25,11 +41,18 @@ export const config = {
   port: parseInt(process.env.PORT ?? '4000', 10),
 
   // -------------------------------------------------------------------------
-  // CORS — explicitly list allowed origins in production
+  // CORS — allow localhost for dev, cyphra-two.vercel.app for prod,
+  //        and *.vercel.app for Vercel PR preview deployments
   // -------------------------------------------------------------------------
-  corsOrigins: (process.env.CORS_ORIGINS ?? 'http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001,http://localhost:4000,http://127.0.0.1:4000')
+  corsOrigins: (
+    process.env.CORS_ORIGINS ??
+    'http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001,https://cyphra-two.vercel.app'
+  )
     .split(',')
     .map((o) => o.trim()),
+
+  // Allow *.vercel.app wildcard for preview deployments
+  corsOriginPattern: /https:\/\/.*\.vercel\.app$/,
 
   // -------------------------------------------------------------------------
   // Rate Limiting
@@ -45,25 +68,27 @@ export const config = {
   },
 
   // -------------------------------------------------------------------------
-  // Midnight Network
+  // Midnight Network — defaults to Preview (Blockfrost)
+  // Override via environment variables for Preprod / Mainnet deployments.
+  // Blockfrost endpoints: https://blockfrost.dev/docs/start-building/midnight/
   // -------------------------------------------------------------------------
   midnight: {
-    networkId: process.env.MIDNIGHT_NETWORK_ID ?? 'preprod',
+    networkId: midnightNetwork,
+    blockfrostProjectId: process.env.BLOCKFROST_PROJECT_ID ?? '',
     indexerUri:
       process.env.MIDNIGHT_INDEXER_URI ??
-      'https://indexer.testnet-02.midnight.network/api/v1/graphql',
+      'https://midnight-preview.blockfrost.io/api/v0',
     indexerWsUri:
       process.env.MIDNIGHT_INDEXER_WS_URI ??
-      'wss://indexer.testnet-02.midnight.network/api/v1/graphql',
+      'wss://midnight-preview.blockfrost.io/api/v0/ws',
     nodeUri:
-      process.env.MIDNIGHT_NODE_URI ??
-      'https://rpc.testnet-02.midnight.network',
-    proverServerUri:
-      process.env.MIDNIGHT_PROVER_SERVER_URI ??
-      'https://proves.testnet-02.midnight.network',
-    contractAddress:
-      process.env.CYPHRA_CONTRACT_ADDRESS ??
-      'mn1cyphratest637970687261003a707265706f6f643a302e312e30',
+      midnightRpcUrl ??
+      'https://rpc.midnight-preview.blockfrost.io',
+    explorerUrl: process.env.MIDNIGHT_EXPLORER_URL ?? 'https://midnightexplorer.com',
+    // A contract address must be supplied by the environment. Never fall back
+    // to a plausible-looking address, which could route a real wallet action
+    // to the wrong deployment.
+    contractAddress,
   },
 
   // -------------------------------------------------------------------------

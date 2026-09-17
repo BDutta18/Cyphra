@@ -16,6 +16,8 @@ import {
   Lock,
 } from 'lucide-react';
 
+
+
 export default function SettingsPage() {
   const { account, network, connect, disconnect } = useMidnightWallet();
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetwork>((network as SupportedNetwork) || 'preview');
@@ -57,8 +59,8 @@ export default function SettingsPage() {
 
           <div className="grid sm:grid-cols-3 gap-2.5">
             {[
+              { id: 'preprod' as SupportedNetwork, name: 'Midnight Preprod', desc: 'Pre-production Testnet' },
               { id: 'preview' as SupportedNetwork, name: 'Midnight Preview', desc: 'Pre-release Preview Network' },
-              { id: 'preprod' as SupportedNetwork, name: 'Midnight Preprod', desc: 'Staging Environment' },
               { id: 'mainnet' as SupportedNetwork, name: 'Midnight Mainnet', desc: 'Production Confidential Ledger' },
             ].map((net) => {
               const isSelected = selectedNetwork === net.id;

@@ -10,18 +10,20 @@
     "frontend"
   ],
   "scripts": {
-    "build": "npm run build --workspace=@cyphra/shared && npm run build --workspace=@cyphra/contracts && npm run build --workspace=@cyphra/backend && npm run build --workspace=@cyphra/frontend",
-    "start": "npm run start --workspace=@cyphra/frontend",
-    "start:frontend": "npm run start --workspace=@cyphra/frontend",
-    "start:backend": "npm run start --workspace=@cyphra/backend",
-    "test": "npm test --workspace=@cyphra/shared && npm test --workspace=@cyphra/contracts && npm test --workspace=@cyphra/backend",
-    "lint": "npm run lint --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present",
-    "dev": "npm run dev --workspaces --if-present",
-    "dev:backend": "npm run dev --workspace=@cyphra/backend",
-    "dev:frontend": "npm run dev --workspace=@cyphra/frontend",
+    "build": "pnpm --filter @cyphra/shared run build && pnpm --filter @cyphra/contracts run build && pnpm --filter @cyphra/backend run build && pnpm --filter @cyphra/frontend run build",
+    "start": "pnpm --filter @cyphra/frontend run start",
+    "start:frontend": "pnpm --filter @cyphra/frontend run start",
+    "start:backend": "pnpm --filter @cyphra/backend run start",
+    "test": "pnpm --filter @cyphra/shared run test && pnpm --filter @cyphra/contracts run test && pnpm --filter @cyphra/backend run test",
+    "lint": "pnpm -r --if-present run lint",
+    "typecheck": "pnpm --filter @cyphra/shared run build && pnpm -r --if-present run typecheck",
+    "verify:preview-env": "node scripts/verify-preview-env.mjs",
+    "verify:preprod-env": "node scripts/verify-preprod-env.mjs",
+    "dev": "pnpm -r --parallel --if-present run dev",
+    "dev:backend": "pnpm --filter @cyphra/backend run dev",
+    "dev:frontend": "pnpm --filter @cyphra/frontend run dev",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md,compact}\"",
-    "clean": "npm run clean --workspaces --if-present"
+    "clean": "pnpm -r --if-present run clean"
   },
   "devDependencies": {
     "@types/node": "^22.13.1",

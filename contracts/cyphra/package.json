@@ -12,19 +12,24 @@
     }
   },
   "scripts": {
+    "compact:compile": "compact compile src/cyphra.compact src/managed",
+    "compact:compile:wsl": "wsl compact compile src/cyphra.compact src/managed",
     "build": "tsc",
     "dev": "echo 'contracts ready'",
     "typecheck": "tsc --noEmit",
     "test": "npm run build && node --test dist/test/cyphra.test.js",
     "test:watch": "node --test --watch src/",
     "lint": "echo 'contracts lint ok'",
-    "deploy:preprod": "MIDNIGHT_NETWORK_ID=preprod node dist/deployment/deploy.js",
-    "deploy:mainnet": "MIDNIGHT_NETWORK_ID=mainnet node dist/deployment/deploy.js",
-    "deploy:local": "MIDNIGHT_NETWORK_ID=local node dist/deployment/deploy.js",
+    "deploy:preview": "node dist/deployment/deploy.js",
+    "deploy:preprod": "node dist/deployment/deploy.js",
+    "deploy:mainnet": "node dist/deployment/deploy.js",
+    "deploy:local": "node dist/deployment/deploy.js",
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@cyphra/shared": "*"
+    "@cyphra/shared": "workspace:*",
+    "@midnight-ntwrk/compact-runtime": "^0.19.0",
+    "@midnight-ntwrk/midnight-js": "^4.1.1"
   },
   "devDependencies": {
     "@types/node": "^22.13.1",

@@ -52,13 +52,7 @@ class ActivityService {
   ): TransactionActivity[] {
     const { limit = 20, offset = 0, typeFilter } = options;
 
-    let list = this.activities.get(walletAddress);
-
-    if (!list || list.length === 0) {
-      // Seed with representative initial history for a fresh wallet
-      list = this.buildInitialHistory();
-      this.activities.set(walletAddress, list);
-    }
+    let list = this.activities.get(walletAddress) ?? [];
 
     // Apply type filter if provided
     if (typeFilter) {
@@ -148,47 +142,6 @@ class ActivityService {
       })),
       complianceAttestation: `CYPHRA-MIDNIGHT-AUDIT:${crypto.randomBytes(32).toString('hex')}`,
     };
-  }
-
-  // ---------------------------------------------------------------------------
-  // Initial history for new wallets (representative, not fake statistics)
-  // ---------------------------------------------------------------------------
-
-  private buildInitialHistory(): TransactionActivity[] {
-    const now = Date.now();
-    return [
-      {
-        id: 'act_init_001',
-        txHash: '0x9fa81b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a',
-        blockHeight: 184_209,
-        timestamp: now - 3_600_000 * 2,
-        type: 'shield_deposit',
-        amount: '250.000000',
-        tokenType: 'NIGHT',
-        counterpartyMasked: 'Unshielded Vault',
-        status: 'confirmed',
-        proofVerified: true,
-        proofType: 'CompactZKProof_Groth16',
-        commitmentHash: 'a'.repeat(64),
-        gasFee: '0.004200 DUST',
-      },
-      {
-        id: 'act_init_002',
-        txHash: '0x3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d',
-        blockHeight: 184_285,
-        timestamp: now - 3_600_000 * 5,
-        type: 'receive_confidential',
-        amount: '75.500000',
-        tokenType: 'NIGHT',
-        counterpartyMasked: maskAddress('mn_shielded1qq847293847293847293847293847293847293847293'),
-        status: 'confirmed',
-        proofVerified: true,
-        proofType: 'CompactZKProof_Groth16',
-        commitmentHash: 'b'.repeat(64),
-        encryptedMemo: '[Encrypted]',
-        gasFee: '0.005100 DUST',
-      },
-    ];
   }
 }
 

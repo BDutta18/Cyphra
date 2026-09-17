@@ -6,12 +6,12 @@ import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 export function NetworkBadge() {
   const { network, setNetwork, isConnected, connect } = useMidnightWallet();
   const [isOpen, setIsOpen] = React.useState(false);
-  const activeNet = network || 'preview';
+  const activeNet = network || 'preprod';
   const displayNet = activeNet.toUpperCase();
 
-  const networks: { id: 'preview' | 'preprod' | 'mainnet'; label: string; desc: string }[] = [
-    { id: 'preview', label: 'PREVIEW', desc: 'Pre-release testnet' },
-    { id: 'preprod', label: 'PREPROD', desc: 'Staging environment' },
+  const networks: { id: 'preprod' | 'preview' | 'mainnet'; label: string; desc: string }[] = [
+    { id: 'preprod', label: 'PREPROD', desc: 'Midnight Preprod network' },
+    { id: 'preview', label: 'PREVIEW', desc: 'Midnight Preview testnet' },
     { id: 'mainnet', label: 'MAINNET', desc: 'Production ledger' },
   ];
 

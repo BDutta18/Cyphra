@@ -41,7 +41,7 @@ import {
 } from 'lucide-react';
 
 export default function RequestPage() {
-  const { account, isConnected, connect } = useMidnightWallet();
+  const { account, isConnected, openConnectModal } = useMidnightWallet();
   const { requests, isLoading, fulfillRequest, refreshRequests } = usePaymentRequest(account);
   const { sendPayment, isProving, step, lastResult, reset } = useConfidentialTransfer(account);
 
@@ -148,7 +148,7 @@ export default function RequestPage() {
   const handlePayImported = async () => {
     if (!importedRequest) return;
     if (!isConnected || !account?.shieldedAddress) {
-      connect('preview');
+      openConnectModal();
       return;
     }
 

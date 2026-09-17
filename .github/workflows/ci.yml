@@ -7,30 +7,36 @@ on:
     branches: [main, master]
 
 jobs:
-  build-and-test:
+  ci:
+    name: Lint · Typecheck · Test · Build
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Lint Monorepo
-        run: npm run lint
+        run: pnpm lint
 
       - name: Typecheck Monorepo
-        run: npm run typecheck
+        run: pnpm typecheck
 
       - name: Run Tests
-        run: npm test
+        run: pnpm test
 
       - name: Build All Workspaces
-        run: npm run build
+        run: pnpm build

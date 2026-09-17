@@ -1,0 +1,9 @@
+packages:
+  - 'shared'
+  - 'contracts/cyphra'
+  - 'backend'
+  - 'frontend'
+allowBuilds:
+  esbuild: true
+  msgpackr-extract: true
+  unrs-resolver: true

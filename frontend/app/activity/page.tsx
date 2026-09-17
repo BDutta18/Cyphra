@@ -29,7 +29,7 @@ import {
 } from 'lucide-react';
 
 export default function ActivityPage() {
-  const { account, isConnected, connect } = useMidnightWallet();
+  const { account, isConnected, openConnectModal } = useMidnightWallet();
   const [activities, setActivities] = useState<TransactionActivity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filterType, setFilterType] = useState<string>('all');
@@ -147,7 +147,7 @@ export default function ActivityPage() {
             </div>
             <Button
               variant="primary"
-              onClick={() => connect('preview')}
+              onClick={openConnectModal}
               className="bg-[#FFD400] text-black font-bold hover:bg-[#E5BE00] text-xs px-6 py-2.5 shadow-sm"
             >
               <Wallet className="w-3.5 h-3.5 mr-1.5" /> Connect 1AM Wallet

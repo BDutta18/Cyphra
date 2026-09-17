@@ -1,0 +1,98 @@
+name: CYPHRA Preprod
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: cyphra-preprod
+  cancel-in-progress: false
+
+jobs:
+  deploy-preprod:
+    name: Install → Lint → Typecheck → Test → Build → Verify Contract → Deploy
+    runs-on: ubuntu-latest
+    environment: preprod
+    permissions:
+      contents: read
+    env:
+      CYPHRA_DEPLOYMENT_ENV: preprod
+      MIDNIGHT_NETWORK: preprod
+      MIDNIGHT_RPC_URL: https://rpc.preprod.midnight.network
+      MIDNIGHT_INDEXER_URI: https://indexer.preprod.midnight.network/api/v4/graphql
+      MIDNIGHT_INDEXER_WS_URI: wss://indexer.preprod.midnight.network/api/v4/graphql/ws
+      CONTRACT_ADDRESS: ${{ vars.CYPHRA_PREPROD_CONTRACT_ADDRESS }}
+      NEXT_PUBLIC_MIDNIGHT_NETWORK: preprod
+      NEXT_PUBLIC_MIDNIGHT_NETWORK_ID: preprod
+      NEXT_PUBLIC_API_URL: ${{ vars.CYPHRA_PREPROD_API_URL }}
+      NEXT_PUBLIC_INDEXER_URI: https://indexer.preprod.midnight.network/api/v4/graphql
+      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: ${{ vars.CYPHRA_PREPROD_CONTRACT_ADDRESS }}
+      NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL: https://preprod.midnightexplorer.com
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      # This is a dedicated Vercel project for Preprod, not the production app.
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PREPROD_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_PREPROD_TOKEN }}
+      RENDER_PREPROD_DEPLOY_HOOK_URL: ${{ secrets.RENDER_PREPROD_DEPLOY_HOOK_URL }}
+      CYPHRA_PREPROD_HEALTHCHECK_URL: ${{ vars.CYPHRA_PREPROD_HEALTHCHECK_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Test
+        run: pnpm test
+      - name: Validate Preprod configuration
+        run: |
+          test "$CONTRACT_ADDRESS" = "$NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS"
+          pnpm verify:preprod-env
+      - name: Build
+        run: pnpm build
+      # Contract deployment is deliberately not simulated in CI. This gate
+      # requires the address produced by a finalized, real `deployContract`
+      # transaction using the Preprod deployer's local proof server and wallet.
+      - name: Verify Contract
+        run: |
+          test -n "$CONTRACT_ADDRESS"
+          printf '%s' "$CONTRACT_ADDRESS" | grep -Eq '^[[:xdigit:]]{64}$'
+          echo "Using finalized Midnight Preprod contract: $CONTRACT_ADDRESS"
+      - name: Deploy Frontend
+        id: frontend
+        working-directory: frontend
+        run: |
+          test -n "$VERCEL_TOKEN"
+          test -n "$VERCEL_ORG_ID"
+          test -n "$VERCEL_PROJECT_ID"
+          URL="$(pnpm dlx vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN" \
+            --build-env NEXT_PUBLIC_MIDNIGHT_NETWORK="$NEXT_PUBLIC_MIDNIGHT_NETWORK" \
+            --build-env NEXT_PUBLIC_MIDNIGHT_NETWORK_ID="$NEXT_PUBLIC_MIDNIGHT_NETWORK_ID" \
+            --build-env NEXT_PUBLIC_API_URL="$NEXT_PUBLIC_API_URL" \
+            --build-env NEXT_PUBLIC_INDEXER_URI="$NEXT_PUBLIC_INDEXER_URI" \
+            --build-env NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS="$NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS" \
+            --build-env NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL="$NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL" \
+            --env NEXT_PUBLIC_MIDNIGHT_NETWORK="$NEXT_PUBLIC_MIDNIGHT_NETWORK" \
+            --env NEXT_PUBLIC_MIDNIGHT_NETWORK_ID="$NEXT_PUBLIC_MIDNIGHT_NETWORK_ID" \
+            --env NEXT_PUBLIC_API_URL="$NEXT_PUBLIC_API_URL" \
+            --env NEXT_PUBLIC_INDEXER_URI="$NEXT_PUBLIC_INDEXER_URI" \
+            --env NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS="$NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS" \
+            --env NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL="$NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL")"
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+      - name: Deploy Backend
+        run: |
+          test -n "$RENDER_PREPROD_DEPLOY_HOOK_URL"
+          curl --fail --silent --show-error --request POST "$RENDER_PREPROD_DEPLOY_HOOK_URL"
+      - name: Health Check
+        run: |
+          test -n "$CYPHRA_PREPROD_HEALTHCHECK_URL"
+          response="$(curl --fail --silent --show-error --retry 12 --retry-delay 10 "$CYPHRA_PREPROD_HEALTHCHECK_URL")"
+          echo "$response" | grep -q '"networkId":"preprod"'

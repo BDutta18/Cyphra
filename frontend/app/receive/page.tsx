@@ -17,17 +17,16 @@ import {
 } from 'lucide-react';
 
 export default function ReceivePage() {
-  const { account, isConnected, connect } = useMidnightWallet();
+  const { account, isConnected, openConnectModal } = useMidnightWallet();
   const [copiedShielded, setCopiedShielded] = useState(false);
   const [copiedUnshielded, setCopiedUnshielded] = useState(false);
+  const [copiedKeys, setCopiedKeys] = useState(false);
   const [shared, setShared] = useState(false);
-  const [stealthActive, setStealthActive] = useState(false);
-  const [stealthAddress, setStealthAddress] = useState<string | null>(null);
 
-  const activeShielded = account?.shieldedAddress || '';
-  const currentAddress = stealthActive && stealthAddress ? stealthAddress : activeShielded;
+  const currentAddress = account?.shieldedAddress || '';
 
   const handleCopyShielded = () => {
+    if (!currentAddress) return;
     navigator.clipboard.writeText(currentAddress);
     setCopiedShielded(true);
     setTimeout(() => setCopiedShielded(false), 2000);
@@ -41,8 +40,26 @@ export default function ReceivePage() {
     }
   };
 
+  const handleCopyKeys = () => {
+    if (account?.shieldedCoinPublicKey) {
+      navigator.clipboard.writeText(
+        JSON.stringify(
+          {
+            shieldedAddress: account.shieldedAddress,
+            shieldedCoinPublicKey: account.shieldedCoinPublicKey,
+            shieldedEncryptionPublicKey: account.shieldedEncryptionPublicKey,
+          },
+          null,
+          2
+        )
+      );
+      setCopiedKeys(true);
+      setTimeout(() => setCopiedKeys(false), 2000);
+    }
+  };
+
   const handleShare = async () => {
-    if (typeof navigator !== 'undefined' && navigator.share) {
+    if (typeof navigator !== 'undefined' && navigator.share && currentAddress) {
       try {
         await navigator.share({
           title: 'My Shielded Midnight Address',
@@ -56,15 +73,6 @@ export default function ReceivePage() {
     } else {
       handleCopyShielded();
     }
-  };
-
-  const generateStealthAddress = () => {
-    const randomHex = Array.from({ length: 48 }, () =>
-      Math.floor(Math.random() * 16).toString(16)
-    ).join('');
-    const oneTime = `mn_shielded1qq_stealth_${randomHex}`;
-    setStealthAddress(oneTime);
-    setStealthActive(true);
   };
 
   return (
@@ -98,7 +106,7 @@ export default function ReceivePage() {
             </div>
             <Button
               variant="primary"
-              onClick={() => connect('preview')}
+              onClick={openConnectModal}
               className="bg-[#FFD400] text-black font-bold hover:bg-[#E5BE00] text-xs px-6 py-2.5 shadow-sm"
             >
               Connect 1AM Wallet
@@ -117,11 +125,7 @@ export default function ReceivePage() {
             <QRCodeDisplay
               value={currentAddress}
               size={200}
-              label={
-                stealthActive
-                  ? 'One-Time Stealth Shielded Address'
-                  : 'Permanent Shielded Midnight Identifier'
-              }
+              label="Permanent Shielded Midnight Identifier"
             />
           </motion.div>
 
@@ -130,7 +134,7 @@ export default function ReceivePage() {
             <div className="flex items-center justify-between mb-1.5 text-xs font-mono text-zinc-600">
               <span className="flex items-center gap-1.5 font-bold text-black">
                 <Shield className="w-3.5 h-3.5 text-black" />
-                {stealthActive ? 'Stealth Address' : 'Shielded Address'}
+                Shielded Address (Midnight)
               </span>
               <button
                 onClick={handleCopyShielded}
@@ -148,16 +152,6 @@ export default function ReceivePage() {
           {/* Action Row */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <Button
-              variant="outline"
-              size="sm"
-              onClick={generateStealthAddress}
-              className="text-xs font-mono font-semibold border-zinc-300 hover:border-black bg-white"
-            >
-              <Sparkles className="w-3.5 h-3.5 mr-1 text-black" />
-              Generate Stealth Address
-            </Button>
-
-            <Button
               variant="secondary"
               size="sm"
               onClick={handleShare}
@@ -167,14 +161,15 @@ export default function ReceivePage() {
               Share Address
             </Button>
 
-            {stealthActive && (
+            {account?.shieldedCoinPublicKey && (
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
-                onClick={() => setStealthActive(false)}
-                className="text-xs font-mono text-zinc-600 hover:text-black"
+                onClick={handleCopyKeys}
+                className="text-xs font-mono font-semibold border-zinc-300 hover:border-black bg-white"
               >
-                Reset Default
+                {copiedKeys ? <Check className="w-3.5 h-3.5 mr-1 text-emerald-600" /> : <KeyRound className="w-3.5 h-3.5 mr-1 text-black" />}
+                {copiedKeys ? 'Copied Keys' : 'Copy Shielded Keys'}
               </Button>
             )}
           </div>

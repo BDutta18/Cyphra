@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 export default function SendPage() {
-  const { account, isConnected, connect } = useMidnightWallet();
+  const { account, isConnected, openConnectModal } = useMidnightWallet();
   const balances = usePrivateBalance(account);
   const { sendPayment, isProving, step, lastResult, error, reset } = useConfidentialTransfer(account);
 
@@ -77,7 +77,7 @@ export default function SendPage() {
 
   const handleConfirmAndSign = async () => {
     if (!isConnected) {
-      connect('preview');
+      openConnectModal();
       return;
     }
     try {

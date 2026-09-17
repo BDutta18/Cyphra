@@ -80,14 +80,14 @@ witness get_blinding_factor(): Bytes<32>;
  * @param noteCommitment A freshly-derived 32-byte commitment: Hash(spendKey, amount, blinding)
  */
 export circuit deposit(amount: Uint<64>, noteCommitment: Bytes<32>): [] {
-    // Verify deposit is non-zero
-    assert amount > 0 "Deposit amount must be strictly positive";
+    // Verify deposit is non-zero (private amount check)
+    assert(amount > 0, "Deposit amount must be strictly positive");
 
     // Verify this commitment does not already exist (prevent replay)
-    assert !commitments.member(noteCommitment) "Note commitment already exists";
+    assert(!commitments.member(disclose(noteCommitment)), "Note commitment already exists");
 
     // Register the note commitment on the public ledger
-    commitments.insert(noteCommitment, true);
+    commitments.insert(disclose(noteCommitment), true);
 
     // Increment aggregate counter (amount NOT disclosed)
     totalShieldedDeposits.increment(1);
@@ -115,28 +115,28 @@ export circuit confidentialTransfer(
     changeCommitment: Bytes<32>
 ): [] {
     // 1. Double-spend check: nullifier must not be already spent
-    assert !nullifiers.member(nullifier) "Double-spend rejected: nullifier already spent";
+    assert(!nullifiers.member(disclose(nullifier)), "Double-spend rejected: nullifier already spent");
 
     // 2. Ensure recipient commitment slot is fresh
-    assert !commitments.member(newCommitment) "Recipient note commitment already exists";
+    assert(!commitments.member(disclose(newCommitment)), "Recipient note commitment already exists");
 
     // 3. Private value balance check (enforced inside ZK circuit)
     //    Witnesses supply the actual values; the assertion is proven in zero-knowledge
     const inputVal: Uint<64> = get_input_note_value();
     const outputVal: Uint<64> = get_output_note_value();
     const changeVal: Uint<64> = get_change_note_value();
-    assert inputVal == outputVal + changeVal "Value conservation violated: input != output + change";
+    assert(inputVal == outputVal + changeVal, "Value conservation violated: input != output + change");
 
     // 4. Mark note as spent
-    nullifiers.insert(nullifier, true);
+    nullifiers.insert(disclose(nullifier), true);
 
     // 5. Create recipient's note on-chain
-    commitments.insert(newCommitment, true);
+    commitments.insert(disclose(newCommitment), true);
 
     // 6. Create change note if change is non-zero
-    if changeVal > 0 {
-        assert !commitments.member(changeCommitment) "Change note commitment already exists";
-        commitments.insert(changeCommitment, true);
+    if (disclose(changeVal > 0)) {
+        assert(!commitments.member(disclose(changeCommitment)), "Change note commitment already exists");
+        commitments.insert(disclose(changeCommitment), true);
     }
 
     // 7. Increment aggregate counter
@@ -156,8 +156,8 @@ export circuit registerPaymentRequest(
     requestId: Bytes<32>,
     requestCommitment: Bytes<32>
 ): [] {
-    assert !paymentRequests.member(requestId) "Payment request ID already registered";
-    paymentRequests.insert(requestId, requestCommitment);
+    assert(!paymentRequests.member(disclose(requestId)), "Payment request ID already registered");
+    paymentRequests.insert(disclose(requestId), disclose(requestCommitment));
     totalPaymentRequests.increment(1);
 }
 
@@ -176,13 +176,13 @@ export circuit fulfillPaymentRequest(
     paymentNullifier: Bytes<32>,
     receiptCommitment: Bytes<32>
 ): [] {
-    assert paymentRequests.member(requestId) "Payment request does not exist";
-    assert !paidRequests.member(requestId) "Payment request is already marked paid";
-    assert !nullifiers.member(paymentNullifier) "Payment nullifier already spent";
+    assert(paymentRequests.member(disclose(requestId)), "Payment request does not exist");
+    assert(!paidRequests.member(disclose(requestId)), "Payment request is already marked paid");
+    assert(!nullifiers.member(disclose(paymentNullifier)), "Payment nullifier already spent");
 
-    nullifiers.insert(paymentNullifier, true);
-    commitments.insert(receiptCommitment, true);
-    paidRequests.insert(requestId, true);
+    nullifiers.insert(disclose(paymentNullifier), true);
+    commitments.insert(disclose(receiptCommitment), true);
+    paidRequests.insert(disclose(requestId), true);
 }
 
 /**
@@ -199,8 +199,8 @@ export circuit grantAuditorAccess(
     auditorKey: Bytes<32>,
     permissions: Uint<32>
 ): [] {
-    assert permissions > 0 "Permission bitmask must be non-zero";
-    auditorRegistry.insert(auditorKey, permissions);
+    assert(permissions > 0, "Permission bitmask must be non-zero");
+    auditorRegistry.insert(disclose(auditorKey), disclose(permissions));
 }
 
 /**
@@ -211,6 +211,6 @@ export circuit grantAuditorAccess(
  * @param auditorKey  The auditor's viewing key commitment to revoke
  */
 export circuit revokeAuditorAccess(auditorKey: Bytes<32>): [] {
-    assert auditorRegistry.member(auditorKey) "Auditor key not found in registry";
-    auditorRegistry.insert(auditorKey, 0);
+    assert(auditorRegistry.member(disclose(auditorKey)), "Auditor key not found in registry");
+    auditorRegistry.insert(disclose(auditorKey), 0);
 }

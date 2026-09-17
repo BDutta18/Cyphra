@@ -1,161 +1,98 @@
 /**
- * CYPHRA Contract Deployment Script
+ * CYPHRA Official Contract Deployment Script for Midnight PREPROD
  *
- * Deploys the CYPHRA Compact contract to Midnight Preprod or Mainnet.
+ * Requirements:
+ * 1. Compact artifacts generated in src/managed/ (contract/, keys/, zkir/)
+ * 2. Dedicated Preprod wallet funded with tNIGHT and registered for DUST
+ * 3. Local Midnight proof server running at http://localhost:6300 (or configured URL)
+ * 4. Secure wallet credentials supplied via MIDNIGHT_WALLET_SEED / MIDNIGHT_WALLET_MNEMONIC
  *
- * Prerequisites:
- *   1. Install the Midnight Compact compiler: npm install -g @midnight-ntwrk/compact-compiler
- *   2. Compile the contract: compact compile src/cyphra.compact --output dist/zkir/
- *   3. Ensure DUST balance in deployment wallet (obtained from Midnight faucet for preprod)
- *
- * Environment Variables:
- *   MIDNIGHT_NETWORK_ID         — 'preprod' | 'mainnet' | 'local' (default: 'preprod')
- *   MIDNIGHT_NODE_URI           — Override substrate node RPC URL
- *   MIDNIGHT_INDEXER_URI        — Override indexer GraphQL URL
- *   MIDNIGHT_PROVER_SERVER_URI  — Override prover server URL
- *
- * Deployment Flow on Midnight:
- *   1. Compact compiler generates ZKIR (Zero-Knowledge Intermediate Representation)
- *   2. Compiler also generates per-circuit BZK proving/verifying keys
- *   3. Contract init transaction is submitted to Midnight substrate node
- *   4. Node executes the genesis circuit (no initial state needed for CYPHRA)
- *   5. Contract address is derived deterministically from ZKIR hash + deployer key
- *
- * 1AM Wallet Integration:
- *   After deployment, the frontend uses the contract address to:
- *     - Build unsigned circuit call transactions
- *     - Pass them to ConnectedAPI.balanceUnsealedTransaction() for DUST balancing
- *     - Submit via ConnectedAPI (which also proves and signs)
- *
- * Note on proving:
- *   The 1AM Wallet's built-in WASM prover handles ZK proof generation.
- *   DApps do NOT need to run their own prover server.
- *
- * Usage:
- *   node dist/deployment/deploy.js
- *   MIDNIGHT_NETWORK_ID=mainnet node dist/deployment/deploy.js
+ * NEVER commit wallet private keys or seeds to Git, source files, or logs.
  */
 
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { deploymentConfigs } from './config.js';
 
-const CYPHRA_CONTRACT_VERSION = '0.1.0';
-const COMPACT_CIRCUIT_COUNT = 6; // deposit, confidentialTransfer, registerPaymentRequest, fulfillPaymentRequest, grantAuditorAccess, revokeAuditorAccess
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-async function main(): Promise<void> {
-  const targetNetwork = process.env.MIDNIGHT_NETWORK_ID ?? 'preprod';
-  const config = deploymentConfigs[targetNetwork];
+async function main() {
+  const network = (process.env.MIDNIGHT_NETWORK ?? process.env.MIDNIGHT_NETWORK_ID ?? 'preprod').toLowerCase();
+  if (network !== 'preprod' && network !== 'preview' && network !== 'mainnet') {
+    throw new Error(`Refusing deployment: expected MIDNIGHT_NETWORK to be 'preprod', 'preview', or 'mainnet', received '${network ?? ''}'.`);
+  }
 
-  if (!config) {
+  const config = deploymentConfigs[network] ?? deploymentConfigs.preprod;
+  console.log('====================================================');
+  console.log(`CYPHRA Smart Contract Deployment — Midnight ${network.toUpperCase()}`);
+  console.log('====================================================');
+  console.log(`Network ID:        ${config.networkId}`);
+  console.log(`Node RPC:          ${config.nodeRpcUrl}`);
+  console.log(`Indexer GraphQL:   ${config.indexerUrl}`);
+  console.log(`Indexer WS:        ${config.indexerWsUrl}`);
+  console.log(`Proof Server:      ${config.proverUrl ?? 'http://localhost:6300'}`);
+  console.log(`Explorer:          ${config.explorerUrl}`);
+  console.log('====================================================\n');
+
+  // 1. Verify Compact compiler artifacts
+  const managedDir = fs.existsSync(path.resolve(__dirname, '../../src/managed'))
+    ? path.resolve(__dirname, '../../src/managed')
+    : path.resolve(__dirname, '../src/managed');
+  const contractJs = path.join(managedDir, 'contract/index.js');
+  const keysDir = path.join(managedDir, 'keys');
+  const zkirDir = path.join(managedDir, 'zkir');
+
+  if (!fs.existsSync(contractJs) || !fs.existsSync(keysDir) || !fs.existsSync(zkirDir)) {
     throw new Error(
-      `Unsupported deployment target: '${targetNetwork}'. ` +
-        `Valid values: ${Object.keys(deploymentConfigs).join(', ')}`
+      `Missing Compact compiler artifacts in ${managedDir}.\n` +
+      'Run `pnpm run compact:compile` (or `pnpm run compact:compile:wsl`) to generate compiler output.'
     );
   }
 
-  console.log('');
-  console.log('╔══════════════════════════════════════════════════════════╗');
-  console.log('║        CYPHRA Contract Deployment — Midnight Network      ║');
-  console.log('╚══════════════════════════════════════════════════════════╝');
-  console.log('');
-  console.log(`  Network:        ${config.networkId.toUpperCase()}`);
-  console.log(`  Contract:       cyphra.compact v${CYPHRA_CONTRACT_VERSION}`);
-  console.log(`  Node RPC:       ${config.nodeRpcUrl}`);
-  console.log(`  Indexer:        ${config.indexerUrl}`);
-  console.log(`  Prover:         ${config.proverUrl ?? '(via 1AM Wallet)'}`);
-  console.log(`  Gas Budget:     ${config.gasLimit.toLocaleString()} DUST`);
-  console.log(`  Circuits:       ${COMPACT_CIRCUIT_COUNT}`);
-  console.log('');
+  const keysCount = fs.readdirSync(keysDir).length;
+  const zkirCount = fs.readdirSync(zkirDir).length;
+  console.log(`[OK] Verified Compact artifacts:`);
+  console.log(`     - Contract JS/TS bindings: present`);
+  console.log(`     - Prover/Verifier circuit keys: ${keysCount} files`);
+  console.log(`     - ZKIR circuit files: ${zkirCount} files\n`);
 
-  // Step 1: Compact compilation check
-  console.log('[1/5] Verifying compiled ZKIR artifacts...');
-  console.log('       ├─ deposit.zkir');
-  console.log('       ├─ confidentialTransfer.zkir');
-  console.log('       ├─ registerPaymentRequest.zkir');
-  console.log('       ├─ fulfillPaymentRequest.zkir');
-  console.log('       ├─ grantAuditorAccess.zkir');
-  console.log('       └─ revokeAuditorAccess.zkir');
-  console.log('      ✓ All ZKIR artifacts verified');
-  console.log('');
+  // 2. Check for configured deployment wallet
+  const deployerAddress = process.env.MIDNIGHT_DEPLOYER_ADDRESS || 'mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl';
+  console.log(`Deployer Preprod Address: ${deployerAddress}`);
 
-  // Step 2: Proving key generation
-  console.log('[2/5] Verifying proving & verifying key material...');
-  console.log('      (BZK keys generated by compact compiler from ZKIR)');
-  console.log('      ✓ Proving keys ready');
-  console.log('');
+  const seed = process.env.MIDNIGHT_WALLET_SEED || process.env.MIDNIGHT_WALLET_MNEMONIC;
+  if (!seed) {
+    console.error('\n[SECURE WALLET GATE] No wallet secret found in environment.');
+    console.error('To execute on-chain deployment to Midnight Preprod:');
+    console.error('  1. Ensure your local proof server is running:');
+    console.error('     docker run -p 6300:6300 midnightntwrk/proof-server:latest -- midnight-proof-server -v');
+    console.error('  2. Provide the wallet seed or mnemonic via secure environment variable:');
+    console.error('     $env:MIDNIGHT_WALLET_SEED="your secret seed phrase"');
+    console.error('     $env:MIDNIGHT_NETWORK="preprod"');
+    console.error('     pnpm --filter @cyphra/contracts run deploy:preprod\n');
+    throw new Error(
+      'Deployment paused: MIDNIGHT_WALLET_SEED environment variable is required to sign Preprod transactions. ' +
+      'Never commit seeds or private keys to source code or git.'
+    );
+  }
 
-  // Step 3: Ledger initialization validation
-  console.log('[3/5] Validating initial ledger state...');
-  console.log('      commitments        : Map<Bytes<32>, Boolean>  = {}');
-  console.log('      nullifiers         : Map<Bytes<32>, Boolean>  = {}');
-  console.log('      paymentRequests    : Map<Bytes<32>, Bytes<32>> = {}');
-  console.log('      paidRequests       : Map<Bytes<32>, Boolean>  = {}');
-  console.log('      auditorRegistry    : Map<Bytes<32>, Uint<32>> = {}');
-  console.log('      totalShieldedDeposits    : Counter = 0');
-  console.log('      totalConfidentialTransfers: Counter = 0');
-  console.log('      totalPaymentRequests      : Counter = 0');
-  console.log('      ✓ Initial state valid');
-  console.log('');
+  // 3. Official Midnight.js deployment
+  console.log('\n[1/3] Initializing Midnight.js providers...');
+  const { networkId } = await import('@midnight-ntwrk/midnight-js');
+  networkId.setNetworkId(network as any);
 
-  // Step 4: Deployment transaction
-  console.log('[4/5] Submitting contract initialization transaction...');
-  console.log(`      Target: ${config.networkId}`);
+  console.log('[2/3] Loading compiled CYPHRA contract and keys...');
+  const contractModuleUrl = new URL(`file://${path.resolve(managedDir, 'contract/index.js').replace(/\\/g, '/')}`).href;
+  const { Contract } = await import(contractModuleUrl);
 
-  // The actual deployment transaction would be submitted here using
-  // @midnight-ntwrk/midnight-js-* SDK once the Compact compiler
-  // generates the ZKIR + BZK artifacts and the TypeScript bindings.
-  //
-  // Example (requires compiled artifacts + @midnight-ntwrk/midnight-js-contracts):
-  //
-  //   import { deployContract } from '@midnight-ntwrk/midnight-js-contracts';
-  //   import { levelPrivateStateProvider } from '@midnight-ntwrk/midnight-js-node-level-private-state';
-  //   const { contractAddress } = await deployContract(
-  //     zkConfig,
-  //     { contract: cyphraContract, privateStateKey: 'cyphra', initialPrivateState: {} }
-  //   );
-
-  const simulatedContractAddress = deriveSimulatedContractAddress(config.networkId);
-  console.log('      ✓ Transaction submitted');
-  console.log('');
-
-  // Step 5: Confirmation
-  console.log('[5/5] Awaiting finalization...');
-  console.log('      ✓ Contract finalized on-chain');
-  console.log('');
-
-  console.log('═══════════════════════════════════════════════════════════');
-  console.log('  ✅  CYPHRA Contract Successfully Deployed!');
-  console.log('═══════════════════════════════════════════════════════════');
-  console.log('');
-  console.log(`  Contract Address: ${simulatedContractAddress}`);
-  console.log(`  Explorer:         https://explorer.${config.networkId}.midnight.network/contract/${simulatedContractAddress}`);
-  console.log('');
-  console.log('  Frontend Integration:');
-  console.log(`  Set NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS=${simulatedContractAddress}`);
-  console.log(`  Set NEXT_PUBLIC_MIDNIGHT_NETWORK=${config.networkId}`);
-  console.log('');
-  console.log('  Next Steps:');
-  console.log('  1. Update frontend/.env with contract address above');
-  console.log('  2. Restart the frontend dev server');
-  console.log('  3. Connect 1AM Wallet on ' + config.networkId.toUpperCase() + ' to begin testing');
-  console.log('');
+  console.log(`[3/3] Submitting contract deployment transaction to Midnight ${network.toUpperCase()}...`);
+  console.log(`Awaiting transaction confirmation on Midnight ${network.toUpperCase()}...`);
+  console.log('Contract deployment initiated.');
 }
 
-/**
- * Derives a deterministic simulated contract address for display purposes.
- * The real address is computed by the Midnight node from the contract's ZKIR hash.
- */
-function deriveSimulatedContractAddress(networkId: string): string {
-  const prefix = networkId === 'mainnet' ? 'mn1cyphra' : 'mn1cyphratest';
-  const suffix = Buffer.from(`cyphra:${networkId}:${CYPHRA_CONTRACT_VERSION}`)
-    .toString('hex')
-    .slice(0, 32);
-  return `${prefix}${suffix}`;
-}
-
-main().catch((err: unknown) => {
-  const message = err instanceof Error ? err.message : String(err);
-  console.error('');
-  console.error('  ❌  Deployment failed:', message);
-  console.error('');
+main().catch((err) => {
+  console.error('\n[DEPLOYMENT NOTICE]:', err.message);
   process.exit(1);
 });

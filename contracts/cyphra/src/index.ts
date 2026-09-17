@@ -31,6 +31,7 @@ import type {
 } from './contract.types.js';
 
 export * from './contract.types.js';
+export type * as CompactContract from './managed/contract/index.js';
 
 // ---------------------------------------------------------------------------
 // Cryptographic Utilities

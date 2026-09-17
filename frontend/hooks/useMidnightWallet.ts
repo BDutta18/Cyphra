@@ -10,11 +10,50 @@ import {
   WrongNetworkError,
 } from '../lib/one-am-wallet-adapter';
 
+let globalModalOpen = false;
+const modalListeners = new Set<(open: boolean) => void>();
+
+function setGlobalModalOpen(open: boolean) {
+  globalModalOpen = open;
+  modalListeners.forEach((fn) => fn(open));
+}
+
 export function useMidnightWallet() {
   const [walletState, setWalletState] = useState<OneAMWalletState>(() => oneAMWallet.getState());
   const [isConnecting, setIsConnecting] = useState(false);
   const [isWalletAvailable, setIsWalletAvailable] = useState(false);
+  const [isDetecting, setIsDetecting] = useState(false);
+  const [detectedApi, setDetectedApi] = useState(() => oneAMWallet.getInitialApi());
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(globalModalOpen);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const listener = (open: boolean) => setIsConnectModalOpen(open);
+    modalListeners.add(listener);
+    return () => {
+      modalListeners.delete(listener);
+    };
+  }, []);
+
+  const openConnectModal = useCallback(() => {
+    setGlobalModalOpen(true);
+  }, []);
+
+  const closeConnectModal = useCallback(() => {
+    setGlobalModalOpen(false);
+  }, []);
+
+  const detectWallet = useCallback(async (timeoutMs = 1200) => {
+    setIsDetecting(true);
+    try {
+      const detected = await oneAMWallet.detectWallet(timeoutMs);
+      setDetectedApi(detected);
+      setIsWalletAvailable(!!detected);
+      return detected;
+    } finally {
+      setIsDetecting(false);
+    }
+  }, []);
 
   // Subscribe to OneAMWalletAdapter state updates
   useEffect(() => {
@@ -22,14 +61,12 @@ export function useMidnightWallet() {
       setWalletState(state);
     });
 
-    oneAMWallet.detectWallet().then((detected) => {
-      setIsWalletAvailable(!!detected);
-    });
+    detectWallet();
 
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [detectWallet]);
 
   // Connect 1AM Wallet
   const connect = useCallback(async (network: SupportedNetwork = 'preview') => {
@@ -77,7 +114,7 @@ export function useMidnightWallet() {
     unshieldedAddress: walletState.addresses.unshieldedAddress,
     dustAddress: walletState.addresses.dustAddress,
     balances: walletState.balances,
-    isSimulated: walletState.isSandbox || false,
+    isSimulated: false,
   } : null;
 
   return {
@@ -85,15 +122,23 @@ export function useMidnightWallet() {
     isConnected: walletState.isConnected,
     isConnecting,
     isWalletAvailable,
-    isSandbox: walletState.isSandbox || false,
+    isDetecting,
+    detectedApi,
+    detectWallet,
+    isConnectModalOpen,
+    openConnectModal,
+    closeConnectModal,
+    isSandbox: false,
     network: walletState.network,
     balances: walletState.balances,
     error,
     clearError,
     connect,
-    connectSandbox: (network?: SupportedNetwork) => oneAMWallet.connectSandbox(network),
+    connectWebWallet: connect,
+    connectSandbox: (network?: SupportedNetwork) => oneAMWallet.connectWallet(network),
     disconnect,
     setNetwork: (network: SupportedNetwork) => oneAMWallet.setNetwork(network),
     refreshBalances: () => oneAMWallet.refreshBalances(),
+    getWalletTxHistory: (page?: number, size?: number) => oneAMWallet.getWalletTxHistory(page, size),
   };
 }

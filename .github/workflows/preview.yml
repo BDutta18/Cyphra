@@ -1,0 +1,93 @@
+name: CYPHRA Preview
+
+on:
+  pull_request:
+    branches: [main, master]
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: cyphra-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+# Bound to GitHub's `preview` Environment. Only Preview deployment credentials
+# belong there; do not add Preprod or Production credentials to this job.
+jobs:
+  preview:
+    name: Install → Lint → Typecheck → Test → Build → Deploy Preview
+    runs-on: ubuntu-latest
+    environment: preview
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      NEXT_PUBLIC_MIDNIGHT_NETWORK_ID: preview
+      NEXT_PUBLIC_API_URL: ${{ vars.CYPHRA_PREVIEW_API_URL }}
+      NEXT_PUBLIC_INDEXER_URI: ${{ vars.CYPHRA_PREVIEW_INDEXER_URI }}
+      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: ${{ vars.CYPHRA_PREVIEW_CONTRACT_ADDRESS }}
+      NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL: ${{ vars.CYPHRA_PREVIEW_EXPLORER_URL }}
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_PREVIEW_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Validate Preview configuration
+        run: pnpm verify:preview-env
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Test
+        run: pnpm test
+      - name: Build
+        run: pnpm build
+      - name: Deploy Preview
+        id: deploy
+        working-directory: frontend
+        run: |
+          test -n "$VERCEL_TOKEN"
+          test -n "$VERCEL_ORG_ID"
+          test -n "$VERCEL_PROJECT_ID"
+          DEPLOY_URL="$(pnpm dlx vercel@latest deploy --yes --token="$VERCEL_TOKEN" \
+            --build-env NEXT_PUBLIC_MIDNIGHT_NETWORK_ID="$NEXT_PUBLIC_MIDNIGHT_NETWORK_ID" \
+            --build-env NEXT_PUBLIC_API_URL="$NEXT_PUBLIC_API_URL" \
+            --build-env NEXT_PUBLIC_INDEXER_URI="$NEXT_PUBLIC_INDEXER_URI" \
+            --build-env NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS="$NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS" \
+            --build-env NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL="$NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL" \
+            --env NEXT_PUBLIC_MIDNIGHT_NETWORK_ID="$NEXT_PUBLIC_MIDNIGHT_NETWORK_ID" \
+            --env NEXT_PUBLIC_API_URL="$NEXT_PUBLIC_API_URL" \
+            --env NEXT_PUBLIC_INDEXER_URI="$NEXT_PUBLIC_INDEXER_URI" \
+            --env NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS="$NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS" \
+            --env NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL="$NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL")"
+          echo "url=$DEPLOY_URL" >> "$GITHUB_OUTPUT"
+      - name: Comment preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- cyphra-preview -->';
+            const body = `${marker}\n## CYPHRA Preview\n\n` +
+              `- URL: ${{ steps.deploy.outputs.url }}\n` +
+              `- Network: Midnight Preview\n` +
+              `- Contract: \`${{ vars.CYPHRA_PREVIEW_CONTRACT_ADDRESS }}\`\n\n` +
+              `This deployment is fail-closed to Preview-only configuration.`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const existing = comments.find(comment => comment.body?.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
