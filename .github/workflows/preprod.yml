@@ -22,12 +22,12 @@ jobs:
       MIDNIGHT_RPC_URL: https://rpc.preprod.midnight.network
       MIDNIGHT_INDEXER_URI: https://indexer.preprod.midnight.network/api/v4/graphql
       MIDNIGHT_INDEXER_WS_URI: wss://indexer.preprod.midnight.network/api/v4/graphql/ws
-      CONTRACT_ADDRESS: ${{ vars.CYPHRA_PREPROD_CONTRACT_ADDRESS }}
+      CONTRACT_ADDRESS: ${{ vars.CYPHRA_PREPROD_CONTRACT_ADDRESS || '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f' }}
       NEXT_PUBLIC_MIDNIGHT_NETWORK: preprod
       NEXT_PUBLIC_MIDNIGHT_NETWORK_ID: preprod
-      NEXT_PUBLIC_API_URL: ${{ vars.CYPHRA_PREPROD_API_URL }}
+      NEXT_PUBLIC_API_URL: ${{ vars.CYPHRA_PREPROD_API_URL || 'https://cyphra-preprod-api.up.railway.app' }}
       NEXT_PUBLIC_INDEXER_URI: https://indexer.preprod.midnight.network/api/v4/graphql
-      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: ${{ vars.CYPHRA_PREPROD_CONTRACT_ADDRESS }}
+      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: ${{ vars.CYPHRA_PREPROD_CONTRACT_ADDRESS || '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f' }}
       NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL: https://preprod.midnightexplorer.com
       VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
       # This is a dedicated Vercel project for Preprod, not the production app.
@@ -56,6 +56,7 @@ jobs:
         env:
           CYPHRA_DEPLOYMENT_ENV: test
           NODE_ENV: test
+          MIDNIGHT_INDEXER_URI: ''
       - name: Build
         run: pnpm build
 

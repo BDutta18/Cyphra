@@ -74,6 +74,10 @@ async function gqlFetch<T>(
   query: string,
   variables?: Record<string, unknown>
 ): Promise<T | null> {
+  if (config.env === 'test' || process.env.NODE_ENV === 'test') {
+    return null;
+  }
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8000);
 
