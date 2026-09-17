@@ -1,7 +1,6 @@
-﻿{
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "cd .. && pnpm --filter @cyphra/shared run build && pnpm --filter @cyphra/contracts run build && pnpm --filter @cyphra/frontend run build",
-  "outputDirectory": ".next",
-  "installCommand": "cd .. && pnpm install --frozen-lockfile",
-  "devCommand": "pnpm dev"
+  "buildCommand": "next build",
+  "outputDirectory": ".next"
 }
