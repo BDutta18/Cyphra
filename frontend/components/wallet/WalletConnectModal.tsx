@@ -192,9 +192,59 @@ export function WalletConnectModal({
 
           {/* Error Message */}
           {(localError || error) && (
-            <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-800 text-xs flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
-              <p className="leading-snug">{localError || error}</p>
+            <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-800 text-xs space-y-2">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
+                <p className="leading-snug">{localError || error}</p>
+              </div>
+              {((localError || error)?.includes('network') || (localError || error)?.includes('configured for')) && (
+                <div className="pt-2 border-t border-red-200/60 flex flex-col gap-1.5 font-mono text-[11px]">
+                  <p className="text-zinc-700 font-sans">
+                    <strong>Quick Switch:</strong> Select your desired active network:
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedNetwork('preview');
+                        setGlobalNetwork('preview');
+                        connect('preview')
+                          .then(() => {
+                            if (onConnectSuccess) onConnectSuccess();
+                            onClose();
+                          })
+                          .catch((e: unknown) => {
+                            setLocalError(e instanceof Error ? e.message : String(e));
+                          });
+                      }}
+                      className="px-2.5 py-1 rounded bg-[#FFD400] text-black font-bold hover:bg-[#E5BE00] transition-colors text-xs"
+                    >
+                      Connect on Preview
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedNetwork('preprod');
+                        setGlobalNetwork('preprod');
+                        connect('preprod')
+                          .then(() => {
+                            if (onConnectSuccess) onConnectSuccess();
+                            onClose();
+                          })
+                          .catch((e: unknown) => {
+                            setLocalError(e instanceof Error ? e.message : String(e));
+                          });
+                      }}
+                      className="px-2.5 py-1 rounded bg-black text-white font-bold hover:bg-zinc-800 transition-colors text-xs"
+                    >
+                      Connect on Preprod
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-zinc-500 font-sans mt-0.5">
+                    To change network in 1AM Wallet: Click the 1AM icon in your browser toolbar and toggle the network dropdown at the top to your preferred network.
+                  </p>
+                </div>
+              )}
             </div>
           )}
 

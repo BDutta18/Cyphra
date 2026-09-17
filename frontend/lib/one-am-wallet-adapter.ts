@@ -89,9 +89,14 @@ export class WalletRejectionError extends Error {
 }
 
 export class WrongNetworkError extends Error {
+  public readonly expected: string;
+  public readonly actual: string;
+
   constructor(expected: string, actual: string) {
     super(`1AM Wallet is configured for network '${actual}', but '${expected}' is required.`);
     this.name = 'WrongNetworkError';
+    this.expected = expected;
+    this.actual = actual;
   }
 }
 
@@ -333,14 +338,32 @@ export class OneAMWalletAdapter {
       try {
         const config: Configuration = await connected.getConfiguration();
         if (config.networkId) {
-          const actualNetwork = config.networkId.toLowerCase();
+          const rawActual = config.networkId.toLowerCase();
           const expected = desiredNetwork.toLowerCase();
+
+          let normalizedActual: SupportedNetwork = 'preview';
+          if (rawActual.includes('preprod')) normalizedActual = 'preprod';
+          else if (rawActual.includes('preview')) normalizedActual = 'preview';
+          else if (rawActual.includes('mainnet')) normalizedActual = 'mainnet';
+
           if (
-            actualNetwork !== expected &&
-            !actualNetwork.includes(expected) &&
-            !expected.includes(actualNetwork)
+            rawActual !== expected &&
+            !rawActual.includes(expected) &&
+            !expected.includes(rawActual)
           ) {
-            throw new WrongNetworkError(desiredNetwork, config.networkId);
+            if (AUTHORIZED_NETWORKS.includes(normalizedActual)) {
+              console.info(
+                `1AM Wallet is configured for '${normalizedActual}', adapting CYPHRA active network to '${normalizedActual}'.`
+              );
+              this.currentNetwork = normalizedActual;
+              if (typeof window !== 'undefined') {
+                try {
+                  localStorage.setItem('cyphra_midnight_network', normalizedActual);
+                } catch {}
+              }
+            } else {
+              throw new WrongNetworkError(desiredNetwork, config.networkId);
+            }
           }
         }
       } catch (e) {

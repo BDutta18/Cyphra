@@ -6,7 +6,7 @@ import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 export function NetworkBadge() {
   const { network, setNetwork, isConnected, connect } = useMidnightWallet();
   const [isOpen, setIsOpen] = React.useState(false);
-  const activeNet = network || 'preprod';
+  const activeNet = network || 'preview';
   const displayNet = activeNet.toUpperCase();
 
   const networks: { id: 'preprod' | 'preview' | 'mainnet'; label: string; desc: string }[] = [
