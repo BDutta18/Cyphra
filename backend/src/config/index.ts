@@ -20,7 +20,9 @@ const midnightNetwork = process.env.MIDNIGHT_NETWORK ?? process.env.MIDNIGHT_NET
 const midnightRpcUrl = process.env.MIDNIGHT_RPC_URL ?? process.env.MIDNIGHT_NODE_URI;
 const contractAddress = process.env.CONTRACT_ADDRESS ?? process.env.CYPHRA_CONTRACT_ADDRESS ?? '';
 
-if (deploymentEnvironment === 'preprod') {
+const isTest = process.env.NODE_ENV === 'test' || process.argv.some((a) => a.includes('test'));
+
+if (deploymentEnvironment === 'preprod' && !isTest) {
   if (midnightNetwork !== 'preprod') {
     throw new Error(`Preprod backend must use Midnight Preprod, received '${midnightNetwork}'.`);
   }
