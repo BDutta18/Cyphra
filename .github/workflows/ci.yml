@@ -40,6 +40,7 @@ jobs:
         env:
           CYPHRA_DEPLOYMENT_ENV: test
           NODE_ENV: test
+          MIDNIGHT_INDEXER_URI: ''
 
       - name: Build All Workspaces
         run: pnpm build
