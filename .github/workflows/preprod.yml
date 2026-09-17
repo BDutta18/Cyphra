@@ -53,6 +53,9 @@ jobs:
         run: pnpm typecheck
       - name: Test
         run: pnpm test
+        env:
+          CYPHRA_DEPLOYMENT_ENV: test
+          NODE_ENV: test
       - name: Build
         run: pnpm build
 
