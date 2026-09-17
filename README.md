@@ -7,39 +7,14 @@
   <p>
     <a href="https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml"><img src="https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml/badge.svg" alt="Cyphra CI" /></a>
     <a href="https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml"><img src="https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml/badge.svg" alt="CYPHRA Preprod" /></a>
-    <a href="https://x.com/CyphraMidnight"><img src="https://img.shields.io/badge/X-@CyphraMidnight-000000?style=flat&logo=x&logoColor=white" alt="Follow on X" /></a>
+    <a href="https://x.com/CyphraPayment"><img src="https://img.shields.io/badge/X-@CyphraPayment-000000?style=flat&logo=x&logoColor=white" alt="Follow on X" /></a>
     <img src="https://img.shields.io/badge/Midnight-Preprod-4F46E5?logo=blockchain.com" alt="Midnight Preprod" />
     <img src="https://img.shields.io/badge/Compact-0.31.1-10B981" alt="Compact 0.31.1" />
     <img src="https://img.shields.io/badge/1AM_Wallet-v4.x-3B82F6" alt="1AM Wallet" />
-    <img src="https://img.shields.io/badge/Commits-43%2B%20Meaningful%20Commits-blue" alt="Commits" />
+    <img src="https://img.shields.io/badge/Commits-44%20Meaningful%20Commits-blue" alt="Commits" />
     <img src="https://img.shields.io/badge/Status-LIVE%20ON%20PREPROD-success" alt="Status: LIVE" />
   </p>
 </div>
-
----
-
-## Submission Checklist & Requirements
-
-| Requirement to Pass | Submission Item | Details / Link | Status |
-|---|---|---|---|
-| **Working MVP live on Preprod** | **Live Preprod Demo DApp** | [https://cyphra-two.vercel.app](https://cyphra-two.vercel.app) | Verified Live |
-| **Verifiable Preprod Address** | **Midnight Preprod Contract Address** | [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod) | Deployed on Preprod |
-| **Explorer Verification (1AM)** | **1AM Contract Explorer** | [1AM Explorer: 0xcc4a29...](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod) | Verified On-Chain |
-| **Explorer Verification (Midnight)** | **Midnight Network Explorer** | [Midnight Explorer: 0xcc4a29...](https://preprod.midnightexplorer.com/address/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Verified On-Chain |
-| **Product X Profile** | **Official X Account** | [@CyphraMidnight (x.com/CyphraMidnight)](https://x.com/CyphraMidnight) | Created & Linked |
-| **Demo Video of the MVP** | **High-Definition Walkthrough** | [Watch MVP Demo Video](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4) | High Quality (Cloudinary MP4) |
-| **Public GitHub Repository** | **Source Code & Documentation** | [https://github.com/BDutta18/Cyphra](https://github.com/BDutta18/Cyphra) | Public Monorepo |
-| **CI/CD Pipeline** | **GitHub Actions CI/CD** | [CI Workflow](https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml) & [Preprod Deployment](https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml) | Passing (100% Green) |
-| **Meaningful Commits** | **Commit History** | 43+ meaningful, atomic commits across contracts, frontend & backend | Minimum 15 Exceeded |
-| **Full Documentation** | **README + Setup + Usage** | Complete architectural guides, local dev, wallet setup, contract circuits | Comprehensive |
-
----
-
-## Video Demo
-
-A video demonstration of the Cyphra MVP showing 1AM Wallet connection on Midnight Preprod, private note commitment creation, confidential transfers, and QR payment request workflows:
-
-- **Direct Link**: [https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4)
 
 ---
 
@@ -69,6 +44,31 @@ Unlike legacy blockchains where user balances, counterparty addresses, and entir
    - Payers scan or load a payment request and settle it instantly via 1AM Wallet with zero-knowledge fulfillment receipts.
 7. **Selective Auditor Disclosure**:
    - Privacy does not preclude compliance. Users can generate cryptographically verified auditor view proofs for tax reporting and regulatory compliance without exposing their master spend keys.
+
+---
+
+## Video Demo of the MVP
+
+A video demonstration of the Cyphra MVP showing 1AM Wallet connection on Midnight Preprod, private note commitment creation, confidential transfers, and QR payment request workflows:
+
+- **Direct Link**: [https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4)
+
+---
+
+## Submission Checklist & Requirements
+
+| Requirement to Pass | Submission Item | Details / Link | Status |
+|---|---|---|---|
+| **Working MVP live on Preprod** | **Live Preprod Demo DApp** | [https://cyphra-two.vercel.app](https://cyphra-two.vercel.app) | Verified Live |
+| **Verifiable Preprod Address** | **Midnight Preprod Contract Address** | [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod) | Deployed on Preprod |
+| **Explorer Verification (1AM)** | **1AM Contract Explorer** | [1AM Explorer: 0xcc4a29...](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod) | Verified On-Chain |
+| **Explorer Verification (Midnight)** | **Midnight Network Explorer** | [Midnight Explorer: 0xcc4a29...](https://preprod.midnightexplorer.com/address/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Verified On-Chain |
+| **Product X Profile** | **Official X Account** | [@CyphraPayment (x.com/CyphraPayment)](https://x.com/CyphraPayment) | Created & Linked |
+| **Demo Video of the MVP** | **High-Definition Walkthrough** | [Watch MVP Demo Video](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4) | High Quality (Cloudinary MP4) |
+| **Public GitHub Repository** | **Source Code & Documentation** | [https://github.com/BDutta18/Cyphra](https://github.com/BDutta18/Cyphra) | Public Monorepo |
+| **CI/CD Pipeline** | **GitHub Actions CI/CD** | [CI Workflow](https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml) & [Preprod Deployment](https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml) | Passing (100% Green) |
+| **Meaningful Commits** | **Commit History** | 44 meaningful, atomic commits across contracts, frontend & backend | Minimum 15 Exceeded |
+| **Full Documentation** | **README + Setup + Usage** | Complete architectural guides, local dev, wallet setup, contract circuits | Comprehensive |
 
 ---
 
@@ -325,7 +325,7 @@ The repository utilizes continuous integration and automated deployment workflow
 
 ## Community & Socials
 
-- **Product X (Twitter)**: [@CyphraMidnight](https://x.com/CyphraMidnight)
+- **Product X (Twitter)**: [@CyphraPayment](https://x.com/CyphraPayment)
 - **GitHub**: [https://github.com/BDutta18/Cyphra](https://github.com/BDutta18/Cyphra)
 - **Live Demo**: [https://cyphra-two.vercel.app](https://cyphra-two.vercel.app)
 
