@@ -22,6 +22,8 @@ export interface DeploymentConfig {
   proverUrl?: string;
   /** Block explorer URL for this network */
   explorerUrl: string;
+  /** 1AM Explorer base URL for this network */
+  oneAmExplorerUrl?: string;
   /** Deployed CYPHRA contract address on this network */
   contractAddress?: string;
   /** Maximum gas / fee budget in DUST base units */
@@ -45,6 +47,7 @@ export const deploymentConfigs: Record<string, DeploymentConfig> = {
       process.env.MIDNIGHT_INDEXER_WS_URI ||
       'wss://midnight-preview.blockfrost.io/api/v0/ws',
     explorerUrl: 'https://midnightexplorer.com',
+    oneAmExplorerUrl: 'https://explorer.1am.xyz?network=preview',
     contractAddress: process.env.CYPHRA_CONTRACT_ADDRESS,
     gasLimit: 50_000_000n,
   },
@@ -71,6 +74,7 @@ export const deploymentConfigs: Record<string, DeploymentConfig> = {
     explorerUrl:
       process.env.MIDNIGHT_EXPLORER_URL ||
       'https://preprod.midnightexplorer.com',
+    oneAmExplorerUrl: 'https://explorer.1am.xyz?network=preprod',
     contractAddress: process.env.CONTRACT_ADDRESS || process.env.CYPHRA_CONTRACT_ADDRESS,
     gasLimit: 50_000_000n,
   },

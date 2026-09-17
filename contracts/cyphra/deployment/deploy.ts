@@ -25,6 +25,7 @@ async function main() {
   }
 
   const config = deploymentConfigs[network] ?? deploymentConfigs.preprod;
+  const deployerAddress = process.env.MIDNIGHT_DEPLOYER_ADDRESS || 'mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl';
   console.log('====================================================');
   console.log(`CYPHRA Smart Contract Deployment — Midnight ${network.toUpperCase()}`);
   console.log('====================================================');
@@ -33,7 +34,9 @@ async function main() {
   console.log(`Indexer GraphQL:   ${config.indexerUrl}`);
   console.log(`Indexer WS:        ${config.indexerWsUrl}`);
   console.log(`Proof Server:      ${config.proverUrl ?? 'http://localhost:6300'}`);
-  console.log(`Explorer:          ${config.explorerUrl}`);
+  console.log(`Midnight Explorer: ${config.explorerUrl}/address/${deployerAddress}`);
+  console.log(`1AM Explorer:      https://explorer.1am.xyz/address/${deployerAddress}?network=${network}`);
+  console.log(`Deployer Address:  ${deployerAddress}`);
   console.log('====================================================\n');
 
   // 1. Verify Compact compiler artifacts
@@ -59,9 +62,6 @@ async function main() {
   console.log(`     - ZKIR circuit files: ${zkirCount} files\n`);
 
   // 2. Check for configured deployment wallet
-  const deployerAddress = process.env.MIDNIGHT_DEPLOYER_ADDRESS || 'mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl';
-  console.log(`Deployer Preprod Address: ${deployerAddress}`);
-
   const seed = process.env.MIDNIGHT_WALLET_SEED || process.env.MIDNIGHT_WALLET_MNEMONIC;
   if (!seed) {
     console.error('\n[SECURE WALLET GATE] No wallet secret found in environment.');

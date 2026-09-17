@@ -166,8 +166,11 @@ pnpm --filter @cyphra/contracts run compact:compile
 Live Preprod Demo:
 https://cyphra-two.vercel.app
 
-Midnight Preprod Contract:
+Midnight Preprod Contract / Deployer Address:
 mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl
+
+1AM Explorer Link:
+https://explorer.1am.xyz/address/mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl?network=preprod
 
 Midnight Explorer Link:
 https://preprod.midnightexplorer.com/address/mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl
@@ -186,8 +189,10 @@ LIVE
 - **Node RPC**: `https://rpc.preprod.midnight.network`
 - **Indexer GraphQL**: `https://indexer.preprod.midnight.network/api/v4/graphql`
 - **Indexer WS**: `wss://indexer.preprod.midnight.network/api/v4/graphql/ws`
-- **Block Explorer**: [https://preprod.midnightexplorer.com](https://preprod.midnightexplorer.com)
-- **Explorer Deployer Address**: [https://preprod.midnightexplorer.com/address/mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl](https://preprod.midnightexplorer.com/address/mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl)
+- **1AM Explorer**: [https://explorer.1am.xyz](https://explorer.1am.xyz?network=preprod)
+- **1AM Explorer Contract / Deployer Link**: [https://explorer.1am.xyz/address/mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl?network=preprod](https://explorer.1am.xyz/address/mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl?network=preprod)
+- **Midnight Explorer**: [https://preprod.midnightexplorer.com](https://preprod.midnightexplorer.com)
+- **Midnight Explorer Deployer Link**: [https://preprod.midnightexplorer.com/address/mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl](https://preprod.midnightexplorer.com/address/mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl)
 
 ---
 
