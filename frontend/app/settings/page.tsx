@@ -139,7 +139,7 @@ export default function SettingsPage() {
               </a>
 
               <a
-                href="https://preprod.midnightexplorer.com/address/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f"
+                href="https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-2.5 rounded-lg border border-zinc-200 hover:border-black bg-zinc-50 hover:bg-zinc-100 transition-colors font-sans text-xs font-semibold text-black"

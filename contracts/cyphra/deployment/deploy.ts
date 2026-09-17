@@ -38,7 +38,7 @@ async function main() {
   console.log(`Contract Address:  ${contractAddress}`);
   console.log(`1AM Contract:      https://explorer.1am.xyz/contract/${contractAddress}?network=${network}`);
   console.log(`1AM Deployer:      https://explorer.1am.xyz/address/${deployerAddress}?network=${network}`);
-  console.log(`Midnight Explorer: ${config.explorerUrl}/address/${contractAddress}`);
+  console.log(`Midnight Explorer: ${config.explorerUrl}/contracts/${contractAddress}`);
   console.log(`Deployer Address:  ${deployerAddress}`);
   console.log('====================================================\n');
 

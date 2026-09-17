@@ -13,7 +13,7 @@ CYPHRA connects to the official Midnight Preprod infrastructure:
 | **Network ID** | `preprod` |
 | **Verified Contract Address** | `0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f` |
 | **1AM Explorer Contract Link** | [explorer.1am.xyz/contract/0xcc4a...](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod) |
-| **Midnight Explorer Contract Link** | [preprod.midnightexplorer.com/address/0xcc4a...](https://preprod.midnightexplorer.com/address/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) |
+| **Midnight Explorer Contract Link** | [preprod.midnightexplorer.com/contracts/0xcc4a...](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) |
 | **Deployer Preprod Address** | `mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl` |
 | **Node RPC Endpoint** | `https://rpc.preprod.midnight.network` |
 | **Indexer GraphQL Endpoint** | `https://indexer.preprod.midnight.network/api/v4/graphql` |
