@@ -85,7 +85,7 @@ A video demonstration of the Cyphra MVP showing 1AM Wallet connection on Midnigh
 | **Launch Users Onboarded** | **Preprod Launch Cohort** | [`LAUNCH_USERS.md`](LAUNCH_USERS.md) (20 Users Personally Onboarded with TX Hashes) | 20 Verified Users |
 | **User Feedback & 75 Addresses** | **Feedback & Resolution Matrix** | [`user.md`](user.md) (All 75 Preprod Test Accounts + User Feedback Matrix) | Highlighted & Solved |
 | **Brand Visuals & Assets** | **Brand Brief, Logo & X Banner** | [`docs/brand-brief.md`](docs/brand-brief.md) + Vector Logo & X Banner Assets | Complete Brand Kit |
-| **Product X Profile** | **Official X Account** | [@CyphraPayment (x.com/CyphraPayment)](https://x.com/CyphraPayment) | Created & Linked |
+| **Product X Profile & Posts** | **Official X Account & Live Posts** | [@CyphraPayment](https://x.com/CyphraPayment) ([Post 1](https://x.com/CyphraPayment/status/2100484238172664311), [Post 2](https://x.com/CyphraPayment/status/2101046395298078809), [Post 3](https://x.com/CyphraPayment/status/2101048165730574842)) | Published & Linked |
 | **Demo Video of the MVP** | **High-Definition Walkthrough** | [Watch MVP Demo Video](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4) | High Quality (Cloudinary MP4) |
 | **Public GitHub Repository** | **Source Code & Documentation** | [https://github.com/BDutta18/Cyphra](https://github.com/BDutta18/Cyphra) | Public Monorepo |
 | **CI/CD Pipeline** | **GitHub Actions CI/CD** | [CI Workflow](https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml) & [Preprod Deployment](https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml) | Passing (100% Green) |
@@ -357,6 +357,9 @@ The repository utilizes continuous integration and automated deployment workflow
 ## Community & Socials
 
 - **Product X (Twitter)**: [@CyphraPayment](https://x.com/CyphraPayment)
+  - **Post 1 (Official Launch Announcement)**: [https://x.com/CyphraPayment/status/2100484238172664311](https://x.com/CyphraPayment/status/2100484238172664311)
+  - **Post 2 (Confidential Payments & ZK Proof Architecture)**: [https://x.com/CyphraPayment/status/2101046395298078809](https://x.com/CyphraPayment/status/2101046395298078809)
+  - **Post 3 (Preprod Deployment & Launch Onboarding)**: [https://x.com/CyphraPayment/status/2101048165730574842](https://x.com/CyphraPayment/status/2101048165730574842)
 - **GitHub**: [https://github.com/BDutta18/Cyphra](https://github.com/BDutta18/Cyphra)
 - **Live Demo**: [https://cyphra-two.vercel.app](https://cyphra-two.vercel.app)
 
