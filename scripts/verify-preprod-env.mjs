@@ -33,8 +33,8 @@ if (!/^0x[a-fA-F0-9]{64}$/.test(PREPROD_CONTRACT)) {
 }
 console.log(`  ✓ Contract Address Verified: ${PREPROD_CONTRACT}`);
 
-// 2. Verify 75 Preprod Addresses from user.md
-console.log('[2/4] Verifying 75 Registered Preprod Addresses from user.md...');
+// 2. Verify Preprod Addresses from user.md & feedback.md
+console.log('[2/4] Verifying Registered Preprod Addresses from user.md & feedback.md...');
 const userMdPath = path.join(rootDir, 'user.md');
 if (!fs.existsSync(userMdPath)) {
   console.error(`❌ user.md not found at ${userMdPath}`);
@@ -51,6 +51,14 @@ console.log(`  ✓ Unique addresses identified: ${uniqueAddresses.length}`);
 // Count table rows in Section 1
 const tableRows = (userMdContent.match(/\|\s*\d+\s*\|.*?`mn_addr_preprod1/g) || []).length;
 console.log(`  ✓ Verified ${tableRows} registered address entries in Section 1 table`);
+
+// Also verify feedback.md exists and contains the cohort
+const feedbackMdPath = path.join(rootDir, 'feedback.md');
+if (fs.existsSync(feedbackMdPath)) {
+  const feedbackContent = fs.readFileSync(feedbackMdPath, 'utf-8');
+  const feedbackAddrs = (feedbackContent.match(/mn_addr_preprod1[0-9a-z]{58,}/g) || []).length;
+  console.log(`  ✓ Verified feedback.md exists with ${feedbackAddrs} Preprod address references`);
+}
 
 if (matchedAddresses.length < 70) {
   console.error(`❌ Expected at least 70 Preprod address occurrences, found ${matchedAddresses.length}`);

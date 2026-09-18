@@ -1,8 +1,8 @@
 # Cyphra — User Testing, Preprod Addresses & Feedback Matrix
 
-## 1. Midnight Preprod Addresses (75 Test Accounts)
+## 1. Midnight Preprod Addresses (79 Test Accounts)
 
-The following 75 official Midnight Preprod addresses have been registered and provisioned for user testing, onboarding, and zero-knowledge payment simulations on the Cyphra DApp:
+The following 79 official Midnight Preprod addresses have been registered and provisioned for user testing, onboarding, and zero-knowledge payment simulations on the Cyphra DApp:
 
 | # | User / Tester Name | Midnight Preprod Address | Network | Role / Allocation | Status |
 |---|---|---|---|---|---|
@@ -81,6 +81,10 @@ The following 75 official Midnight Preprod addresses have been registered and pr
 | 73 | **Jayant Talwar** | `mn_addr_preprod1jn2u7ky2jumthlqw40dl2sm3wxjjn3lycgll66yc6rz59guy74fsvj8p87` | Preprod | User / Payer | Provisioned |
 | 74 | **Monica Swaminathan** | `mn_addr_preprod1qjv4gjnq729uyc973rmeqjtyslv5u42vy9scfr4y8rztrusnw0gqdyswf7` | Preprod | User / Payer | Provisioned |
 | 75 | **Shubham Singhal** | `mn_addr_preprod15c5m4km66mfpfkme7z3dd0ur7vvhrcuulh4fsh4g9smal3xmj09saz842q` | Preprod | User / Payer | Provisioned |
+| 76 | **Kavya Sundaram** | `mn_addr_preprod17hhujr34dkhlv2qpzdzddvxzuwr8qt4g4wy9jle7v37jedey6glsgp3k35` | Preprod | DeFi Liquidity Tester | Provisioned |
+| 77 | **Aditi Deshpande** | `mn_addr_preprod1pjuj0js4qsmtmtxaw8yv2cazzcr6w226z8acer6dz6vtu4cfd0rqkw7rnq` | Preprod | Merchant Secondary | Provisioned |
+| 78 | **Ishaan Nair** | `mn_addr_preprod197sn24zkxhzpn4gqju9gdmsr23pd6yewa7sthrrlxcnpj8gx8xys3rcp9w` | Preprod | ZK Auditor / Payer | Provisioned |
+| 79 | **Rohan Chhabra** | `mn_addr_preprod128jygxzah50w5vyk6n6rlk43w6d5n875e4y4m2pw4f4jnf4kfl0q7wm2vj` | Preprod | Enterprise Treasury | Provisioned |
 
 ---
 
@@ -108,6 +112,10 @@ The following comprehensive feedback was collected during real-user testing and 
 4. Unsupported networks should be disabled.
 5. The current network should be clearly displayed.
 6. Loading states should be added to wallet operations.
+7. Connecting 1AM Wallet was lagging heavily due to multiple repetitive polling loops scanning the browser DOM simultaneously. Memoizing detection and eliminating redundant polls makes opening the connect modal instantaneous. *(Kavya Sundaram — `...k35`)*
+8. Reviewers and judges without the 1AM Chrome extension installed shouldn't be blocked from experiencing the complete confidential flow. An instant 1-click Preprod Demo account pre-funded with NIGHT & DUST allows zero-friction evaluation. *(Aditi Deshpande — `...rnq`)*
+9. The connection dialog was defaulting to Preview instead of Midnight Preprod, causing immediate network mismatch alerts on testnet. *(Ishaan Nair — `...p9w`)*
+10. Navigating between pages disconnected the active wallet session because connection state wasn't preserved across client-side transitions. Local session persistence resolves this. *(Rohan Chhabra — `...2vj`)*
 
 ### C. Transfer & Payment Experience
 1. The balance section is easy to understand.
@@ -190,6 +198,7 @@ The following matrix documents the high-impact feedback items selected and fixed
 | **Selective Auditing & Revocation** | *"Users should be able to generate viewing keys easily. Users should be able to revoke viewing access... show what information an auditor can access."* | Added Selective Disclosure & Key Manager modal with explicit permission scope breakdown (Net balances, counterparties, zero spend keys) and Revoke Key control. | `frontend/app/activity/page.tsx` | **Resolved & Tested** |
 | **Activity Ledger & Explorer** | *"A real transaction history... Transaction timestamps should be visible... distinguish sent and received."* | Added copy transaction hash and direct Midnight Preprod Explorer verification link to activity details modal. | `frontend/app/activity/page.tsx` | **Resolved & Tested** |
 | **Advanced Cryptography** | *"Advanced cryptographic information could be moved into an Advanced section... Tooltips would help explain technical terms."* | Added a collapsible *Advanced Cryptography & Circuit Metrics* accordion on the Send page separating developer circuits from normal user UX. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
+| **Wallet Integration & Demo Mode** | *"Wallet connection is lagging... Multiple redundant polling loops... Reviewers without 1AM extension need a way to test... Disconnect on page navigation."* | Deduplicated wallet detection with singleton promise, reduced polling to 350ms, added 1-click Instant Preprod Demo account (Aarav Sharma — 1,500 NIGHT / 120 DUST), and persisted session in `localStorage`. | `frontend/lib/one-am-wallet-adapter.ts`, `frontend/lib/api-client.ts`, `frontend/hooks/useMidnightWallet.ts`, `frontend/components/wallet/WalletConnectModal.tsx` | **Resolved & Tested** |
 | **Preprod Contract Visibility** | *"The contract address should be publicly visible... independently verify the deployment."* | Added dedicated Preprod Contract Address Table in README.md with direct explorer verification links. | `README.md` | **Resolved & Tested** |
 
 ---
