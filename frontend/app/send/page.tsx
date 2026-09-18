@@ -6,6 +6,7 @@ import { AppShell } from '../../components/layout/AppShell';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { Tooltip } from '../../components/ui/Tooltip';
 import { ProofProgressModal } from '../../components/payment/ProofProgressModal';
 import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 import { usePrivateBalance } from '../../hooks/usePrivateBalance';
@@ -349,6 +350,7 @@ export default function SendPage() {
                     <div className="flex justify-between items-center pb-1.5 border-b border-zinc-200">
                       <span className="flex items-center gap-1.5 text-zinc-700 font-semibold">
                         <Zap className="w-3.5 h-3.5 text-amber-500" /> Estimated Network Fee:
+                        <Tooltip content="Settlement cost paid in DUST gas and balanced by 1AM Wallet." />
                       </span>
                       <span className="text-black font-bold">{estimatedGasCost}</span>
                     </div>
@@ -356,6 +358,7 @@ export default function SendPage() {
                     <div className="flex justify-between items-center">
                       <span className="flex items-center gap-1.5 text-zinc-700">
                         <Lock className="w-3.5 h-3.5 text-black" /> Privacy Guarantee:
+                        <Tooltip content="Value and parties are proven via Groth16 zero-knowledge proofs. No plaintext is broadcast to block explorers." />
                       </span>
                       <span className="text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
                         100% Shielded Note
