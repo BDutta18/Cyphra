@@ -7,7 +7,7 @@
     "build": "tsc",
     "dev": "echo 'shared ready'",
     "typecheck": "tsc --noEmit",
-    "test": "node --test dist/**/*.test.js || echo 'Tests run on build'",
+    "test": "node --test dist/payment-request.test.js || echo 'Tests run on build'",
     "lint": "echo 'shared lint ok'",
     "clean": "rimraf dist"
   },

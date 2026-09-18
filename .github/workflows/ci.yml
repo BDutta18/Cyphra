@@ -10,6 +10,19 @@ jobs:
   ci:
     name: Lint · Typecheck · Test · Build
     runs-on: ubuntu-latest
+    env:
+      CYPHRA_DEPLOYMENT_ENV: test
+      NODE_ENV: test
+      MIDNIGHT_NETWORK: preprod
+      MIDNIGHT_RPC_URL: https://rpc.preprod.midnight.network
+      MIDNIGHT_INDEXER_URI: ''
+      CONTRACT_ADDRESS: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f'
+      NEXT_PUBLIC_MIDNIGHT_NETWORK: preprod
+      NEXT_PUBLIC_MIDNIGHT_NETWORK_ID: preprod
+      NEXT_PUBLIC_API_URL: 'https://cyphra-preprod-api.up.railway.app'
+      NEXT_PUBLIC_INDEXER_URI: https://indexer.preprod.midnight.network/api/v4/graphql
+      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f'
+      NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL: https://preprod.midnightexplorer.com
 
     steps:
       - name: Checkout Repository

@@ -80,25 +80,27 @@ class BalanceService {
     // Fetch public contract counters from indexer
     let counters = { totalShieldedDeposits: 0, totalConfidentialTransfers: 0, totalPaymentRequests: 0 };
 
-    try {
-      const raw = await fetch(config.midnight.indexerUri, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: CONTRACT_COUNTERS_QUERY,
-          variables: { address: config.midnight.contractAddress },
-        }),
-        signal: AbortSignal.timeout(6000),
-      });
+    if (config.env !== 'test' && process.env.NODE_ENV !== 'test' && config.midnight.indexerUri) {
+      try {
+        const raw = await fetch(config.midnight.indexerUri, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: CONTRACT_COUNTERS_QUERY,
+            variables: { address: config.midnight.contractAddress },
+          }),
+          signal: AbortSignal.timeout(6000),
+        });
 
-      if (raw.ok) {
-        const json = (await raw.json()) as { data?: ContractCountersData };
-        if (json.data?.contractState) {
-          counters = json.data.contractState;
+        if (raw.ok) {
+          const json = (await raw.json()) as { data?: ContractCountersData };
+          if (json.data?.contractState) {
+            counters = json.data.contractState;
+          }
         }
+      } catch (err) {
+        logger.warn('Could not fetch contract counters from indexer', err);
       }
-    } catch (err) {
-      logger.warn('Could not fetch contract counters from indexer', err);
     }
 
     return {

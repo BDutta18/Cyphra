@@ -31,6 +31,9 @@ before(async () => {
 
 after(async () => {
   await new Promise<void>((resolve) => {
+    if (server && 'closeAllConnections' in server) {
+      (server as unknown as { closeAllConnections: () => void }).closeAllConnections();
+    }
     server.close(() => resolve());
   });
 });
