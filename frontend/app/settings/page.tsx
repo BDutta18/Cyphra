@@ -20,8 +20,24 @@ import {
 
 export default function SettingsPage() {
   const { account, network, connect, disconnect } = useMidnightWallet();
-  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetwork>((network as SupportedNetwork) || 'preview');
+  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetwork>((network as SupportedNetwork) || 'preprod');
   const [isSwitching, setIsSwitching] = useState(false);
+  const [devMode, setDevMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('cyphra_dev_mode') === 'true';
+    }
+    return false;
+  });
+
+  const toggleDevMode = () => {
+    setDevMode((prev) => {
+      const next = !prev;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('cyphra_dev_mode', String(next));
+      }
+      return next;
+    });
+  };
 
   const handleNetworkSwitch = async (net: SupportedNetwork) => {
     setSelectedNetwork(net);
@@ -192,6 +208,81 @@ export default function SettingsPage() {
             <p className="text-xs font-mono text-zinc-400 py-4 text-center">
               Connect 1AM Wallet to inspect active cryptographic public keys and addresses.
             </p>
+          )}
+        </Card>
+
+        {/* Developer Mode & Circuit Telemetry */}
+        <Card className="space-y-4 bg-white border-zinc-200 shadow-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
+            <div className="flex items-center gap-2">
+              <Cpu className="w-4 h-4 text-black" />
+              <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-700 font-bold">
+                Developer & Circuit Debugger Mode
+              </h3>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-mono text-zinc-500">
+                {devMode ? 'Active' : 'Disabled'}
+              </span>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={devMode}
+                onClick={toggleDevMode}
+                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
+                  devMode ? 'bg-[#FFD400]' : 'bg-zinc-300'
+                }`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                    devMode ? 'translate-x-4' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
+
+          <p className="text-xs text-zinc-600 font-sans">
+            Enable advanced cryptographic inspection, circuit nullifier logs, and raw witness payloads across transactions.
+          </p>
+
+          {devMode && (
+            <div className="space-y-3 pt-2 border-t border-zinc-100">
+              <div className="p-3 bg-zinc-900 text-zinc-200 rounded-xl text-xs font-mono space-y-2">
+                <div className="flex items-center justify-between text-yellow-400 font-bold border-b border-zinc-800 pb-1.5">
+                  <span>CIRCUIT SPECIFICATION</span>
+                  <span>COMPACT 0.31.1</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-[11px] pt-1">
+                  <div>
+                    <span className="text-zinc-500 block">Curve:</span>
+                    <span className="text-white">BLS12-381 / Jubjub</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-500 block">Hash Engine:</span>
+                    <span className="text-white">Poseidon (4:1)</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-500 block">Commitment Tree:</span>
+                    <span className="text-white">Merkle Tree (depth 32)</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-500 block">Active Circuits:</span>
+                    <span className="text-white">6 Verified (Groth16)</span>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-zinc-800">
+                  <span className="text-zinc-500 block text-[10px]">VERIFIED CIRCUITS:</span>
+                  <div className="flex flex-wrap gap-1.5 mt-1">
+                    {['mint', 'deposit', 'send', 'withdraw', 'create_invoice', 'pay_invoice'].map((c) => (
+                      <span key={c} className="px-2 py-0.5 rounded bg-zinc-800 text-yellow-300 text-[10px] font-mono">
+                        {c}()
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </Card>
 

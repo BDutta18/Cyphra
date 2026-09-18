@@ -118,7 +118,6 @@ export function PaymentRequestModal({ isOpen, onClose, account }: PaymentRequest
                 {new Date(createdResult.request.expiresAt).toLocaleString()}
               </span>
             </div>
-            </div>
             <div className="flex justify-between text-zinc-600 pt-1 border-t border-zinc-200">
               <span>Expires In:</span>
               <span className="text-zinc-800 font-bold">{expiryHours} Hours</span>
