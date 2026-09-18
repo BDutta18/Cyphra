@@ -46,7 +46,7 @@ Unlike legacy blockchains where user balances, counterparty addresses, and entir
    - Privacy does not preclude compliance. Users can generate cryptographically verified auditor view proofs for tax reporting and regulatory compliance without exposing their master spend keys.
 
 ---
-### 🏠 Homepage — Confidential Payments for the Private Web
+### 1. Homepage — Confidential Payments for the Private Web
 
 <p align="center">
   <img src="./docs/screenshots/01-landing.png" alt="Cyphra Landing Page" width="820" />
@@ -56,7 +56,7 @@ The Cyphra homepage with multi-network switcher (Preview Testnet → Preprod Sta
 
 ---
 
-### 📊 Dashboard — Shielded Settlement Volume & ZK Proof Workflow
+### 2. Dashboard — Shielded Settlement Volume & ZK Proof Workflow
 
 <p align="center">
   <img src="./docs/screenshots/02-dashboard.png" alt="Cyphra Dashboard" width="820" />
@@ -66,7 +66,7 @@ Dashboard showing 7-day shielded settlement volume (**\$22,800 +15.2%**, 72 proo
 
 ---
 
-### 📤 Send — Confidential ZK Transfer
+### 3. Send — Confidential ZK Transfer
 
 <p align="center">
   <img src="./docs/screenshots/03-send.png" alt="Cyphra Send Confidential Payment" width="820" />
@@ -76,7 +76,7 @@ Dashboard showing 7-day shielded settlement volume (**\$22,800 +15.2%**, 72 proo
 
 ---
 
-### 📥 Receive — Shielded QR & Permanent Midnight Identifier
+### 4. Receive — Shielded QR & Permanent Midnight Identifier
 
 <p align="center">
   <img src="./docs/screenshots/04-receive.png" alt="Cyphra Receive Confidential Payments" width="820" />
