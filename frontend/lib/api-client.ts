@@ -33,31 +33,39 @@ async function request<T>(
   options: RequestInit = {},
   walletAddress?: string
 ): Promise<T> {
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...(options.headers as Record<string, string>),
-  };
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 3000);
 
-  if (walletAddress) {
-    headers['x-wallet-address'] = walletAddress;
+  try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...(options.headers as Record<string, string>),
+    };
+
+    if (walletAddress) {
+      headers['x-wallet-address'] = walletAddress;
+    }
+
+    const res = await fetch(`${API_BASE}${path}`, {
+      ...options,
+      headers,
+      signal: options.signal || controller.signal,
+    });
+
+    const json = (await res.json()) as ApiEnvelope<T>;
+
+    if (!res.ok || !json.success) {
+      const errorMsg = json.error || `HTTP ${res.status}: ${res.statusText}`;
+      const err = new Error(errorMsg) as Error & { code?: string; details?: unknown };
+      err.code = json.code;
+      err.details = json.details;
+      throw err;
+    }
+
+    return json.data as T;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  const res = await fetch(`${API_BASE}${path}`, {
-    ...options,
-    headers,
-  });
-
-  const json = (await res.json()) as ApiEnvelope<T>;
-
-  if (!res.ok || !json.success) {
-    const errorMsg = json.error || `HTTP ${res.status}: ${res.statusText}`;
-    const err = new Error(errorMsg) as Error & { code?: string; details?: unknown };
-    err.code = json.code;
-    err.details = json.details;
-    throw err;
-  }
-
-  return json.data as T;
 }
 
 export const apiClient = {
@@ -186,22 +194,50 @@ export const apiClient = {
     walletAddress: string,
     activity: Omit<TransactionActivity, 'id'>
   ): Promise<TransactionActivity> {
-    return request<TransactionActivity>(
-      '/api/activity/record',
-      {
-        method: 'POST',
-        body: JSON.stringify(activity),
-      },
-      walletAddress
-    );
+    const item: TransactionActivity = {
+      ...activity,
+      id: 'act_' + Math.random().toString(36).slice(2, 11),
+    };
+
+    if (typeof window !== 'undefined') {
+      try {
+        const key = `cyphra_activity_${walletAddress}`;
+        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        localStorage.setItem(key, JSON.stringify([item, ...existing]));
+      } catch {}
+    }
+
+    try {
+      return await request<TransactionActivity>(
+        '/api/activity/record',
+        {
+          method: 'POST',
+          body: JSON.stringify(activity),
+        },
+        walletAddress
+      );
+    } catch {
+      return item;
+    }
   },
 
   async getActivity(walletAddress: string): Promise<TransactionActivity[]> {
-    try {
-      return await request<TransactionActivity[]>('/api/activity', { method: 'GET' }, walletAddress);
-    } catch {
-      return [];
+    let localItems: TransactionActivity[] = [];
+    if (typeof window !== 'undefined') {
+      try {
+        const key = `cyphra_activity_${walletAddress}`;
+        localItems = JSON.parse(localStorage.getItem(key) || '[]');
+      } catch {}
     }
+
+    try {
+      const remote = await request<TransactionActivity[]>('/api/activity', { method: 'GET' }, walletAddress);
+      if (Array.isArray(remote) && remote.length > 0) {
+        return remote;
+      }
+    } catch {}
+
+    return localItems;
   },
 
   // ---------------------------------------------------------------------------

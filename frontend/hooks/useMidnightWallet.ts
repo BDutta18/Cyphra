@@ -21,7 +21,7 @@ function setGlobalModalOpen(open: boolean) {
 export function useMidnightWallet() {
   const [walletState, setWalletState] = useState<OneAMWalletState>(() => oneAMWallet.getState());
   const [isConnecting, setIsConnecting] = useState(false);
-  const [isWalletAvailable, setIsWalletAvailable] = useState(false);
+  const [isWalletAvailable, setIsWalletAvailable] = useState(() => !!oneAMWallet.getInitialApi());
   const [isDetecting, setIsDetecting] = useState(false);
   const [detectedApi, setDetectedApi] = useState(() => oneAMWallet.getInitialApi());
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(globalModalOpen);
@@ -43,7 +43,13 @@ export function useMidnightWallet() {
     setGlobalModalOpen(false);
   }, []);
 
-  const detectWallet = useCallback(async (timeoutMs = 1200) => {
+  const detectWallet = useCallback(async (timeoutMs = 350) => {
+    if (oneAMWallet.getInitialApi()) {
+      const api = oneAMWallet.getInitialApi();
+      setDetectedApi(api);
+      setIsWalletAvailable(true);
+      return api;
+    }
     setIsDetecting(true);
     try {
       const detected = await oneAMWallet.detectWallet(timeoutMs);
@@ -61,7 +67,11 @@ export function useMidnightWallet() {
       setWalletState(state);
     });
 
-    detectWallet();
+    if (!oneAMWallet.getInitialApi()) {
+      detectWallet(350);
+    } else {
+      setIsWalletAvailable(true);
+    }
 
     return () => {
       unsubscribe();
@@ -103,10 +113,22 @@ export function useMidnightWallet() {
     setError(null);
   }, []);
 
+  // Connect instant demo account (Preprod simulated)
+  const connectDemo = useCallback(async (network: SupportedNetwork = 'preprod') => {
+    setIsConnecting(true);
+    setError(null);
+    try {
+      const state = await oneAMWallet.connectDemo(network);
+      return state;
+    } finally {
+      setIsConnecting(false);
+    }
+  }, []);
+
   // Format account details for components
   const account = walletState.isConnected && walletState.addresses ? {
     isConnected: true,
-    walletName: walletState.walletName || '1AM Wallet',
+    walletName: walletState.walletName || (walletState.isSandbox ? 'Preprod Demo Wallet' : '1AM Wallet'),
     networkId: walletState.network,
     shieldedAddress: walletState.addresses.shieldedAddress,
     shieldedCoinPublicKey: walletState.addresses.shieldedCoinPublicKey,
@@ -114,7 +136,7 @@ export function useMidnightWallet() {
     unshieldedAddress: walletState.addresses.unshieldedAddress,
     dustAddress: walletState.addresses.dustAddress,
     balances: walletState.balances,
-    isSimulated: false,
+    isSimulated: walletState.isSandbox,
   } : null;
 
   return {
@@ -128,14 +150,15 @@ export function useMidnightWallet() {
     isConnectModalOpen,
     openConnectModal,
     closeConnectModal,
-    isSandbox: false,
+    isSandbox: walletState.isSandbox,
     network: walletState.network,
     balances: walletState.balances,
     error,
     clearError,
     connect,
     connectWebWallet: connect,
-    connectSandbox: (network?: SupportedNetwork) => oneAMWallet.connectWallet(network),
+    connectDemo,
+    connectSandbox: connectDemo,
     disconnect,
     setNetwork: (network: SupportedNetwork) => oneAMWallet.setNetwork(network),
     refreshBalances: () => oneAMWallet.refreshBalances(),

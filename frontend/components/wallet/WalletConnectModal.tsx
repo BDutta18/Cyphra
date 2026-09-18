@@ -33,6 +33,7 @@ export function WalletConnectModal({
 }: WalletConnectModalProps) {
   const {
     connect,
+    connectDemo,
     isConnecting,
     isWalletAvailable,
     isDetecting,
@@ -44,15 +45,15 @@ export function WalletConnectModal({
     clearError,
   } = useMidnightWallet();
 
-  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetwork>(currentNetwork || 'preview');
+  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetwork>(currentNetwork || 'preprod');
   const [localError, setLocalError] = useState<string | null>(null);
 
-  // Re-detect on modal open
+  // Re-detect on modal open (instant check first, short 400ms polling fallback)
   useEffect(() => {
     if (isOpen) {
       clearError();
       setLocalError(null);
-      detectWallet(1500);
+      detectWallet(400);
     }
   }, [isOpen, detectWallet, clearError]);
 
@@ -82,7 +83,22 @@ export function WalletConnectModal({
 
   const handleManualRedetect = async () => {
     setLocalError(null);
-    await detectWallet(2000);
+    await detectWallet(600);
+  };
+
+  const handleConnectDemo = async () => {
+    clearError();
+    setLocalError(null);
+    try {
+      setGlobalNetwork(selectedNetwork);
+      await connectDemo(selectedNetwork);
+      if (onConnectSuccess) {
+        onConnectSuccess();
+      }
+      onClose();
+    } catch (err: unknown) {
+      setLocalError(err instanceof Error ? err.message : String(err));
+    }
   };
 
   return (
@@ -249,7 +265,7 @@ export function WalletConnectModal({
           )}
 
           {/* Action Buttons */}
-          <div className="pt-1">
+          <div className="pt-1 space-y-2.5">
             {isWalletAvailable ? (
               <Button
                 variant="primary"
@@ -281,6 +297,30 @@ export function WalletConnectModal({
                 </p>
               </div>
             )}
+
+            <div className="relative py-1">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-zinc-200" />
+              </div>
+              <div className="relative flex justify-center text-[10px] font-mono uppercase tracking-wider text-zinc-400">
+                <span className="bg-zinc-50 px-2">or quick review</span>
+              </div>
+            </div>
+
+            <Button
+              type="button"
+              variant="secondary"
+              size="md"
+              className="w-full font-bold text-xs py-2 bg-white hover:bg-zinc-100 text-zinc-800 border border-zinc-300"
+              isLoading={isConnecting}
+              onClick={handleConnectDemo}
+            >
+              <Shield className="w-3.5 h-3.5 mr-1.5 text-emerald-600" />
+              Launch Instant Preprod Demo (Aarav Sharma)
+            </Button>
+            <p className="text-[10px] text-zinc-500 text-center font-mono">
+              Zero-lag testing with 1,500 NIGHT &amp; 120 DUST pre-funded balance
+            </p>
           </div>
         </div>
 
