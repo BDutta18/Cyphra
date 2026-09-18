@@ -246,6 +246,29 @@ export default function SendPage() {
                         <span>{recipientValidation.message}</span>
                       </div>
                     )}
+                    <div className="flex items-center gap-1.5 pt-1">
+                      <span className="text-[10px] text-zinc-400 font-mono">Quick autofill:</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRecipient('mn_addr_preprod1r8mfahw8davsu6kpskeka9udgt3l4daqtgnxt4703fa80p65567q95hzv4');
+                          setValidationError(null);
+                        }}
+                        className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors border border-zinc-200"
+                      >
+                        Priya Patel (#2)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRecipient('mn_addr_preprod1f0llvmnc0y6kk6x09ze3t0sh0zdm3uelq6dvdv7qzscsng62yrps5pc9aa');
+                          setValidationError(null);
+                        }}
+                        className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors border border-zinc-200 hidden sm:inline-block"
+                      >
+                        Rohan Mehta (#3)
+                      </button>
+                    </div>
                   </div>
 
                   {/* Asset Selector Segmented Tabs with Framer Motion */}

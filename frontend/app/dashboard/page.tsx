@@ -31,7 +31,7 @@ import {
 } from 'lucide-react';
 
 export default function DashboardPage() {
-  const { account, isConnected, openConnectModal, refreshBalances } = useMidnightWallet();
+  const { account, isConnected, openConnectModal, connectDemo, refreshBalances } = useMidnightWallet();
   const balances = usePrivateBalance(account);
   const [activities, setActivities] = useState<TransactionActivity[]>([]);
   const [isDepositOpen, setIsDepositOpen] = useState(false);
@@ -144,14 +144,25 @@ export default function DashboardPage() {
                 Claim Testnet NIGHT
               </Button>
             ) : (
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={openConnectModal}
-                className="text-xs font-bold px-4 py-2 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-xs"
-              >
-                <Wallet className="w-3.5 h-3.5 mr-1.5" /> Connect 1AM Wallet
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => connectDemo('preprod')}
+                  className="text-xs font-mono font-bold border-zinc-300 hover:border-black bg-white text-zinc-900 shadow-xs flex items-center gap-1.5"
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Instant Demo (Aarav)
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={openConnectModal}
+                  className="text-xs font-bold px-4 py-2 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-xs"
+                >
+                  <Wallet className="w-3.5 h-3.5 mr-1.5" /> Connect 1AM Wallet
+                </Button>
+              </div>
             )}
           </div>
         </motion.div>
