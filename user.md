@@ -1,6 +1,6 @@
 # Cyphra — User Testing, Preprod Addresses & Feedback Matrix
 
-## 1. Midnight Preprod Addresses (79 Test Accounts)
+## 1. Midnight Preprod Addresses (79 Accounts)
 
 The following 79 official Midnight Preprod addresses have been registered and provisioned for user testing, onboarding, and zero-knowledge payment simulations on the Cyphra DApp:
 
