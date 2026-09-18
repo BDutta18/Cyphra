@@ -22,7 +22,7 @@ import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 
 export function Navbar() {
   const pathname = usePathname();
-  const { isSyncing } = useMidnightWallet();
+  const { isSyncing, syncProgress } = useMidnightWallet();
   const [blockHeight, setBlockHeight] = useState(248192);
 
   // Live simulated Midnight block ticker
@@ -111,11 +111,13 @@ export function Navbar() {
 
           {isSyncing && (
             <div
-              title="1AM Wallet is synchronizing blocks with Midnight Preprod. Click 1AM icon in browser to keep sync active."
+              title="1AM Wallet is synchronizing blocks with Midnight Preprod. Cyphra will reconnect automatically when done."
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-50 border border-amber-300 text-[11px] font-mono text-amber-900 shadow-xs"
             >
               <RotateCw className="w-3 h-3 animate-spin text-amber-700" />
-              <span className="hidden sm:inline font-semibold">1AM Syncing...</span>
+              <span className="hidden sm:inline font-semibold">
+                Syncing{syncProgress > 0 ? ` ${syncProgress}%` : '…'}
+              </span>
             </div>
           )}
 

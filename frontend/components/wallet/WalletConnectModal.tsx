@@ -41,6 +41,8 @@ export function WalletConnectModal({
     detectWallet,
     network: currentNetwork,
     setNetwork: setGlobalNetwork,
+    isSyncing,
+    syncProgress,
     error,
     clearError,
   } = useMidnightWallet();
@@ -263,15 +265,29 @@ export function WalletConnectModal({
               )}
 
               {((localError || error)?.toLowerCase().includes('sync')) && (
-                <div className="pt-2 border-t border-amber-300 flex flex-col gap-2 font-mono text-[11px] bg-amber-50 p-2.5 rounded-lg border border-amber-200">
-                  <div className="flex items-center gap-1.5 text-amber-950 font-bold font-sans">
-                    <RotateCw className="w-3.5 h-3.5 animate-spin text-amber-700" />
-                    <span>1AM Wallet is Synchronizing with Midnight Preprod</span>
-                  </div>
-                  <p className="text-[11px] text-zinc-700 font-sans leading-snug">
-                    The 1AM extension is currently scanning testnet blocks. While syncing, note indexing is temporarily locked by the extension.
-                  </p>
-                  <div className="flex flex-col gap-1.5 pt-1">
+                <div className="pt-2 border-t border-amber-200 flex flex-col gap-2">
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 space-y-2.5">
+                    <div className="flex items-center gap-2 text-amber-900 font-bold text-xs">
+                      <RotateCw className="w-3.5 h-3.5 animate-spin text-amber-700 shrink-0" />
+                      <span>1AM Wallet Syncing Midnight Preprod Blocks</span>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="space-y-1">
+                      <div className="w-full h-1.5 bg-amber-200 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-amber-500 rounded-full transition-all duration-1000"
+                          style={{ width: `${Math.max(5, syncProgress)}%` }}
+                        />
+                      </div>
+                      <p className="text-[10px] font-mono text-amber-700">
+                        {syncProgress < 100
+                          ? `Auto-reconnecting when sync completes… (${syncProgress}%)`
+                          : '✓ Sync complete — reconnecting now…'}
+                      </p>
+                    </div>
+                    <p className="text-[11px] text-zinc-600 leading-snug">
+                      The 1AM extension is scanning testnet blocks on first open. Cyphra will <strong>reconnect automatically</strong> — no action needed.
+                    </p>
                     <Button
                       type="button"
                       variant="primary"
@@ -279,14 +295,12 @@ export function WalletConnectModal({
                       onClick={handleConnectDemo}
                       className="w-full bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold text-xs py-2 shadow-xs"
                     >
-                      ⚡ Bypass Wait: Launch Preprod Demo Account (Aarav Sharma)
+                      ⚡ Skip sync — Use Instant Preprod Demo (Aarav Sharma)
                     </Button>
-                    <p className="text-[10px] text-zinc-500 font-mono text-center">
-                      Pre-funded with 1,500 NIGHT &amp; 120 DUST on Preprod
-                    </p>
                   </div>
                 </div>
               )}
+
             </div>
           )}
 

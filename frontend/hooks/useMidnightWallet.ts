@@ -27,6 +27,7 @@ export function useMidnightWallet() {
   const [detectedApi, setDetectedApi] = useState(() => oneAMWallet.getInitialApi());
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(globalModalOpen);
   const [error, setError] = useState<string | null>(null);
+  const [syncProgress, setSyncProgress] = useState<number>(0);
 
   useEffect(() => {
     const listener = (open: boolean) => setIsConnectModalOpen(open);
@@ -78,6 +79,38 @@ export function useMidnightWallet() {
       unsubscribe();
     };
   }, [detectWallet]);
+
+  // Auto-recover from sync: poll every 8s, reconnect silently when sync clears
+  useEffect(() => {
+    if (!walletState.isSyncing || walletState.isSandbox) return;
+
+    let attempt = 0;
+
+    const interval = setInterval(async () => {
+      attempt += 1;
+      // Animate sync progress 0→100 over 10 attempts (~80s max)
+      setSyncProgress(Math.min(100, Math.round((attempt / 10) * 100)));
+
+      try {
+        // Try refreshing balances — succeeds once 1AM finishes syncing
+        await oneAMWallet.refreshBalances();
+        const currentState = oneAMWallet.getState();
+        if (!currentState.isSyncing) {
+          clearInterval(interval);
+          setSyncProgress(100);
+          // Auto-reconnect silently after sync completes
+          oneAMWallet.connectWallet(currentState.network).catch(() => {});
+        }
+      } catch {
+        // Still syncing — keep polling
+      }
+    }, 8000);
+
+    return () => {
+      clearInterval(interval);
+      setSyncProgress(0);
+    };
+  }, [walletState.isSyncing, walletState.isSandbox]);
 
   // Connect 1AM Wallet
   const connect = useCallback(async (network: SupportedNetwork = 'preprod') => {
@@ -156,6 +189,7 @@ export function useMidnightWallet() {
     closeConnectModal,
     isSandbox: walletState.isSandbox,
     isSyncing: walletState.isSyncing || false,
+    syncProgress,
     network: walletState.network,
     balances: walletState.balances,
     error,

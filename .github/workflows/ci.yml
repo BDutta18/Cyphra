@@ -57,3 +57,33 @@ jobs:
 
       - name: Build All Workspaces
         run: pnpm build
+
+  # Creates a GitHub "Production" deployment so the environment shows as Active
+  mark-production:
+    name: Mark Production Deployment
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      deployments: write
+      contents: read
+    steps:
+      - name: Create GitHub Deployment
+        uses: chrnorm/deployment-action@v2
+        id: deployment
+        with:
+          token: ${{ github.token }}
+          environment: production
+          initial-status: in_progress
+          auto-inactive: true
+          description: 'Cyphra DApp — Midnight Preprod on Vercel'
+          environment-url: 'https://cyphra-two.vercel.app'
+
+      - name: Mark Deployment Success
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: ${{ github.token }}
+          state: success
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          environment-url: 'https://cyphra-two.vercel.app'
+          description: 'Live on cyphra-two.vercel.app'
