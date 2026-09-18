@@ -8,6 +8,7 @@ import { BalanceCard } from '../../components/dashboard/BalanceCard';
 import { QuickActions } from '../../components/dashboard/QuickActions';
 import { PrivacyScoreMeter } from '../../components/dashboard/PrivacyScoreMeter';
 import { ShieldedVolumeChart } from '../../components/dashboard/ShieldedVolumeChart';
+import { VisualPrivacyWorkflow } from '../../components/dashboard/VisualPrivacyWorkflow';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
@@ -186,6 +187,11 @@ export default function DashboardPage() {
         {/* Analytics & Volume Chart */}
         <motion.div variants={itemVariants}>
           <ShieldedVolumeChart />
+        </motion.div>
+
+        {/* Visual Zero-Knowledge Privacy Workflow */}
+        <motion.div variants={itemVariants}>
+          <VisualPrivacyWorkflow />
         </motion.div>
 
         {/* Recent Activity Feed */}
