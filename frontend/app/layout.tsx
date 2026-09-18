@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://cyphra-two.vercel.app'),
   title: 'Cyphra | Confidential Payments on Midnight Preprod',
   description:
     'Privacy-first confidential payment application built on Midnight. Send, receive, and request private digital assets with zero-knowledge verification.',

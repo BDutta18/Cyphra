@@ -97,7 +97,7 @@ export interface AuditorDisclosedReport {
   complianceAttestation: string;
 }
 
-export type MidnightNetworkId = 'testnet' | 'devnet' | 'mainnet' | 'local';
+export type MidnightNetworkId = 'preprod' | 'preview' | 'testnet' | 'devnet' | 'mainnet' | 'local';
 
 export interface MidnightNetworkConfig {
   networkId: MidnightNetworkId;
