@@ -6,8 +6,10 @@ import { ShieldCheck, Cpu, ArrowRight, Lock, Key, Check, RefreshCw } from 'lucid
 import { Button } from '../ui/Button';
 
 export function InteractiveCircuitVisualizer() {
+  const [selectedCircuit, setSelectedCircuit] = useState<'send' | 'invoice' | 'mint'>('send');
   const [isSynthesizing, setIsSynthesizing] = useState(false);
   const [proofState, setProofState] = useState<'idle' | 'witness' | 'proving' | 'verified'>('idle');
+  const [testAmount, setTestAmount] = useState('250');
   const [nullifierHash, setNullifierHash] = useState('0x8f4b...392d');
   const [noteCommitment, setNoteCommitment] = useState('0x3c91...a78e');
 
@@ -55,6 +57,23 @@ export function InteractiveCircuitVisualizer() {
         </Button>
       </div>
 
+      {/* Circuit Type Tabs */}
+      <div className="flex items-center gap-2 pt-4 pb-1">
+        {(['send', 'invoice', 'mint'] as const).map((circ) => (
+          <button
+            key={circ}
+            onClick={() => setSelectedCircuit(circ)}
+            className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-colors ${
+              selectedCircuit === circ
+                ? 'bg-black text-[#FFD400]'
+                : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+            }`}
+          >
+            {circ === 'send' ? 'send() Circuit' : circ === 'invoice' ? 'pay_invoice() Circuit' : 'mint() Circuit'}
+          </button>
+        ))}
+      </div>
+
       {/* Interactive Circuit Flow */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6 relative">
         {/* Step 1: Private Inputs (Shielded) */}
@@ -72,8 +91,16 @@ export function InteractiveCircuitVisualizer() {
                 <span className="text-black font-semibold">●●●●●●●● (ZK)</span>
               </div>
               <div className="p-2 rounded bg-white border border-zinc-200 flex items-center justify-between">
-                <span className="text-zinc-500">Amount & Asset:</span>
-                <span className="text-black font-semibold">Confidential</span>
+                <span className="text-zinc-500">Amount:</span>
+                <div className="flex items-center gap-1">
+                  <input
+                    type="number"
+                    value={testAmount}
+                    onChange={(e) => setTestAmount(e.target.value)}
+                    className="w-16 px-1.5 py-0.5 text-right font-bold text-black border border-zinc-300 rounded bg-zinc-50 focus:outline-none focus:border-black"
+                  />
+                  <span className="text-zinc-600 font-bold">tCYP</span>
+                </div>
               </div>
               <div className="p-2 rounded bg-white border border-zinc-200 flex items-center justify-between">
                 <span className="text-zinc-500">Blinding Nonce:</span>
@@ -82,7 +109,7 @@ export function InteractiveCircuitVisualizer() {
             </div>
           </div>
           <div className="mt-3 text-[10px] font-mono text-zinc-500">
-            *Never leaves client browser
+            *Never leaves client browser (Confidential)
           </div>
         </div>
 
