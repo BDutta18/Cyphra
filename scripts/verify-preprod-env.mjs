@@ -49,7 +49,7 @@ console.log(`  ✓ Found ${matchedAddresses.length} address mentions in user.md`
 console.log(`  ✓ Unique addresses identified: ${uniqueAddresses.length}`);
 
 // Count table rows in Section 1
-const tableRows = (userMdContent.match(/\|\s*\d+\s*\|\s*`mn_addr_preprod1/g) || []).length;
+const tableRows = (userMdContent.match(/\|\s*\d+\s*\|.*?`mn_addr_preprod1/g) || []).length;
 console.log(`  ✓ Verified ${tableRows} registered address entries in Section 1 table`);
 
 if (matchedAddresses.length < 70) {
