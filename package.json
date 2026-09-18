@@ -19,6 +19,7 @@
     "typecheck": "pnpm --filter @cyphra/shared run build && pnpm -r --if-present run typecheck",
     "verify:preview-env": "node scripts/verify-preview-env.mjs",
     "verify:preprod-env": "node scripts/verify-preprod-env.mjs",
+    "onboard:users": "node scripts/onboard-users.mjs",
     "dev": "pnpm -r --parallel --if-present run dev",
     "dev:backend": "pnpm --filter @cyphra/backend run dev",
     "dev:frontend": "pnpm --filter @cyphra/frontend run dev",
