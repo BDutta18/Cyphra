@@ -80,11 +80,11 @@ export function QRCodeDisplay({
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      <div className="relative p-3 bg-white rounded-xl border-2 border-zinc-200 shadow-md">
-        <canvas ref={canvasRef} className="block" />
+      <div className="relative p-3 bg-white rounded-xl border-2 border-zinc-200 shadow-md max-w-full">
+        <canvas ref={canvasRef} className="block max-w-full h-auto mx-auto" />
         {showLogo && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-8 h-8 rounded-md bg-black p-0.5 border border-brand-yellow flex items-center justify-center shadow-md">
+            <div className="w-8 h-8 rounded-md bg-black p-0.5 border border-[#FFD400] flex items-center justify-center shadow-md">
               <Image
                 src="/logo.png"
                 alt="Cyphra Emblem"
@@ -97,18 +97,18 @@ export function QRCodeDisplay({
         )}
       </div>
 
-      {label && <p className="text-xs text-zinc-600 text-center max-w-xs font-mono font-medium">{label}</p>}
+      {label && <p className="text-xs text-zinc-600 text-center max-w-xs font-mono font-medium break-all">{label}</p>}
 
-      <div className="flex flex-wrap items-center justify-center gap-2">
-        <Button variant="primary" size="sm" onClick={handleCopy} className="text-xs font-bold">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-2 w-full max-w-xs">
+        <Button variant="primary" size="sm" onClick={handleCopy} className="w-full sm:w-auto text-xs font-bold bg-[#FFD400] hover:bg-[#E5BE00] text-black">
           {copied ? <Check className="w-3.5 h-3.5 mr-1" /> : <Copy className="w-3.5 h-3.5 mr-1" />}
           {copied ? 'Copied' : 'Copy URI'}
         </Button>
-        <Button variant="secondary" size="sm" onClick={handleShare} className="text-xs font-semibold">
+        <Button variant="secondary" size="sm" onClick={handleShare} className="w-full sm:w-auto text-xs font-semibold">
           {shared ? <Check className="w-3.5 h-3.5 mr-1 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 mr-1" />}
           Share
         </Button>
-        <Button variant="secondary" size="sm" onClick={handleDownload} className="text-xs font-semibold">
+        <Button variant="secondary" size="sm" onClick={handleDownload} className="w-full sm:w-auto text-xs font-semibold">
           <Download className="w-3.5 h-3.5 mr-1" /> Download
         </Button>
       </div>
