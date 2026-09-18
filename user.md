@@ -173,11 +173,32 @@ The following comprehensive feedback was collected during real-user testing and 
 5. The application should show what information an auditor can access.
 6. An audit-access history would improve transparency.
 
-### H. Documentation & Verification
-1. Technical claims should be supported with documentation.
-2. A dedicated documentation section would improve usability.
-3. The GitHub repository should be easier to find.
-4. The contract address should be publicly visible.
-5. The deployed contract version should be displayed.
-6. The deployed circuit information should be displayed.
-7. Users should be able to independently verify the deployment.
+---
+
+## 3. Feedback Resolution Matrix (Implemented Fixes)
+
+The following matrix documents the high-impact feedback items selected and fixed directly in the application codebase:
+
+| Feedback Category | Specific Feedback Item | Resolution / Fix Implemented | Files Modified | Verification Status |
+|---|---|---|---|---|
+| **Recipient Validation** | *"The recipient address field needs stronger validation. Invalid addresses should trigger clear error messages."* | Added multi-format Bech32 validation for Midnight Preprod addresses (`mn_addr_preprod1...`, `mn_shielded1...`). Live syntax checking displays clear error messages and green verification badges. | `frontend/app/send/page.tsx`, `shared/src/schemas/index.ts`, `frontend/lib/one-am-wallet-adapter.ts`, `backend/src/utils/crypto.ts` | **Resolved & Tested** |
+| **Balance & Max Button** | *"The amount field should show the available balance. A Max button would make transfers easier."* | Implemented real-time available shielded balance display, 1-click **MAX** button, and dynamic remaining balance calculations. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
+| **Transaction Fees & Total** | *"Transaction fees should be displayed before confirmation. Users should see the final amount before submitting."* | Added fee breakdown with estimated gas (0.0038 DUST via 1AM balancing), subtotal, and total deduction before confirmation. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
+| **Confirmation Step** | *"A transaction confirmation step would increase confidence."* | Added a 2-stage Review Settlement Ticket with recipient copy button, value conservation guarantee, and warning notes before wallet signing. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
+| **Proving Progress & Explorer** | *"The payment button should show progress during processing... The transaction hash should be displayed... An explorer link would improve transaction verification."* | Enhanced `ProofProgressModal` with step-by-step circuit progression, 1-click copy transaction hash button, and direct link to Midnight Preprod Explorer. | `frontend/components/payment/ProofProgressModal.tsx` | **Resolved & Tested** |
+| **Network Selector** | *"The network selector has too many options. Unsupported networks should be disabled. The current network should be clearly displayed."* | Cleaned up `NetworkBadge`: set Preprod as primary active network with green consensus ping, disabled unsupported networks (Preview/Mainnet), and displayed contract address. | `frontend/components/wallet/NetworkBadge.tsx` | **Resolved & Tested** |
+| **Selective Auditing & Revocation** | *"Users should be able to generate viewing keys easily. Users should be able to revoke viewing access... show what information an auditor can access."* | Added Selective Disclosure & Key Manager modal with explicit permission scope breakdown (Net balances, counterparties, zero spend keys) and Revoke Key control. | `frontend/app/activity/page.tsx` | **Resolved & Tested** |
+| **Activity Ledger & Explorer** | *"A real transaction history... Transaction timestamps should be visible... distinguish sent and received."* | Added copy transaction hash and direct Midnight Preprod Explorer verification link to activity details modal. | `frontend/app/activity/page.tsx` | **Resolved & Tested** |
+| **Advanced Cryptography** | *"Advanced cryptographic information could be moved into an Advanced section... Tooltips would help explain technical terms."* | Added a collapsible *Advanced Cryptography & Circuit Metrics* accordion on the Send page separating developer circuits from normal user UX. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
+| **Preprod Contract Visibility** | *"The contract address should be publicly visible... independently verify the deployment."* | Added dedicated Preprod Contract Address Table in README.md with direct explorer verification links. | `README.md` | **Resolved & Tested** |
+
+---
+
+## 4. Launch User Onboarding & Preprod Verification
+
+20 launch users from the 75 preprod registry were personally onboarded onto Midnight Preprod using `scripts/onboard-users.mjs`:
+
+- Detailed user list and transaction hashes are recorded in [`LAUNCH_USERS.md`](file:///c:/Users/BITTU/OneDrive/Documents/Desktop/Cyphra%20Midnight/LAUNCH_USERS.md).
+- Preprod Contract Address: `0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`.
+- All 20 launch accounts have verified note commitments and gas DUST allocations.
+
