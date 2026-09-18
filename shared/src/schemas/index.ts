@@ -6,7 +6,7 @@ export const ShieldedAddressSchema = z
   .min(30, 'Shielded address is too short')
   .max(120, 'Shielded address is too long')
   .regex(
-    new RegExp(`^${ADDRESS_PREFIXES.SHIELDED}1[0-9a-z]+$`),
+    /^mn_shielded1[0-9a-z]+$/,
     'Invalid Midnight shielded address (must start with mn_shielded1)'
   );
 
@@ -15,21 +15,22 @@ export const UnshieldedAddressSchema = z
   .min(30, 'Unshielded address is too short')
   .max(120, 'Unshielded address is too long')
   .regex(
-    new RegExp(`^${ADDRESS_PREFIXES.UNSHIELDED}1[0-9a-z]+$`),
-    'Invalid Midnight unshielded address (must start with mn_addr1)'
+    /^(mn_addr_preprod1|mn_addr1)[0-9a-z]+$/,
+    'Invalid Midnight unshielded address (must start with mn_addr_preprod1 or mn_addr1)'
   );
 
 export const AnyMidnightAddressSchema = z.string().refine(
   (addr) =>
-    addr.startsWith(ADDRESS_PREFIXES.SHIELDED) ||
-    addr.startsWith(ADDRESS_PREFIXES.UNSHIELDED),
-  { message: 'Must be a valid Midnight shielded or unshielded address' }
+    addr.startsWith('mn_shielded1') ||
+    addr.startsWith('mn_addr_preprod1') ||
+    addr.startsWith('mn_addr1'),
+  { message: 'Must be a valid Midnight address (starting with mn_shielded1, mn_addr_preprod1, or mn_addr1)' }
 );
 
 export const TokenTypeSchema = z.enum(['NIGHT', 'DUST', 'tCYPHRA']);
 
 export const CreatePaymentRequestSchema = z.object({
-  recipientAddress: ShieldedAddressSchema,
+  recipientAddress: AnyMidnightAddressSchema,
   amount: z
     .string()
     .regex(/^\d+(\.\d+)?$/, 'Amount must be a positive decimal or integer')
@@ -43,7 +44,7 @@ export type CreatePaymentRequestInput = z.infer<typeof CreatePaymentRequestSchem
 
 export const FulfillPaymentRequestSchema = z.object({
   requestId: z.string().uuid('Invalid request ID format'),
-  payerShieldedAddress: ShieldedAddressSchema,
+  payerShieldedAddress: AnyMidnightAddressSchema,
   txHash: z.string().min(10, 'Invalid transaction hash'),
   paymentNullifier: z.string().length(64, 'Nullifier must be 32-byte hex (64 chars)'),
   receiptCommitment: z.string().length(64, 'Commitment must be 32-byte hex (64 chars)'),
@@ -52,7 +53,7 @@ export const FulfillPaymentRequestSchema = z.object({
 export type FulfillPaymentRequestInput = z.infer<typeof FulfillPaymentRequestSchema>;
 
 export const ConfidentialTransferSchema = z.object({
-  recipientAddress: ShieldedAddressSchema,
+  recipientAddress: AnyMidnightAddressSchema,
   amount: z
     .string()
     .regex(/^\d+(\.\d+)?$/, 'Amount must be a positive decimal or integer')

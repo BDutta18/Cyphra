@@ -36,6 +36,15 @@ export const ADDRESS_PREFIXES = {
 } as const;
 
 export const DEFAULT_NETWORKS: Record<string, MidnightNetworkConfig> = {
+  preprod: {
+    networkId: 'preprod',
+    indexerUri: 'https://indexer.preprod.midnight.network/api/v4/graphql',
+    indexerWsUri: 'wss://indexer.preprod.midnight.network/api/v4/graphql/ws',
+    nodeUri: 'https://rpc.preprod.midnight.network',
+    proverServerUri: 'https://prover.preprod.midnight.network',
+    contractAddress: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f',
+    explorerUrl: 'https://preprod.midnightexplorer.com',
+  },
   testnet: {
     networkId: 'testnet',
     indexerUri: 'https://indexer.testnet.midnight.network/api/v1/graphql',
