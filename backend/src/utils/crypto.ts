@@ -9,9 +9,11 @@ export function maskAddress(address: string): string {
   if (!address || address.length < 20) return '****';
   const prefix = address.startsWith('mn_shielded1')
     ? 'mn_shielded1'
-    : address.startsWith('mn_addr1')
-      ? 'mn_addr1'
-      : address.slice(0, 6);
+    : address.startsWith('mn_addr_preprod1')
+      ? 'mn_addr_preprod1'
+      : address.startsWith('mn_addr1')
+        ? 'mn_addr1'
+        : address.slice(0, 6);
   const rest = address.slice(prefix.length);
   if (rest.length <= 12) return address;
   return `${prefix}${rest.slice(0, 4)}...${rest.slice(-6)}`;
@@ -65,10 +67,10 @@ export function isValidShieldedAddress(address: string): boolean {
 }
 
 /**
- * Checks whether a string looks like a valid Midnight unshielded address.
+ * Checks whether a string looks like a valid Midnight unshielded address (preprod or mainnet).
  */
 export function isValidUnshieldedAddress(address: string): boolean {
-  return /^mn_addr1[0-9a-z]{20,100}$/.test(address);
+  return /^(mn_addr_preprod1|mn_addr1)[0-9a-z]{20,100}$/.test(address);
 }
 
 /**
