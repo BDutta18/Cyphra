@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/badge/Midnight-Preprod-4F46E5?logo=blockchain.com" alt="Midnight Preprod" />
     <img src="https://img.shields.io/badge/Compact-0.31.1-10B981" alt="Compact 0.31.1" />
     <img src="https://img.shields.io/badge/1AM_Wallet-v4.x-3B82F6" alt="1AM Wallet" />
-    <img src="https://img.shields.io/badge/Commits-44%20Meaningful%20Commits-blue" alt="Commits" />
+    <img src="https://img.shields.io/badge/Commits-50%20Meaningful%20Commits-blue" alt="Commits" />
     <img src="https://img.shields.io/badge/Status-LIVE%20ON%20PREPROD-success" alt="Status: LIVE" />
   </p>
 </div>
@@ -66,7 +66,7 @@ A video demonstration of the Cyphra MVP showing 1AM Wallet connection on Midnigh
 | **Demo Video of the MVP** | **High-Definition Walkthrough** | [Watch MVP Demo Video](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4) | High Quality (Cloudinary MP4) |
 | **Public GitHub Repository** | **Source Code & Documentation** | [https://github.com/BDutta18/Cyphra](https://github.com/BDutta18/Cyphra) | Public Monorepo |
 | **CI/CD Pipeline** | **GitHub Actions CI/CD** | [CI Workflow](https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml) & [Preprod Deployment](https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml) | Passing (100% Green) |
-| **Meaningful Commits** | **Commit History** | 44 meaningful, atomic commits across contracts, frontend & backend | Minimum 15 Exceeded |
+| **Meaningful Commits** | **Commit History** | 50+ meaningful, atomic commits across contracts, frontend & backend | Minimum 15 Exceeded |
 | **Full Documentation** | **README + Setup + Usage** | Complete architectural guides, local dev, wallet setup, contract circuits | Comprehensive |
 
 ---
