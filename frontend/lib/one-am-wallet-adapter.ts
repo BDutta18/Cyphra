@@ -151,7 +151,7 @@ declare global {
 export class OneAMWalletAdapter {
   private initialApi: InitialAPI | null = null;
   private connectedApi: ConnectedAPI | null = null;
-  private currentNetwork: SupportedNetwork = 'preview';
+  private currentNetwork: SupportedNetwork = 'preprod';
   private addresses: WalletAddresses | null = null;
   private balances: WalletBalances = {
     shieldedNight: '0.00',
@@ -199,7 +199,7 @@ export class OneAMWalletAdapter {
   /**
    * Connects to 1AM Wallet on desired network
    */
-  public async connectSandbox(desiredNetwork: SupportedNetwork = 'preview'): Promise<OneAMWalletState> {
+  public async connectSandbox(desiredNetwork: SupportedNetwork = 'preprod'): Promise<OneAMWalletState> {
     return this.connectWallet(desiredNetwork);
   }
 
@@ -560,8 +560,12 @@ export class OneAMWalletAdapter {
 
     // 2. Recipient address validation
     const recipient = params.recipientAddress.trim();
-    if (!recipient.startsWith('mn_shielded1') && !recipient.startsWith('mn_addr1')) {
-      throw new InvalidRecipientError('Recipient must be a valid Midnight address (mn_shielded1... or mn_addr1...).');
+    if (
+      !recipient.startsWith('mn_shielded1') &&
+      !recipient.startsWith('mn_addr_preprod1') &&
+      !recipient.startsWith('mn_addr1')
+    ) {
+      throw new InvalidRecipientError('Recipient must be a valid Midnight address (mn_addr_preprod1..., mn_shielded1..., or mn_addr1...).');
     }
 
     // 3. Amount validation

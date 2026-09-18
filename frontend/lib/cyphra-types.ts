@@ -387,8 +387,12 @@ export async function validatePaymentRequest(
     }
   } else { req = input; }
 
-  if (!req.recipientAddress.startsWith('mn_shielded1') && !req.recipientAddress.startsWith('mn_addr1')) {
-    return { valid: false, code: 'INVALID_ADDRESS', reason: 'Recipient address is not a valid Midnight address format', request: req };
+  if (
+    !req.recipientAddress.startsWith('mn_shielded1') &&
+    !req.recipientAddress.startsWith('mn_addr_preprod1') &&
+    !req.recipientAddress.startsWith('mn_addr1')
+  ) {
+    return { valid: false, code: 'INVALID_ADDRESS', reason: 'Recipient address is not a valid Midnight address format (must start with mn_shielded1, mn_addr_preprod1, or mn_addr1)', request: req };
   }
   if (!['NIGHT', 'DUST', 'tCYPHRA'].includes(req.asset)) {
     return { valid: false, code: 'INVALID_ASSET', reason: `Unsupported asset: ${req.asset}`, request: req };

@@ -69,7 +69,7 @@ export function useMidnightWallet() {
   }, [detectWallet]);
 
   // Connect 1AM Wallet
-  const connect = useCallback(async (network: SupportedNetwork = 'preview') => {
+  const connect = useCallback(async (network: SupportedNetwork = 'preprod') => {
     setIsConnecting(true);
     setError(null);
     try {
