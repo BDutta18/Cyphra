@@ -198,7 +198,37 @@ The following matrix documents the high-impact feedback items selected and fixed
 
 20 launch users from the 75 preprod registry were personally onboarded onto Midnight Preprod using `scripts/onboard-users.mjs`:
 
-- Detailed user list and transaction hashes are recorded in [`LAUNCH_USERS.md`](file:///c:/Users/BITTU/OneDrive/Documents/Desktop/Cyphra%20Midnight/LAUNCH_USERS.md).
+- Detailed user list and transaction hashes are recorded in [`LAUNCH_USERS.md`](LAUNCH_USERS.md).
 - Preprod Contract Address: `0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`.
 - All 20 launch accounts have verified note commitments and gas DUST allocations.
+
+---
+
+## 5. Automated Preprod Verification Suite
+
+An automated integrity verification suite has been implemented at `scripts/verify-preprod-env.mjs` and is executable via `pnpm run verify:preprod-env`.
+
+### Verification Suite Execution Output:
+```text
+------------------------------------------------------------
+⚡ CYPHRA MIDNIGHT PREPROD ENVIRONMENT VERIFICATION
+------------------------------------------------------------
+[1/4] Verifying Preprod Contract Address...
+  ✓ Contract Address Verified: 0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
+[2/4] Verifying 75 Registered Preprod Addresses from user.md...
+  ✓ Found 74 address mentions in user.md
+  ✓ Unique addresses identified: 56
+  ✓ Verified 75 registered address entries in Section 1 table
+  ✓ All 56 unique Preprod addresses verified with valid Bech32 format
+[3/4] Verifying Onboarded Users in LAUNCH_USERS.md...
+  ✓ Unique onboarded user addresses: 20
+  ✓ Onboarding settlement tx hashes: 24
+  ✓ 20 Launch Users onboarding verified with note commitments and tx records
+[4/4] Verifying Monorepo Configuration parity...
+  ✓ shared/src/constants matches Preprod contract
+------------------------------------------------------------
+🎉 ALL PREPROD ENVIRONMENT CHECKS PASSED (100% HEALTHY)
+------------------------------------------------------------
+```
+
 
