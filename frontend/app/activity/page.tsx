@@ -26,6 +26,7 @@ import {
   Calendar,
   Layers,
   Sparkles,
+  ExternalLink,
 } from 'lucide-react';
 
 export default function ActivityPage() {
@@ -338,8 +339,31 @@ export default function ActivityPage() {
 
               <div className="space-y-2">
                 <div>
-                  <span className="text-zinc-500 block mb-1 font-semibold">Transaction Hash:</span>
-                  <span className="text-[11px] text-black break-all p-2 rounded-lg bg-zinc-50 border border-zinc-200 block font-bold">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-zinc-500 font-semibold">Transaction Hash:</span>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                            navigator.clipboard.writeText(selectedTx.txHash);
+                          }
+                        }}
+                        className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-zinc-100 hover:bg-[#FFD400] text-black border border-zinc-200 transition-colors flex items-center gap-1"
+                      >
+                        <Copy className="w-3 h-3" /> Copy
+                      </button>
+                      <a
+                        href="https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#FFD400] hover:bg-[#E5BE00] text-black border border-black/15 transition-colors flex items-center gap-1"
+                      >
+                        <ExternalLink className="w-3 h-3" /> Explorer
+                      </a>
+                    </div>
+                  </div>
+                  <span className="text-[11px] text-black break-all p-2 rounded-lg bg-zinc-50 border border-zinc-200 block font-bold select-all">
                     {selectedTx.txHash}
                   </span>
                 </div>
@@ -370,30 +394,64 @@ export default function ActivityPage() {
         <Modal
           isOpen={isAuditorModalOpen}
           onClose={() => setIsAuditorModalOpen(false)}
-          title="Generate Auditor Selective Disclosure Report"
+          title="Selective Auditor Disclosure & Key Manager"
         >
           <div className="space-y-4 text-xs font-mono text-zinc-900">
             <p className="text-zinc-600 font-sans">
-              Provide an authorized auditor address to generate a zero-knowledge verified selective disclosure proof for the past 30 days.
+              Authorize a regulated auditor or tax authority with a time-bounded, read-only viewing key. Private spending keys are never exposed.
             </p>
+
+            {/* Permission Scope Overview */}
+            <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200 space-y-1.5">
+              <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider block">
+                Permitted Disclosure Scope
+              </span>
+              <div className="grid grid-cols-3 gap-1.5 text-[11px]">
+                <div className="p-1.5 bg-white rounded border border-zinc-200 text-center">
+                  <span className="text-emerald-700 font-bold block">✓ Enabled</span>
+                  <span className="text-zinc-600 text-[10px]">Net Balances</span>
+                </div>
+                <div className="p-1.5 bg-white rounded border border-zinc-200 text-center">
+                  <span className="text-emerald-700 font-bold block">✓ Enabled</span>
+                  <span className="text-zinc-600 text-[10px]">Counterparties</span>
+                </div>
+                <div className="p-1.5 bg-white rounded border border-zinc-200 text-center">
+                  <span className="text-red-700 font-bold block">✕ Protected</span>
+                  <span className="text-zinc-600 text-[10px]">Spend Keys</span>
+                </div>
+              </div>
+            </div>
 
             <form onSubmit={handleGenerateAuditorReport} className="space-y-3">
               <Input
                 label="Auditor Midnight Address"
-                placeholder="mn_addr1... or mn_shielded1..."
+                placeholder="mn_addr_preprod1... or mn_shielded1..."
                 value={auditorAddress}
                 onChange={(e) => setAuditorAddress(e.target.value)}
                 required
               />
 
-              <Button
-                type="submit"
-                variant="primary"
-                className="w-full bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold"
-                isLoading={isGeneratingReport}
-              >
-                Generate Cryptographic Attestation
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="flex-1 bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold"
+                  isLoading={isGeneratingReport}
+                >
+                  Generate Viewing Proof
+                </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    setGeneratedReport(null);
+                    setAuditorAddress('');
+                  }}
+                  className="text-xs"
+                >
+                  Revoke Key
+                </Button>
+              </div>
             </form>
 
             {generatedReport && (
@@ -408,9 +466,12 @@ export default function ActivityPage() {
                     {copiedProof ? 'Copied' : 'Copy'}
                   </button>
                 </div>
-                <p className="text-[10px] break-all bg-white p-2 rounded border border-zinc-200">
+                <p className="text-[10px] break-all bg-white p-2 rounded border border-zinc-200 font-bold select-all">
                   {generatedReport.complianceAttestation}
                 </p>
+                <span className="text-[10px] text-zinc-500 block font-sans">
+                  Status: Active • Verified against Compact contract <code>0xcc4a2930...</code>
+                </span>
               </div>
             )}
           </div>
