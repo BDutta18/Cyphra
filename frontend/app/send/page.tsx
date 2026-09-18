@@ -29,10 +29,11 @@ import {
   HelpCircle,
   Clock,
   Coins,
+  RotateCw,
 } from 'lucide-react';
 
 export default function SendPage() {
-  const { account, isConnected, openConnectModal, network } = useMidnightWallet();
+  const { account, isConnected, openConnectModal, connectDemo, network } = useMidnightWallet();
   const balances = usePrivateBalance(account);
   const { sendPayment, isProving, step, lastResult, error, reset } = useConfidentialTransfer(account);
 
@@ -494,9 +495,30 @@ export default function SendPage() {
                   </div>
 
                   {error && (
-                    <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-mono flex items-start gap-2">
-                      <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <span>{error}</span>
+                    <div className="p-3 rounded-lg bg-amber-50 border border-amber-300 text-amber-900 text-xs font-mono space-y-2">
+                      <div className="flex items-start gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-amber-700" />
+                        <span className="font-sans font-semibold text-zinc-900">{error}</span>
+                      </div>
+                      {error.toLowerCase().includes('sync') && (
+                        <div className="pt-2 border-t border-amber-200 flex flex-col gap-1.5 font-sans">
+                          <p className="text-[11px] text-zinc-600">
+                            1AM Wallet is syncing blocks on Midnight Preprod. You can wait for 1AM, or bypass wait instantly:
+                          </p>
+                          <Button
+                            type="button"
+                            variant="primary"
+                            size="sm"
+                            onClick={async () => {
+                              reset();
+                              await connectDemo('preprod');
+                            }}
+                            className="bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold text-xs py-1.5 shadow-xs"
+                          >
+                            ⚡ Switch to Instant Preprod Demo Mode (0ms)
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

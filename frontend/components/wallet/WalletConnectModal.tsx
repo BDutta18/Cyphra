@@ -261,6 +261,32 @@ export function WalletConnectModal({
                   </p>
                 </div>
               )}
+
+              {((localError || error)?.toLowerCase().includes('sync')) && (
+                <div className="pt-2 border-t border-amber-300 flex flex-col gap-2 font-mono text-[11px] bg-amber-50 p-2.5 rounded-lg border border-amber-200">
+                  <div className="flex items-center gap-1.5 text-amber-950 font-bold font-sans">
+                    <RotateCw className="w-3.5 h-3.5 animate-spin text-amber-700" />
+                    <span>1AM Wallet is Synchronizing with Midnight Preprod</span>
+                  </div>
+                  <p className="text-[11px] text-zinc-700 font-sans leading-snug">
+                    The 1AM extension is currently scanning testnet blocks. While syncing, note indexing is temporarily locked by the extension.
+                  </p>
+                  <div className="flex flex-col gap-1.5 pt-1">
+                    <Button
+                      type="button"
+                      variant="primary"
+                      size="sm"
+                      onClick={handleConnectDemo}
+                      className="w-full bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold text-xs py-2 shadow-xs"
+                    >
+                      ⚡ Bypass Wait: Launch Preprod Demo Account (Aarav Sharma)
+                    </Button>
+                    <p className="text-[10px] text-zinc-500 font-mono text-center">
+                      Pre-funded with 1,500 NIGHT &amp; 120 DUST on Preprod
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

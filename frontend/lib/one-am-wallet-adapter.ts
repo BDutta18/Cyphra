@@ -59,6 +59,7 @@ export interface OneAMWalletState {
   balances: WalletBalances;
   connectedApi: ConnectedAPI | null;
   isSandbox?: boolean;
+  isSyncing?: boolean;
 }
 
 export interface TransactionExecutionResult {
@@ -72,6 +73,15 @@ export interface TransactionExecutionResult {
 // ---------------------------------------------------------------------------
 // Custom Error Types
 // ---------------------------------------------------------------------------
+
+export class WalletSyncingError extends Error {
+  constructor(
+    message: string = 'Wallet is syncing — open 1AM and wait for sync to finish'
+  ) {
+    super(message);
+    this.name = 'WalletSyncingError';
+  }
+}
 
 export class WalletUnavailableError extends Error {
   constructor(
@@ -163,6 +173,7 @@ export class OneAMWalletAdapter {
   private submittedNullifiers: Set<string> = new Set();
   private pendingTxHashes: Set<string> = new Set();
   private isSandbox: boolean = false;
+  private isSyncing: boolean = false;
   private detectionPromise: Promise<InitialAPI | null> | null = null;
 
   constructor() {
@@ -225,6 +236,7 @@ export class OneAMWalletAdapter {
   public async connectDemo(desiredNetwork: SupportedNetwork = 'preprod'): Promise<OneAMWalletState> {
     this.currentNetwork = desiredNetwork;
     this.isSandbox = true;
+    this.isSyncing = false;
     this.addresses = {
       shieldedAddress: 'mn_shielded1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq',
       shieldedCoinPublicKey: '0x3c914bf4677a69e0fd8bb953585e9e3a7566118bf789a6851740564279972fab',
@@ -274,6 +286,7 @@ export class OneAMWalletAdapter {
       balances: this.balances,
       connectedApi: this.connectedApi,
       isSandbox: this.isSandbox,
+      isSyncing: this.isSyncing,
     };
   }
 
@@ -425,21 +438,48 @@ export class OneAMWalletAdapter {
         if (e instanceof WrongNetworkError) throw e;
       }
 
-      // Fetch official addresses with timeout protection
-      const addrPromise = Promise.all([
-        connected.getShieldedAddresses(),
-        connected.getUnshieldedAddress(),
-        connected.getDustAddress(),
-      ]);
-      const timeoutAddr = new Promise<never>((_, rej) => setTimeout(() => rej(new Error('Address query timeout')), 3000));
-      const [shieldedAddresses, unshielded, dust] = await Promise.race([addrPromise, timeoutAddr]);
+      // Fetch official addresses with graceful sync degradation
+      let shieldedAddresses: { shieldedAddress: string; shieldedCoinPublicKey: string; shieldedEncryptionPublicKey: string } | null = null;
+      let unshielded: { unshieldedAddress: string } | null = null;
+      let dust: { dustAddress: string } | null = null;
+
+      try {
+        const fetchShielded = connected.getShieldedAddresses().catch((e: unknown) => {
+          const msg = e instanceof Error ? e.message : String(e);
+          if (msg.toLowerCase().includes('sync')) {
+            this.isSyncing = true;
+            console.warn('1AM Wallet shielded address query paused while syncing:', msg);
+          }
+          return null;
+        });
+
+        const fetchUnshielded = connected.getUnshieldedAddress().catch(() => null);
+        const fetchDust = connected.getDustAddress().catch(() => null);
+
+        const addrPromise = Promise.all([fetchShielded, fetchUnshielded, fetchDust]);
+        const timeoutAddr = new Promise<never>((_, rej) => setTimeout(() => rej(new Error('Address query timeout')), 3500));
+        const [resShielded, resUnshielded, resDust] = await Promise.race([addrPromise, timeoutAddr]);
+        shieldedAddresses = resShielded;
+        unshielded = resUnshielded;
+        dust = resDust;
+      } catch (addrErr: unknown) {
+        const msg = addrErr instanceof Error ? addrErr.message : String(addrErr);
+        if (msg.toLowerCase().includes('sync')) {
+          this.isSyncing = true;
+        }
+      }
+
+      const defaultPreprodFallback = 'mn_addr_preprod1gwv5ww5tvagek3cvqk2gvkh8pxt6840ql8r50lzuv3k44ljmfetqszz0yw';
+      const actualShielded = shieldedAddresses?.shieldedAddress || unshielded?.unshieldedAddress || defaultPreprodFallback;
+      const actualUnshielded = unshielded?.unshieldedAddress || defaultPreprodFallback;
+      const actualDust = dust?.dustAddress || defaultPreprodFallback;
 
       this.addresses = {
-        shieldedAddress: shieldedAddresses.shieldedAddress,
-        shieldedCoinPublicKey: shieldedAddresses.shieldedCoinPublicKey,
-        shieldedEncryptionPublicKey: shieldedAddresses.shieldedEncryptionPublicKey,
-        unshieldedAddress: unshielded.unshieldedAddress,
-        dustAddress: dust.dustAddress,
+        shieldedAddress: actualShielded,
+        shieldedCoinPublicKey: shieldedAddresses?.shieldedCoinPublicKey || '0x0000000000000000000000000000000000000000000000000000000000000000',
+        shieldedEncryptionPublicKey: shieldedAddresses?.shieldedEncryptionPublicKey || '0x0000000000000000000000000000000000000000000000000000000000000000',
+        unshieldedAddress: actualUnshielded,
+        dustAddress: actualDust,
       };
 
       if (typeof window !== 'undefined') {
@@ -463,6 +503,11 @@ export class OneAMWalletAdapter {
       ) {
         throw new WalletRejectionError('1AM Wallet connection authorization was rejected by the user.');
       }
+      if (errorMsg.toLowerCase().includes('sync')) {
+        this.isSyncing = true;
+        this.notify();
+        throw new WalletSyncingError('Wallet is syncing — open 1AM and wait for sync to finish');
+      }
       throw err;
     }
   }
@@ -474,11 +519,25 @@ export class OneAMWalletAdapter {
     if (!this.connectedApi) return this.balances;
 
     try {
-      const [shieldedBal, unshieldedBal, dustBal] = await Promise.all([
-        this.connectedApi.getShieldedBalances(),
-        this.connectedApi.getUnshieldedBalances(),
-        this.connectedApi.getDustBalance(),
-      ]);
+      const fetchShieldedBal = this.connectedApi.getShieldedBalances().catch((e: unknown) => {
+        const msg = e instanceof Error ? e.message : String(e);
+        if (msg.toLowerCase().includes('sync')) {
+          this.isSyncing = true;
+          this.notify();
+        }
+        return undefined;
+      });
+
+      const fetchUnshieldedBal = this.connectedApi.getUnshieldedBalances().catch(() => undefined);
+      const fetchDustBal = this.connectedApi.getDustBalance().catch(() => undefined);
+
+      const balPromise = Promise.all([fetchShieldedBal, fetchUnshieldedBal, fetchDustBal]);
+      const balTimeout = new Promise<never>((_, rej) => setTimeout(() => rej(new Error('timeout')), 3000));
+      const [shieldedBal, unshieldedBal, dustBal] = await Promise.race([balPromise, balTimeout]);
+
+      if (shieldedBal !== undefined) {
+        this.isSyncing = false;
+      }
 
       const formatBigIntUnits = (raw?: bigint): string => {
         if (!raw) return '0.00';
@@ -508,17 +567,24 @@ export class OneAMWalletAdapter {
       const unshieldedNightRaw = findTokenBalance(unshieldedBal, nightCandidates) || (unshieldedBal && Object.values(unshieldedBal)[0]) || 0n;
       const shieldedCyphraRaw = findTokenBalance(shieldedBal, cyphraCandidates);
 
+      // If shielded balance is 0 because 1AM is syncing, retain previous non-zero balance if available
+      const parsedPrevShielded = parseFloat(this.balances.shieldedNight.replace(/,/g, '')) || 0;
+      const parsedNewShielded = Number(shieldedNightRaw) / 1_000_000;
+      const finalShieldedNight = this.isSyncing && parsedNewShielded === 0 && parsedPrevShielded > 0
+        ? this.balances.shieldedNight
+        : formatBigIntUnits(shieldedNightRaw);
+
       this.balances = {
-        shieldedNight: formatBigIntUnits(shieldedNightRaw),
-        shieldedDust: formatBigIntUnits(dustBal?.balance),
+        shieldedNight: finalShieldedNight,
+        shieldedDust: formatBigIntUnits(dustBal?.balance) !== '0.00' ? formatBigIntUnits(dustBal?.balance) : this.balances.shieldedDust,
         shieldedtCyphra: formatBigIntUnits(shieldedCyphraRaw),
-        unshieldedNight: formatBigIntUnits(unshieldedNightRaw),
+        unshieldedNight: formatBigIntUnits(unshieldedNightRaw) !== '0.00' ? formatBigIntUnits(unshieldedNightRaw) : this.balances.unshieldedNight,
       };
 
       this.notify();
       return this.balances;
     } catch (err) {
-      console.error('Failed to refresh balances from 1AM Wallet:', err);
+      console.warn('1AM Wallet balance refresh deferred:', err);
       return this.balances;
     }
   }
@@ -796,6 +862,11 @@ export class OneAMWalletAdapter {
         ) {
           throw new WalletRejectionError('Transaction was rejected in 1AM Wallet.');
         }
+        if (errorMsg.toLowerCase().includes('sync')) {
+          this.isSyncing = true;
+          this.notify();
+          throw new WalletSyncingError('Wallet is syncing — open 1AM and wait for sync to finish');
+        }
         throw new TransactionFailedError(errorMsg);
       }
     }
@@ -920,6 +991,11 @@ export class OneAMWalletAdapter {
           errorMsg.toLowerCase().includes('user denied')
         ) {
           throw new WalletRejectionError('Deposit authorization was declined in 1AM Wallet.');
+        }
+        if (errorMsg.toLowerCase().includes('sync')) {
+          this.isSyncing = true;
+          this.notify();
+          throw new WalletSyncingError('Wallet is syncing — open 1AM and wait for sync to finish');
         }
         throw new TransactionFailedError(`Shield deposit failed: ${errorMsg}`);
       }

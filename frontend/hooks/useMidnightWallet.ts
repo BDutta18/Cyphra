@@ -7,6 +7,7 @@ import {
   SupportedNetwork,
   WalletUnavailableError,
   WalletRejectionError,
+  WalletSyncingError,
   WrongNetworkError,
 } from '../lib/one-am-wallet-adapter';
 
@@ -89,6 +90,8 @@ export function useMidnightWallet() {
       let message = 'Failed to connect to 1AM Wallet.';
       if (err instanceof WalletUnavailableError) {
         message = err.message;
+      } else if (err instanceof WalletSyncingError) {
+        message = err.message;
       } else if (err instanceof WalletRejectionError) {
         message = 'Connection request was cancelled in 1AM Wallet.';
       } else if (err instanceof WrongNetworkError) {
@@ -137,6 +140,7 @@ export function useMidnightWallet() {
     dustAddress: walletState.addresses.dustAddress,
     balances: walletState.balances,
     isSimulated: walletState.isSandbox,
+    isSyncing: walletState.isSyncing || false,
   } : null;
 
   return {
@@ -151,6 +155,7 @@ export function useMidnightWallet() {
     openConnectModal,
     closeConnectModal,
     isSandbox: walletState.isSandbox,
+    isSyncing: walletState.isSyncing || false,
     network: walletState.network,
     balances: walletState.balances,
     error,
