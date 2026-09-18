@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { Tooltip } from '../ui/Tooltip';
 import { Eye, EyeOff, Shield, ArrowDownToLine, RefreshCw } from 'lucide-react';
 
 export interface BalanceCardProps {
@@ -48,9 +49,12 @@ export function BalanceCard({
             <Shield className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold">
-              Confidential Shielded Vault
-            </h2>
+            <div className="flex items-center gap-1.5">
+              <h2 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold">
+                Confidential Shielded Vault
+              </h2>
+              <Tooltip content="Funds held in zero-knowledge note commitments on Midnight Preprod. Invisible to block explorers." />
+            </div>
             <p className="text-[11px] text-emerald-700 font-mono flex items-center gap-1.5 mt-0.5 font-medium">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -129,14 +133,20 @@ export function BalanceCard({
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-4 border-t border-zinc-200">
         <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-300 transition-colors">
-          <span className="text-[11px] text-zinc-500 font-mono block font-medium">Shielded DUST (Gas)</span>
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-zinc-500 font-mono block font-medium">Shielded DUST (Gas)</span>
+            <Tooltip content="Midnight gas token used by 1AM Wallet to balance and submit zero-knowledge transactions." />
+          </div>
           <span className="text-sm font-bold text-black font-mono mt-0.5 block tabular-nums">
             {showAmounts ? `${shieldedDust} DUST` : '••••'}
           </span>
         </div>
 
         <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-300 transition-colors">
-          <span className="text-[11px] text-zinc-500 font-mono block font-medium">tCYPHRA (Confidential)</span>
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-zinc-500 font-mono block font-medium">tCYPHRA (Confidential)</span>
+            <Tooltip content="Cyphra confidential stable asset transferred with complete value shielding." />
+          </div>
           <span className="text-sm font-bold text-black font-mono mt-0.5 block tabular-nums">
             {showAmounts ? `${shieldedtCyphra} tCYPHRA` : '••••'}
           </span>
@@ -144,7 +154,10 @@ export function BalanceCard({
 
         <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-300 transition-colors col-span-2 sm:col-span-1 flex items-center justify-between">
           <div>
-            <span className="text-[11px] text-zinc-500 font-mono block font-medium">Unshielded L1</span>
+            <div className="flex items-center gap-1">
+              <span className="text-[11px] text-zinc-500 font-mono block font-medium">Unshielded L1</span>
+              <Tooltip content="Public on-chain tokens in your Midnight address before being shielded into private notes." />
+            </div>
             <span className="text-sm font-bold text-zinc-700 font-mono mt-0.5 block tabular-nums">
               {showAmounts ? `${unshieldedNight} NIGHT` : '••••'}
             </span>
