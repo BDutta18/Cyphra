@@ -4,7 +4,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Modal } from '../ui/Modal';
 import { ProofGenerationStep } from '../../lib/cyphra-types';
-import { ShieldCheck, Cpu, Key, Lock, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Cpu, Key, Lock, CheckCircle2, ArrowRight, Copy, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 export interface ProofProgressModalProps {
@@ -120,12 +120,41 @@ export function ProofProgressModal({ isOpen, step, onClose, txHash }: ProofProgr
               Zero-knowledge proof generated and accepted by Midnight consensus. Notes committed privately via 1AM.
             </p>
             {txHash && (
-              <div className="p-2 rounded bg-white border border-zinc-200 font-mono text-[11px] text-zinc-800 break-all text-left shadow-xs">
-                <span className="text-zinc-500 block mb-0.5 font-bold">TX HASH:</span>
-                {txHash}
+              <div className="p-3 rounded-lg bg-white border border-zinc-200 text-left shadow-xs space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-zinc-500 font-mono font-bold uppercase tracking-wider">
+                    Midnight Transaction Hash
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                          navigator.clipboard.writeText(txHash);
+                        }
+                      }}
+                      className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-zinc-100 hover:bg-[#FFD400] text-black border border-zinc-200 transition-colors flex items-center gap-1"
+                      title="Copy transaction hash"
+                    >
+                      <Copy className="w-3 h-3" /> Copy Hash
+                    </button>
+                    <a
+                      href={`https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#FFD400] hover:bg-[#E5BE00] text-black border border-black/15 transition-colors flex items-center gap-1"
+                      title="Verify on Midnight Preprod Explorer"
+                    >
+                      <ExternalLink className="w-3 h-3" /> Explorer
+                    </a>
+                  </div>
+                </div>
+                <div className="p-2 rounded bg-zinc-50 border border-zinc-200 font-mono text-[11px] text-zinc-800 break-all select-all font-semibold">
+                  {txHash}
+                </div>
               </div>
             )}
-            <Button variant="primary" size="md" className="w-full mt-2 font-bold" onClick={onClose}>
+            <Button variant="primary" size="md" className="w-full mt-2 font-bold bg-[#FFD400] hover:bg-[#E5BE00] text-black shadow-xs" onClick={onClose}>
               Done
             </Button>
           </motion.div>
