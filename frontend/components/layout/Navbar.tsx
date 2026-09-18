@@ -15,6 +15,7 @@ import {
   History,
   Settings,
   Activity,
+  BookOpen,
 } from 'lucide-react';
 
 export function Navbar() {
@@ -35,6 +36,7 @@ export function Navbar() {
     { label: 'Receive', href: '/receive', icon: ArrowDownLeft },
     { label: 'Request', href: '/request', icon: QrCode },
     { label: 'Activity', href: '/activity', icon: History },
+    { label: 'Docs', href: '/docs', icon: BookOpen },
     { label: 'Settings', href: '/settings', icon: Settings },
   ];
 
