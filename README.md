@@ -55,6 +55,26 @@ A video demonstration of the Cyphra MVP showing 1AM Wallet connection on Midnigh
 
 ---
 
+## Contract Address Table
+
+> [!IMPORTANT]
+> **Mandatory Preprod Contract Deployment**
+> Cyphra is deployed and actively operating on the official decentralized **Midnight Preprod** network.
+
+| Parameter | Value / Link | Description |
+|---|---|---|
+| **Network** | **Midnight Preprod** | Official decentralized Midnight test ledger |
+| **Contract Name** | `CyphraConfidentialPayment` | Privacy-preserving Compact smart contract |
+| **Contract Address** | [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | **Deployed Preprod Smart Contract** |
+| **Explorer Verification** | [Midnight Preprod Explorer](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Verified on-chain ledger state |
+| **1AM Explorer** | [1AM Explorer Contract View](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod) | 1AM DApp Connector contract index |
+| **Ledger Version** | Midnight Ledger 8.0 Preprod | Consensus state machine |
+| **Compact Compiler** | Compact v0.31.1 (`.compact`) | Zero-knowledge intermediate representation |
+| **Active Circuits** | `deposit`, `confidentialTransfer`, `registerPaymentRequest`, `fulfillPaymentRequest`, `grantAuditorAccess`, `revokeAuditorAccess` | 6 full Groth16 cryptographic circuits |
+| **Deployment Status** | **LIVE ON PREPROD** | Deterministic deployment confirmed |
+
+---
+
 ## Submission Checklist & Requirements
 
 | Requirement to Pass | Submission Item | Details / Link | Status |
@@ -62,11 +82,14 @@ A video demonstration of the Cyphra MVP showing 1AM Wallet connection on Midnigh
 | **Working MVP live on Preprod** | **Live Preprod Demo DApp** | [https://cyphra-two.vercel.app](https://cyphra-two.vercel.app) | Verified Live |
 | **Verifiable Preprod Address** | **Midnight Preprod Contract Address** | [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Deployed on Preprod |
 | **Explorer Verification (Midnight)** | **Midnight Network Explorer** | [Midnight Explorer: 0xcc4a29...](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Verified On-Chain |
+| **Launch Users Onboarded** | **Preprod Launch Cohort** | [`LAUNCH_USERS.md`](LAUNCH_USERS.md) (20 Users Personally Onboarded with TX Hashes) | 20 Verified Users |
+| **User Feedback & 75 Addresses** | **Feedback & Resolution Matrix** | [`user.md`](user.md) (All 75 Preprod Test Accounts + User Feedback Matrix) | Highlighted & Solved |
+| **Brand Visuals & Assets** | **Brand Brief, Logo & X Banner** | [`docs/brand-brief.md`](docs/brand-brief.md) + Vector Logo & X Banner Assets | Complete Brand Kit |
 | **Product X Profile** | **Official X Account** | [@CyphraPayment (x.com/CyphraPayment)](https://x.com/CyphraPayment) | Created & Linked |
 | **Demo Video of the MVP** | **High-Definition Walkthrough** | [Watch MVP Demo Video](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4) | High Quality (Cloudinary MP4) |
 | **Public GitHub Repository** | **Source Code & Documentation** | [https://github.com/BDutta18/Cyphra](https://github.com/BDutta18/Cyphra) | Public Monorepo |
 | **CI/CD Pipeline** | **GitHub Actions CI/CD** | [CI Workflow](https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml) & [Preprod Deployment](https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml) | Passing (100% Green) |
-| **Meaningful Commits** | **Commit History** | 50+ meaningful, atomic commits across contracts, frontend & backend | Minimum 15 Exceeded |
+| **Meaningful Commits** | **Commit History** | 60+ atomic commits across contracts, frontend, backend & onboarding | Minimum 15 Exceeded |
 | **Full Documentation** | **README + Setup + Usage** | Complete architectural guides, local dev, wallet setup, contract circuits | Comprehensive |
 
 ---
