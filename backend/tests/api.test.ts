@@ -130,6 +130,15 @@ describe('Unit Services', () => {
     assert.ok(report.complianceAttestation.startsWith('CYPHRA-MIDNIGHT-AUDIT:'));
   });
 
+  test('Preprod Address Format Validation & Masking', async () => {
+    const preprodAddr = 'mn_addr_preprod1gwv5ww5tvagek3cvqk2gvkh8pxt6840ql8r50lzuv3k44ljmfetqszz0yw';
+    const { isValidMidnightAddress, isValidUnshieldedAddress, maskAddress } = await import('../src/utils/crypto.js');
+    assert.strictEqual(isValidUnshieldedAddress(preprodAddr), true);
+    assert.strictEqual(isValidMidnightAddress(preprodAddr), true);
+    const masked = maskAddress(preprodAddr);
+    assert.ok(masked.startsWith('mn_addr_preprod1gwv5...'));
+  });
+
   test('Midnight Service - Network Health Query', async () => {
     const health = await midnightService.getNetworkHealth();
     assert.ok(['online', 'degraded', 'offline'].includes(health.status));
