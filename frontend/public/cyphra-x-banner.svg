@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" width="1500" height="500" fill="none">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050507" />
+      <stop offset="50%" stop-color="#0E0E12" />
+      <stop offset="100%" stop-color="#15151C" />
+    </linearGradient>
+
+    <!-- Cyber Gold Gradient -->
+    <linearGradient id="cyberGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE033" />
+      <stop offset="100%" stop-color="#FFD400" />
+    </linearGradient>
+
+    <!-- Emerald Proof Glow -->
+    <linearGradient id="zkEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <!-- Geometric Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#27272A" stroke-width="0.75" stroke-opacity="0.4" />
+    </pattern>
+
+    <!-- Radial Glows -->
+    <radialGradient id="glowLeft" cx="20%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD400" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#050507" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowRight" cx="80%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#050507" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1500" height="500" fill="url(#bgGrad)" />
+  <rect width="1500" height="500" fill="url(#grid)" />
+  <rect width="1500" height="500" fill="url(#glowLeft)" />
+  <rect width="1500" height="500" fill="url(#glowRight)" />
+
+  <!-- Abstract Circuit Lines in Background -->
+  <g stroke="#3F3F46" stroke-width="1" stroke-dasharray="4 8" opacity="0.4">
+    <path d="M 100 80 L 320 80 L 400 160 L 700 160" />
+    <path d="M 900 380 L 1150 380 L 1250 280 L 1400 280" />
+    <path d="M 200 420 L 450 420 L 520 350 L 780 350" />
+  </g>
+
+  <!-- Left: Cyber Shield Emblem (Enlarged) -->
+  <g transform="translate(130, 130)">
+    <!-- Outer Glow Polygon -->
+    <polygon points="120,10 216,65 216,175 120,230 24,175 24,65" fill="#18181B" stroke="#3F3F46" stroke-width="3" />
+    <!-- Inner Cyber Gold Border -->
+    <polygon points="120,30 196,75 196,165 120,210 44,165 44,75" stroke="url(#cyberGold)" stroke-width="5" stroke-linejoin="round" fill="none" />
+    <!-- Center Cipher Symbol -->
+    <circle cx="120" cy="105" r="22" fill="url(#cyberGold)" />
+    <path d="M107,118 L133,118 L142,168 L98,168 Z" fill="url(#cyberGold)" />
+    <!-- ZK Proof Verification Nodes -->
+    <circle cx="24" cy="120" r="6" fill="#10B981" />
+    <circle cx="216" cy="120" r="6" fill="#10B981" />
+    <circle cx="120" cy="10" r="6" fill="#10B981" />
+    <circle cx="120" cy="230" r="6" fill="#10B981" />
+  </g>
+
+  <!-- Center-Right: Typography & Value Proposition -->
+  <g transform="translate(420, 160)">
+    <!-- Category Super-Title -->
+    <g transform="translate(0, 0)">
+      <rect width="210" height="28" rx="14" fill="#FFD400" fill-opacity="0.15" stroke="#FFD400" stroke-width="1.5" />
+      <text x="105" y="18" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="800" fill="#FFD400" letter-spacing="2">
+        MIDNIGHT PREPROD LIVE
+      </text>
+    </g>
+
+    <!-- Main Wordmark -->
+    <text y="75" font-family="'Inter', -apple-system, sans-serif" font-weight="900" font-size="64" letter-spacing="8" fill="#FFFFFF">
+      CYPHRA
+    </text>
+
+    <!-- Subtitle -->
+    <text y="125" font-family="'Inter', sans-serif" font-weight="600" font-size="24" fill="#E4E4E7" letter-spacing="1">
+      Privacy-First Confidential Payments on the Midnight Network
+    </text>
+
+    <!-- Technical Specification Pills -->
+    <g transform="translate(0, 160)">
+      <!-- Pill 1: Compact 0.31.1 -->
+      <g transform="translate(0, 0)">
+        <rect width="170" height="34" rx="8" fill="#18181B" stroke="#27272A" stroke-width="1.5" />
+        <circle cx="20" cy="17" r="4" fill="#10B981" />
+        <text x="32" y="22" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#A1A1AA">
+          Compact v0.31.1
+        </text>
+      </g>
+
+      <!-- Pill 2: Groth16 zk-SNARKs -->
+      <g transform="translate(185, 0)">
+        <rect width="180" height="34" rx="8" fill="#18181B" stroke="#27272A" stroke-width="1.5" />
+        <circle cx="20" cy="17" r="4" fill="#FFD400" />
+        <text x="32" y="22" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#A1A1AA">
+          Groth16 zk-SNARKs
+        </text>
+      </g>
+
+      <!-- Pill 3: 1AM Wallet Native -->
+      <g transform="translate(380, 0)">
+        <rect width="180" height="34" rx="8" fill="#18181B" stroke="#27272A" stroke-width="1.5" />
+        <circle cx="20" cy="17" r="4" fill="#3B82F6" />
+        <text x="32" y="22" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#A1A1AA">
+          1AM Wallet Native
+        </text>
+      </g>
+
+      <!-- Pill 4: Selective Auditing -->
+      <g transform="translate(575, 0)">
+        <rect width="185" height="34" rx="8" fill="#18181B" stroke="#27272A" stroke-width="1.5" />
+        <circle cx="20" cy="17" r="4" fill="#EC4899" />
+        <text x="32" y="22" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#A1A1AA">
+          Selective Auditing
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Accent Stripe -->
+  <rect y="494" width="1500" height="6" fill="url(#cyberGold)" />
+</svg>

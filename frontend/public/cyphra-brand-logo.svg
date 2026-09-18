@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120" fill="none">
+  <defs>
+    <linearGradient id="goldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE033" />
+      <stop offset="100%" stop-color="#FFD400" />
+    </linearGradient>
+    <linearGradient id="shieldFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B" />
+      <stop offset="100%" stop-color="#09090B" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Logo Mark Container -->
+  <g transform="translate(20, 15)" filter="url(#shadow)">
+    <!-- Shield Hexagon Base -->
+    <polygon points="45,5 82,26 82,68 45,89 8,68 8,26" fill="url(#shieldFill)" stroke="#27272A" stroke-width="2" />
+    <!-- Inner Cyber Gold Accent Accent Lines -->
+    <polygon points="45,15 74,32 74,63 45,79 16,63 16,32" stroke="url(#goldGlow)" stroke-width="3" stroke-linejoin="round" fill="none" />
+    <!-- ZK Core Nodes & Cipher Keyhole -->
+    <circle cx="45" cy="40" r="7" fill="#FFD400" />
+    <path d="M41,45 L49,45 L52,62 L38,62 Z" fill="#FFD400" />
+    <!-- Glowing Circuit Accents -->
+    <circle cx="8" cy="47" r="2.5" fill="#10B981" />
+    <circle cx="82" cy="47" r="2.5" fill="#10B981" />
+    <circle cx="45" cy="5" r="2.5" fill="#10B981" />
+    <circle cx="45" cy="89" r="2.5" fill="#10B981" />
+  </g>
+
+  <!-- Brand Typography -->
+  <g transform="translate(130, 68)">
+    <text font-family="'Geist', 'Inter', -apple-system, sans-serif" font-weight="900" font-size="44" letter-spacing="4" fill="#09090B">
+      CYPHRA
+    </text>
+    <text y="24" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="11" letter-spacing="2" fill="#71717A">
+      CONFIDENTIAL PAYMENTS • MIDNIGHT
+    </text>
+  </g>
+
+  <!-- Verified Badge -->
+  <g transform="translate(420, 38)">
+    <rect width="42" height="18" rx="9" fill="#10B981" fill-opacity="0.15" stroke="#10B981" stroke-width="1" />
+    <text x="21" y="12.5" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800" fill="#059669">
+      ZK-SNARK
+    </text>
+  </g>
+</svg>
