@@ -47,11 +47,57 @@ Unlike legacy blockchains where user balances, counterparty addresses, and entir
 
 ---
 
-## Video Demo of the MVP
+## DApp Screenshots
 
-A video demonstration of the Cyphra MVP showing 1AM Wallet connection on Midnight Preprod, private note commitment creation, confidential transfers, and QR payment request workflows:
+> Live on Midnight Preprod — [cyphra-two.vercel.app](https://cyphra-two.vercel.app)
 
-- **Direct Link**: [https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4)
+### 🏠 Landing Page — Confidential Payments for the Private Web
+
+<p align="center">
+  <img src="./docs/screenshots/01-landing.png" alt="Cyphra Landing Page" width="820" />
+</p>
+
+The Cyphra landing page with multi-network switcher (Preview Testnet → Preprod Staging → Mainnet Production), live block ticker, and official 1AM Wallet DApp Connector integration banner.
+
+---
+
+### 📊 Dashboard — Shielded Settlement Volume & ZK Proof Workflow
+
+<p align="center">
+  <img src="./docs/screenshots/02-dashboard.png" alt="Cyphra Dashboard" width="820" />
+</p>
+
+Dashboard showing 7-day shielded settlement volume (**\$22,800 +15.2%**, 72 proofs verified), quick action cards (Send Confidential, Receive, Request Payment, Shield Funds), and the full Zero-Knowledge Privacy Architecture step-by-step flow (Private Witness Generation → Groth16 zk-SNARK Proving → On-Chain State Transition).
+
+---
+
+### 📤 Send — Confidential ZK Transfer
+
+<p align="center">
+  <img src="./docs/screenshots/03-send.png" alt="Cyphra Send Confidential Payment" width="820" />
+</p>
+
+3-step send flow: **Details & Fee → Review & Confirm → Midnight Proof**. Supports Midnight Preprod unshielded (`mn_addr_preprod1…`) and shielded (`mn_shielded1…`) addresses with one-click autofill chips, asset selector (NIGHT / DUST / tCYPHRA), optional encrypted private memo, and estimated network fee in DUST.
+
+---
+
+### 📥 Receive — Shielded QR & Permanent Midnight Identifier
+
+<p align="center">
+  <img src="./docs/screenshots/04-receive.png" alt="Cyphra Receive Confidential Payments" width="820" />
+</p>
+
+High-resolution QR code for the permanent shielded Midnight address with one-click Copy URI, Share, and Download actions. Displays the full `mn_addr_preprod1…` unshielded address for direct peer-to-peer transfers.
+
+---
+
+### 🔗 Contract Deployment — Midnight Preprod Explorer
+
+<p align="center">
+  <img src="./docs/screenshots/05-contract-preprod.png" alt="Cyphra Contract on Midnight Preprod Explorer" width="820" />
+</p>
+
+**Live verification on [midnightexplorer.com](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)** — Contract `0xcc4a2930…96db3f` status **● DEPLOYED**, deployed at Block **#2,518,562** on **Sep 12, 2026, 2:40 PM UTC** with full on-chain Ledger State.
 
 ---
 
@@ -72,6 +118,14 @@ A video demonstration of the Cyphra MVP showing 1AM Wallet connection on Midnigh
 | **Compact Compiler** | Compact v0.31.1 (`.compact`) | Zero-knowledge intermediate representation |
 | **Active Circuits** | `deposit`, `confidentialTransfer`, `registerPaymentRequest`, `fulfillPaymentRequest`, `grantAuditorAccess`, `revokeAuditorAccess` | 6 full Groth16 cryptographic circuits |
 | **Deployment Status** | **LIVE ON PREPROD** | Deterministic deployment confirmed |
+
+---
+
+## Video Demo of the MVP
+
+A full walkthrough of Cyphra MVP: 1AM Wallet connection on Midnight Preprod, private note commitment creation, confidential transfers, and QR payment request workflows.
+
+- 🎬 **Watch Demo**: [Screen_Recording_2026-09-17_230655.mp4](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4)
 
 ---
 
