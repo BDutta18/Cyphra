@@ -13,6 +13,7 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Modal } from '../../components/ui/Modal';
+import { PaymentRequestModal } from '../../components/payment/PaymentRequestModal';
 import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 import { usePrivateBalance } from '../../hooks/usePrivateBalance';
 import { apiClient } from '../../lib/api-client';
@@ -34,6 +35,7 @@ export default function DashboardPage() {
   const balances = usePrivateBalance(account);
   const [activities, setActivities] = useState<TransactionActivity[]>([]);
   const [isDepositOpen, setIsDepositOpen] = useState(false);
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [depositAmount, setDepositAmount] = useState('50');
   const [isDepositing, setIsDepositing] = useState(false);
   const [depositSuccess, setDepositSuccess] = useState(false);
@@ -181,7 +183,10 @@ export default function DashboardPage() {
               Quick Actions
             </h3>
           </div>
-          <QuickActions onOpenDeposit={() => setIsDepositOpen(true)} />
+          <QuickActions
+            onOpenDeposit={() => setIsDepositOpen(true)}
+            onOpenInvoice={() => setIsInvoiceOpen(true)}
+          />
         </motion.div>
 
         {/* Analytics & Volume Chart */}
@@ -350,6 +355,13 @@ export default function DashboardPage() {
             </form>
           )}
         </Modal>
+
+        {/* Quick Invoice Creation Modal */}
+        <PaymentRequestModal
+          isOpen={isInvoiceOpen}
+          onClose={() => setIsInvoiceOpen(false)}
+          account={account}
+        />
       </motion.div>
     </AppShell>
   );

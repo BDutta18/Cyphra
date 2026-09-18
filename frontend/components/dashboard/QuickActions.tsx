@@ -7,9 +7,10 @@ import { Send, ArrowDownLeft, QrCode, ShieldPlus, ArrowUpRight } from 'lucide-re
 
 export interface QuickActionsProps {
   onOpenDeposit: () => void;
+  onOpenInvoice?: () => void;
 }
 
-export function QuickActions({ onOpenDeposit }: QuickActionsProps) {
+export function QuickActions({ onOpenDeposit, onOpenInvoice }: QuickActionsProps) {
   const actions = [
     {
       label: 'Send Confidential',
@@ -28,7 +29,8 @@ export function QuickActions({ onOpenDeposit }: QuickActionsProps) {
     {
       label: 'Request Payment',
       desc: 'Confidential invoice link',
-      href: '/request',
+      href: onOpenInvoice ? undefined : '/request',
+      onClick: onOpenInvoice,
       icon: QrCode,
       highlight: false,
     },
