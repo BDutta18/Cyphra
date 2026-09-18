@@ -118,9 +118,17 @@ export function PaymentRequestModal({ isOpen, onClose, account }: PaymentRequest
                 {new Date(createdResult.request.expiresAt).toLocaleString()}
               </span>
             </div>
+            </div>
             <div className="flex justify-between text-zinc-600 pt-1 border-t border-zinc-200">
-              <span>Status:</span>
-              <span className="text-amber-700 font-bold uppercase">Unpaid / Pending</span>
+              <span>Expires In:</span>
+              <span className="text-zinc-800 font-bold">{expiryHours} Hours</span>
+            </div>
+            <div className="flex justify-between text-zinc-600 pt-1 border-t border-zinc-200">
+              <span>Settlement Status:</span>
+              <span className="text-amber-700 font-bold uppercase flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+                Awaiting Settlement
+              </span>
             </div>
           </div>
 
@@ -139,11 +147,18 @@ export function PaymentRequestModal({ isOpen, onClose, account }: PaymentRequest
               type="button"
               variant="secondary"
               size="sm"
-              onClick={handleShare}
+              onClick={() => {
+                if (typeof window !== 'undefined' && createdResult) {
+                  const webLink = `${window.location.origin}/request?pay=${encodeURIComponent(createdResult.paymentUri)}`;
+                  navigator.clipboard.writeText(webLink);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }
+              }}
               className="text-xs font-bold"
             >
-              {shared ? <Check className="w-3.5 h-3.5 mr-1.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 mr-1.5" />}
-              Share Request
+              <Share2 className="w-3.5 h-3.5 mr-1.5" />
+              Copy Web Link
             </Button>
           </div>
 
