@@ -46,18 +46,13 @@ Unlike legacy blockchains where user balances, counterparty addresses, and entir
    - Privacy does not preclude compliance. Users can generate cryptographically verified auditor view proofs for tax reporting and regulatory compliance without exposing their master spend keys.
 
 ---
-
-## DApp Screenshots
-
-> Live on Midnight Preprod — [cyphra-two.vercel.app](https://cyphra-two.vercel.app)
-
-### 🏠 Landing Page — Confidential Payments for the Private Web
+### 🏠 Homepage — Confidential Payments for the Private Web
 
 <p align="center">
   <img src="./docs/screenshots/01-landing.png" alt="Cyphra Landing Page" width="820" />
 </p>
 
-The Cyphra landing page with multi-network switcher (Preview Testnet → Preprod Staging → Mainnet Production), live block ticker, and official 1AM Wallet DApp Connector integration banner.
+The Cyphra homepage with multi-network switcher (Preview Testnet → Preprod Staging → Mainnet Production), live block ticker, and official 1AM Wallet DApp Connector integration banner.
 
 ---
 
