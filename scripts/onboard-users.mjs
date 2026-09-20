@@ -1,16 +1,5 @@
 #!/usr/bin/env node
 
-/**
- * Cyphra Preprod User Onboarding & Distribution Engine
- *
- * This script automates personal onboarding of launch users onto Midnight Preprod:
- * 1. Takes the registered 75 Preprod addresses.
- * 2. Selects the launch cohort (20+ launch users).
- * 3. Simulates/executes confidential note commitment creation on Midnight Preprod contract.
- * 4. Derives unique note commitments and transaction hashes for each user.
- * 5. Writes and updates LAUNCH_USERS.md with full transaction and onboarding audit details.
- */
-
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
