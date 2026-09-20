@@ -51,6 +51,8 @@ jobs:
         run: pnpm lint
       - name: Typecheck
         run: pnpm typecheck
+      - name: Build Shared
+        run: pnpm --filter @cyphra/shared run build
       - name: Test
         run: pnpm test
         env:

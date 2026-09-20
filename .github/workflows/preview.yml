@@ -49,8 +49,14 @@ jobs:
         run: pnpm lint
       - name: Typecheck
         run: pnpm typecheck
+      - name: Build Shared
+        run: pnpm --filter @cyphra/shared run build
       - name: Test
         run: pnpm test
+        env:
+          CYPHRA_DEPLOYMENT_ENV: test
+          NODE_ENV: test
+          MIDNIGHT_INDEXER_URI: ''
       - name: Build
         run: pnpm build
       - name: Deploy Preview

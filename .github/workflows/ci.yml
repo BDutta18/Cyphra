@@ -48,6 +48,9 @@ jobs:
       - name: Typecheck Monorepo
         run: pnpm typecheck
 
+      - name: Build Shared
+        run: pnpm --filter @cyphra/shared run build
+
       - name: Run Tests
         run: pnpm test
         env:
