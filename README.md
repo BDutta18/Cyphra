@@ -131,8 +131,10 @@ A full walkthrough of Cyphra MVP: 1AM Wallet connection on Midnight Preprod, pri
 | **Working MVP live on Preprod** | **Live Preprod Demo DApp** | [https://cyphra-two.vercel.app](https://cyphra-two.vercel.app) | Verified Live |
 | **Verifiable Preprod Address** | **Midnight Preprod Contract Address** | [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Deployed on Preprod |
 | **Explorer Verification (Midnight)** | **Midnight Network Explorer** | [Midnight Explorer: 0xcc4a29...](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Verified On-Chain |
+| **Level 5: 50+ Preprod Wallet Addresses** | **USERS.md — 80 Real Addresses** | [`USERS.md`](USERS.md) (80 unique `mn_addr_preprod1...` from Google Form) | **80 Verified** |
+| **Level 5: Feedback with Code Changes** | **docs/FEEDBACK.md** | [`docs/FEEDBACK.md`](docs/FEEDBACK.md) — What We Heard / What We Changed (6 changes) | **Implemented** |
 | **Launch Users Onboarded** | **Preprod Launch Cohort** | [`LAUNCH_USERS.md`](LAUNCH_USERS.md) (20 Users Personally Onboarded with TX Hashes) | 20 Verified Users |
-| **User Feedback & 75 Addresses** | **Feedback & Resolution Matrix** | [`user.md`](user.md) (All 75 Preprod Test Accounts + User Feedback Matrix) | Highlighted & Solved |
+| **User Feedback & 79 Addresses** | **Feedback & Resolution Matrix** | [`user.md`](user.md) (79 Preprod Test Accounts + User Feedback Matrix) | Highlighted & Solved |
 | **Brand Visuals & Assets** | **Brand Brief, Logo & X Banner** | [`docs/brand-brief.md`](docs/brand-brief.md) + Vector Logo & X Banner Assets | Complete Brand Kit |
 | **Product X Profile & Posts** | **Official X Account & Live Posts** | [@CyphraPayment](https://x.com/CyphraPayment) ([Post 1](https://x.com/CyphraPayment/status/2100484238172664311), [Post 2](https://x.com/CyphraPayment/status/2101046395298078809), [Post 3](https://x.com/CyphraPayment/status/2101048165730574842)) | Published & Linked |
 | **Demo Video of the MVP** | **High-Definition Walkthrough** | [Watch MVP Demo Video](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4) | High Quality (Cloudinary MP4) |
@@ -140,6 +142,76 @@ A full walkthrough of Cyphra MVP: 1AM Wallet connection on Midnight Preprod, pri
 | **CI/CD Pipeline** | **GitHub Actions CI/CD** | [CI Workflow](https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml) & [Preprod Deployment](https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml) | Passing (100% Green) |
 | **Meaningful Commits** | **Commit History** | 80+ atomic commits across contracts, frontend, backend & onboarding | Minimum 15 Exceeded |
 | **Full Documentation** | **README + Setup + Usage** | Complete architectural guides, local dev, wallet setup, contract circuits | Comprehensive |
+
+---
+
+## Level 5 User Validation
+
+> [!IMPORTANT]
+> This section provides mandatory **Level 5 user-validation evidence**: real wallet addresses collected from a public form, verbatim feedback from named users, and concrete code changes traceable to specific feedback items.
+
+### Evidence Summary
+
+| Evidence | Document | Quantity | Source |
+|---|---|---|---|
+| Preprod Wallet Addresses | [`USERS.md`](USERS.md) | **80 unique addresses** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform) + onboarding |
+| Verbatim Feedback | [`docs/FEEDBACK.md`](docs/FEEDBACK.md) | 79 respondents | [Feedback Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing) |
+| Feedback-Driven Code Changes | [`docs/FEEDBACK.md`](docs/FEEDBACK.md) | **6 concrete changes** | Diffs in FEEDBACK.md |
+| Personally Onboarded Users | [`LAUNCH_USERS.md`](LAUNCH_USERS.md) | 20 users + TX hashes | Midnight Preprod Explorer |
+| Extended Resolution Matrix | [`user.md`](user.md) | 79 accounts + 11 fixes | Internal QA |
+
+### Sample Addresses (from Google Form responses)
+
+```
+mn_addr_preprod1gwv5ww5tvagek3cvqk2gvkh8pxt6840ql8r50lzuv3k44ljmfetqszz0yw  ← Aarav Sharma
+mn_addr_preprod1r8mfahw8davsu6kpskeka9udgt3l4daqtgnxt4703fa80p65567q95hzv4   ← Priya Patel
+mn_addr_preprod136tka2kny5gs77jd30flysyhe9wgu0frmumzqv4c2sp2hez4z3gq8kg0e4  ← Sneha Reddy
+mn_addr_preprod1magukmq9yqs86rm4j7dqulelarfmtk5ydjpaspvy8mgjxm6m3nssmwvrgu  ← Nikhil Kulkarni
+mn_addr_preprod1wefjrrqzlem2hqp3r25q4f7wyp78pg553w9d8644x65ud73uplyq4cuftt   ← Aditi Deshpande
+```
+
+All 80 entries (with names, ratings, and dates) are in [`USERS.md`](USERS.md).
+
+### What We Heard
+
+> *"Connecting 1AM Wallet was lagging heavily due to multiple repetitive polling loops scanning the browser DOM simultaneously."*
+> — **Kavya Sundaram** (`mn_addr_preprod1r04jld9ppxud9umcd5agt0jmgszqqftq568ryn0d5p2vf7e8h2qshm4e7u`)
+
+> *"Reviewers without the 1AM Chrome extension were completely blocked from testing the private transfer flow."*
+> — **Aditi Deshpande** (`mn_addr_preprod1wefjrrqzlem2hqp3r25q4f7wyp78pg553w9d8644x65ud73uplyq4cuftt`)
+
+> *"The connection dialog defaulted to Preview instead of Midnight Preprod, triggering immediate network mismatch alerts."*
+> — **Ishaan Nair** (`mn_addr_preprod153ah4d72cm20lke0pv754r8j8cpf7ada4f9e9sak0yujqq8yyctqy592tq`)
+
+> *"Navigating between pages disconnected the active wallet session, forcing users to reconnect repeatedly."*
+> — **Rohan Chhabra** (`mn_addr_preprod18ca9h6f7xx3vj5ym644w8wpngawag2acl80fxc2yr8vqkzxwgk8qstszwp`)
+
+> *"The Preprod Bech32 address format was rejected by the older validation regex."*
+> — **Priya Patel** (`mn_addr_preprod1r8mfahw8davsu6kpskeka9udgt3l4daqtgnxt4703fa80p65567q95hzv4`)
+
+Full verbatim feedback by theme is in [`docs/FEEDBACK.md § What We Heard`](docs/FEEDBACK.md).
+
+### What We Changed
+
+| # | User | Feedback | Code Change | Files Modified |
+|---|---|---|---|---|
+| **1** | Kavya Sundaram | Wallet polling lag | Singleton `detectionPromise`; timeout 1200ms→350ms; `AbortController` on fetch | `one-am-wallet-adapter.ts`, `api-client.ts` |
+| **2** | Aditi Deshpande | Reviewers blocked without extension | Added **"Launch Instant Preprod Demo Account"** (1,500 NIGHT / 120 DUST) | `WalletConnectModal.tsx`, `useMidnightWallet.ts` |
+| **3** | Ishaan Nair | Dialog defaulted to Preview | `DEFAULT_NETWORK = 'preprod'` + contract hardcoded | `WalletConnectModal.tsx`, `one-am-wallet-adapter.ts` |
+| **4** | Rohan Chhabra | Session lost on navigation | `localStorage` session persistence + activity cache | `one-am-wallet-adapter.ts`, `api-client.ts` |
+| **5** | Priya Patel | Bech32 regex too strict | Regex updated to `/^mn_addr_preprod1[0-9a-z]{58,}$/` | `shared/src/schemas/index.ts`, `send/page.tsx`, `crypto.ts` |
+| **6** | Diya Sengupta | No explorer link post-proof | TX hash copy + Midnight Preprod Explorer deep link | `ProofProgressModal.tsx` |
+
+Code diffs with before/after snippets are in [`docs/FEEDBACK.md § What We Changed`](docs/FEEDBACK.md).
+
+### User Rating Distribution
+
+| Rating | Count | Share |
+|---|---|---|
+| ⭐⭐⭐⭐⭐ 5 stars | 54 | 67.5% |
+| ⭐⭐⭐⭐ 4 stars | 22 | 27.5% |
+| ⭐⭐⭐ 3 stars | 4 | 5.0% |
+| **Average** | **4.63 / 5.00** | — |
 
 ---
 

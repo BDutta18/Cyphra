@@ -1,5 +1,10 @@
 # Cyphra — User Testing, Preprod Addresses & Feedback Matrix
 
+> **See Also**:
+> - [`USERS.md`](USERS.md) — **80 unique Midnight Preprod wallet addresses** sourced directly from the [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform)
+> - [`docs/FEEDBACK.md`](docs/FEEDBACK.md) — **What We Heard / What We Changed** — verbatim user quotes and 6 concrete code changes
+> - [Feedback Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing) — Raw Google Form responses
+
 ## 1. Midnight Preprod Addresses (79 Accounts)
 
 The following 79 official Midnight Preprod addresses have been registered and provisioned for user testing, onboarding, and zero-knowledge payment simulations on the Cyphra DApp:
