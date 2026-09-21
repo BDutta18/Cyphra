@@ -1,4 +1,4 @@
-﻿# Cyphra — User Feedback Report (docs/FEEDBACK.md)
+# Cyphra — User Feedback Report (docs/FEEDBACK.md)
 
 > **Level 5 User Validation** — Real feedback collected from 79 form respondents via the official
 > [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform).
@@ -6,7 +6,7 @@
 
 - **Contract**: [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
 - **Feedback period**: 09 Sep 2026 — 20 Sep 2026
-- **Total respondents**: 79 (wallet addresses in [`USERS.md`](../USERS.md))
+- **Total respondents**: 79 (wallet addresses in [`user.md`](../user.md))
 - **Average rating**: 4.63 / 5.00
 
 ---
@@ -531,9 +531,8 @@ pnpm run verify:preprod-env
 
 ## References
 
-- [USERS.md](../USERS.md) — 79 registered Preprod wallet addresses
+- [user.md](../user.md) — 79 registered Preprod wallet addresses
 - [LAUNCH_USERS.md](../LAUNCH_USERS.md) — 20 personally onboarded launch users with TX hashes
-- [user.md](../user.md) — Extended feedback matrix (79 accounts + resolution table)
 - [Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform)
 - [Feedback Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing)
 - [Preprod Explorer](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
