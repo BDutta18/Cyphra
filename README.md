@@ -18,7 +18,7 @@
   <p>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform">📋 User Feedback Form</a>
     &nbsp;·&nbsp;
-    <a href="https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing">📊 Feedback Sheet (79 Responses)</a>
+    <a href="https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing">📊 Feedback Sheet</a>
   </p>
 </div>
 
