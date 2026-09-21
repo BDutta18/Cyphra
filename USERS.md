@@ -1,11 +1,11 @@
-﻿# Cyphra — Preprod User Registry (USERS.md)
+# Cyphra — Preprod User Registry (USERS.md)
 
-> **Level 5 User Validation** — 80 verified Midnight Preprod wallet addresses collected via the official [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform) and onboarding sessions on the Midnight Preprod network.
+> **Level 5 User Validation** — 79 verified Midnight Preprod wallet addresses collected via the official [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform) and onboarding sessions on the Midnight Preprod network.
 
 - **Contract Address**: [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
 - **Feedback Form**: [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform)
 - **Feedback Sheet**: [Google Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing)
-- **Total Registered Addresses**: **80**
+- **Total Registered Addresses**: **79**
 - **Address Format**: Midnight Preprod Bech32 (`mn_addr_preprod1...`)
 - **Network**: Midnight Preprod (Official Decentralised Testnet)
 
@@ -94,7 +94,6 @@
 | 77 | Aditi Deshpande | `mn_addr_preprod1wefjrrqzlem2hqp3r25q4f7wyp78pg553w9d8644x65ud73uplyq4cuftt` | ⭐⭐⭐⭐⭐ | 20 Sep 2026 |
 | 78 | Ishaan Nair | `mn_addr_preprod153ah4d72cm20lke0pv754r8j8cpf7ada4f9e9sak0yujqq8yyctqy592tq` | ⭐⭐⭐⭐⭐ | 20 Sep 2026 |
 | 79 | Rohan Chhabra | `mn_addr_preprod18ca9h6f7xx3vj5ym644w8wpngawag2acl80fxc2yr8vqkzxwgk8qstszwp` | ⭐⭐⭐⭐ | 20 Sep 2026 |
-| 80 | Rashmi Iyer *(launch cohort)* | `mn_addr_preprod15c5m4km66mfpfkme7z3dd0ur7vvhrcuulh4fsh4g9smal3xmj09saz842q` | — | Sep 2026 |
 
 ---
 
@@ -111,7 +110,7 @@ Length:  72-80 characters total
 **Validation command** (run against the repository):
 ```bash
 pnpm run verify:preprod-env
-# All 80 unique Preprod addresses verified with valid Bech32 format
+# All 79 unique Preprod addresses verified with valid Bech32 format
 ```
 
 ---

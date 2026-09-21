@@ -1,4 +1,4 @@
-﻿# Cyphra — User Feedback Report (docs/FEEDBACK.md)
+# Cyphra — User Feedback Report (docs/FEEDBACK.md)
 
 > **Level 5 User Validation** — Real feedback collected from 79 form respondents via the official
 > [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform).
@@ -305,14 +305,14 @@ pnpm typecheck
 
 pnpm run verify:preprod-env
 # Contract Address Verified: 0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
-# All 80 Preprod addresses verified with valid Bech32 format
+# All 79 Preprod addresses verified with valid Bech32 format
 ```
 
 ---
 
 ## References
 
-- [USERS.md](../USERS.md) — 80 registered Preprod wallet addresses
+- [USERS.md](../USERS.md) — 79 registered Preprod wallet addresses
 - [LAUNCH_USERS.md](../LAUNCH_USERS.md) — 20 personally onboarded launch users with TX hashes
 - [user.md](../user.md) — Extended feedback matrix (79 accounts + resolution table)
 - [Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform)

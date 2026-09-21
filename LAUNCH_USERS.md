@@ -2,11 +2,11 @@
 
 This document certifies that **20 launch users** have been personally onboarded onto **Midnight Preprod** using the official Cyphra onboarding engine and 1AM Wallet DApp Connector.
 
-These 20 users are a subset of the **80 real users** registered in [`USERS.md`](USERS.md), all of whom submitted their Preprod wallet address via the official [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform). Raw responses are in the [Feedback Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing).
+These 20 users are a subset of the **79 real users** registered in [`USERS.md`](USERS.md), all of whom submitted their Preprod wallet address via the official [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform). Raw responses are in the [Feedback Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing).
 
 - **Preprod Contract Address**: [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
 - **Explorer Verification**: [Midnight Preprod Explorer](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
-- **Full User Registry**: [`USERS.md`](USERS.md) — 80 unique `mn_addr_preprod1...` addresses
+- **Full User Registry**: [`USERS.md`](USERS.md) — 79 unique `mn_addr_preprod1...` addresses
 - **User Feedback**: [`docs/FEEDBACK.md`](docs/FEEDBACK.md) — What We Heard / What We Changed
 - **Cohort Status**: 100% Verified Active with Cryptographic Note Commitments
 
