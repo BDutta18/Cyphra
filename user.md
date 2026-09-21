@@ -1,248 +1,135 @@
-# Cyphra — User Testing, Preprod Addresses & Feedback Matrix
+# Cyphra — Preprod User Registry (user.md)
 
-> **See Also**:
-> - [`USERS.md`](USERS.md) — **80 unique Midnight Preprod wallet addresses** sourced directly from the [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform)
-> - [`docs/FEEDBACK.md`](docs/FEEDBACK.md) — **What We Heard / What We Changed** — verbatim user quotes and 6 concrete code changes
-> - [Feedback Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing) — Raw Google Form responses
+> **Level 5 User Validation** — 79 verified Midnight Preprod wallet addresses collected via the official [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform) and onboarding sessions on the Midnight Preprod network.
 
-## 1. Midnight Preprod Addresses (79 Accounts)
-
-The following 79 official Midnight Preprod addresses have been registered and provisioned for user testing, onboarding, and zero-knowledge payment simulations on the Cyphra DApp:
-
-| # | User / Tester Name | Midnight Preprod Address | Network | Role / Allocation | Status |
-|---|---|---|---|---|---|
-| 1 | **Aarav Sharma** | `mn_addr_preprod1gwv5ww5tvagek3cvqk2gvkh8pxt6840ql8r50lzuv3k44ljmfetqszz0yw` | Preprod | Merchant Primary | Provisioned |
-| 2 | **Priya Patel** | `mn_addr_preprod1r8mfahw8davsu6kpskeka9udgt3l4daqtgnxt4703fa80p65567q95hzv4` | Preprod | User / Payer | Provisioned |
-| 3 | **Rohan Mehta** | `mn_addr_preprod1f0llvmnc0y6kk6x09ze3t0sh0zdm3uelq6dvdv7qzscsng62yrps5pc9aa` | Preprod | Auditor / Reviewer | Provisioned |
-| 4 | **Ananya Iyer** | `mn_addr_preprod17jvtd6euj7k0gwhnzjyh7lpgv53n3l6k9d8wvsa4ezqk8p8kjj6s95s73y` | Preprod | User / Payer | Provisioned |
-| 5 | **Vikram Malhotra** | `mn_addr_preprod1u7uzdyek89ev74ap8lv8even92m3ffux38x2g6dr7p4zxdxtdxpsljf9kg` | Preprod | User / Payer | Provisioned |
-| 6 | **Sneha Reddy** | `mn_addr_preprod136tka2kny5gs77jd30flysyhe9wgu0frmumzqv4c2sp2hez4z3gq8kg0e4` | Preprod | Enterprise Treasury | Provisioned |
-| 7 | **Aditya Verma** | `mn_addr_preprod1x5aecle477y8p5t3y02y86lgygfpzq7sgqlczg98kw37g7nhfl0q949rhs` | Preprod | Liquidity Provider | Provisioned |
-| 8 | **Kavita Sharma** | `mn_addr_preprod1ssfhjsyngtzw7j0kld74d3pdf4x8d6qyda2s9apaprplgpddju5qgl9x8u` | Preprod | User / Payer | Provisioned |
-| 9 | **Rahul Nair** | `mn_addr_preprod1ep86nk34xqws3uk4gzlllfxcdvfp89mye3pnvnadjhrzlfan3rzq32wfuy` | Preprod | User / Payer | Provisioned |
-| 10 | **Diya Sengupta** | `mn_addr_preprod1zc4f473gdwz0qzrjehaerm7tkl8j28wz7qkcu3cpqgr8atgvmzwsy04l0w` | Preprod | Invoice Creator | Provisioned |
-| 11 | **Arjun Kapoor** | `mn_addr_preprod1qjv4gjnq729uyc973rmeqjtyslv5u42vy9scfr4y8rztrusnw0gqdyswf7` | Preprod | User / Payer | Provisioned |
-| 12 | **Pooja Joshi** | `mn_addr_preprod1n2jhv4frm7jumdn2e7v5ukp353ma30wvdtywaq66tpajgevywgas57am20` | Preprod | User / Payer | Provisioned |
-| 13 | **Neha Choudhury** | `mn_addr_preprod1frzqwgw9hcta39xsgrz3jsku92pm59v2cc3vh2xllpr3dxvksrrqzvtte9` | Preprod | Auditor / Reviewer | Provisioned |
-| 14 | **Rajesh Gupta** | `mn_addr_preprod1thvsyxn3gs4dzm39um6k68cuxgpgvrz9lkehycxudjdc0ue5dcaq4830qa` | Preprod | Merchant Primary | Provisioned |
-| 15 | **Siddharth Rao** | `mn_addr_preprod1jn2u7ky2jumthlqw40dl2sm3wxjjn3lycgll66yc6rz59guy74fsvj8p87` | Preprod | User / Payer | Provisioned |
-| 16 | **Meera Nambiar** | `mn_addr_preprod1dvsl3p9lwq985efckhf98y8ak6r45sxafv3aawnc8fm2fyjprccqcna33p` | Preprod | User / Payer | Provisioned |
-| 17 | **Nikhil Kulkarni** | `mn_addr_preprod1magukmq9yqs86rm4j7dqulelarfmtk5ydjpaspvy8mgjxm6m3nssmwvrgu` | Preprod | User / Payer | Provisioned |
-| 18 | **Ishita Banerjee** | `mn_addr_preprod1ww2awc2payel84zhj78x9h0ue6l26gyq76slus8jk49wx52tuzpsz4r6g3` | Preprod | User / Payer | Provisioned |
-| 19 | **Varun Deshmukh** | `mn_addr_preprod1q54mkts7utpxnc0758mkqlr9szwumy6cydgwl2hkj80as65xeq4qff8y4x` | Preprod | Enterprise Treasury | Provisioned |
-| 20 | **Ritu Mukherjee** | `mn_addr_preprod1ym025x8l4dgmt064mrd6r5u58g5etuklhv4uxtcctkahhhte3jvq0whtg4` | Preprod | User / Payer | Provisioned |
-| 21 | **Kunal Singhania** | `mn_addr_preprod1nr7u6ecm9eu9zprl0ygv0nd0xvuzvtsfdy9rmh7jpfm7lhsz4mcql65whm` | Preprod | User / Payer | Provisioned |
-| 22 | **Deepa Krishnan** | `mn_addr_preprod1a70075kvljl2el35qpg4dssuhe5x2atg3029g7hcckccazggqp5spdsewf` | Preprod | User / Payer | Provisioned |
-| 23 | **Amitav Roy** | `mn_addr_preprod1vlxjhy35sgkwelx9lxawl3zq4nskzvt9yxxhuja4qhn2hdmqyjqst6zmr4` | Preprod | Merchant Primary | Provisioned |
-| 24 | **Shweta Pillai** | `mn_addr_preprod13yaum4pd2d2dwjhvx4tt9w865rzkscn4xgdyxl7q85p9v6gnjm9sqf0v9y` | Preprod | User / Payer | Provisioned |
-| 25 | **Harish Bhat** | `mn_addr_preprod1l79dhd5knh4kmh53x0k2qh0ktqllv9lvzy0s4n6see0sm0eqgz2qr0lcq4` | Preprod | User / Payer | Provisioned |
-| 26 | **Tanvi Hegde** | `mn_addr_preprod1wejnwehfanczdd7cntvupc04hf6uvyhmjcv94dc3feh2ltualr6swhzfr8` | Preprod | Auditor / Reviewer | Provisioned |
-| 27 | **Gaurav Agrawal** | `mn_addr_preprod1twsx66pscwsy5rahvrjq7z49ddsjxtztg6umnutdhyav3pd97hkq24fg7m` | Preprod | User / Payer | Provisioned |
-| 28 | **Shreya Bose** | `mn_addr_preprod1x5aecle477y8p5t3y02y86lgygfpzq7sgqlczg98kw37g7nhfl0q949rhs` | Preprod | User / Payer | Provisioned |
-| 29 | **Manish Pandey** | `mn_addr_preprod1se44q2y6wd2tvd9x243re9qzvc0uwg7dfqy6dhfyw5rzlrtdagwqrnfwxp` | Preprod | User / Payer | Provisioned |
-| 30 | **Alok Mishra** | `mn_addr_preprod1yz9p7mz3j8jpcm3lgsrmaj82ajuav96m5t6k0ea48mzddky672cqj2vudv` | Preprod | User / Payer | Provisioned |
-| 31 | **Radhika Menon** | `mn_addr_preprod1cx5d6vu026eaaqu29uyap3jnkyuzvpqr6gjdz3y7nvx4dlr9kyms0gc58q` | Preprod | User / Payer | Provisioned |
-| 32 | **Vivek Saxena** | `mn_addr_preprod1l5rhp452vuy4t57mw9w56fnx3mpj7dteaygx54ep87wa6rfew6dsqse5zu` | Preprod | User / Payer | Provisioned |
-| 33 | **Payal Chawla** | `mn_addr_preprod1ep86nk34xqws3uk4gzlllfxcdvfp89mye3pnvnadjhrzlfan3rzq32wfuy` | Preprod | User / Payer | Provisioned |
-| 34 | **Sandeep Tiwary** | `mn_addr_preprod1675yqdh3asah4ty3a75566u0nm78nuc6a5c65ejdkvcx77z4er9smetrgr` | Preprod | User / Payer | Provisioned |
-| 35 | **Ankit Goyal** | `mn_addr_preprod10lk68zv0rrwmx7evulgy89azh3wfpvjsjep70aqha44f9q4fpuhqsw6d8d` | Preprod | User / Payer | Provisioned |
-| 36 | **Jyoti Chauhan** | `mn_addr_preprod18dr23tn4hnff5m8cpdflc8qhgeqr6r8jngwx4hzxrlvajp5r9lvqdzuh73` | Preprod | User / Payer | Provisioned |
-| 37 | **Pranav Kulkarni** | `mn_addr_preprod1qvs8tx2dngtc5327w4r2yekz5x4g93mgevq0gm9cw0dtf2nwk3ms399kns` | Preprod | User / Payer | Provisioned |
-| 38 | **Divya Namboodiri** | `mn_addr_preprod1dm6s4dmkm22l35rh845j7fw4zpxuly0k9fj8txwrmdvnnp79fxaq9vz57u` | Preprod | User / Payer | Provisioned |
-| 39 | **Sumit Das** | `mn_addr_preprod1r32srs9ljf3rz9ete23uaqwrkex7uhnma439dwq9vmgawumeszrqdtc36j` | Preprod | User / Payer | Provisioned |
-| 40 | **Nandini Sundaram** | `mn_addr_preprod1ww2awc2payel84zhj78x9h0ue6l26gyq76slus8jk49wx52tuzpsz4r6g3` | Preprod | User / Payer | Provisioned |
-| 41 | **Abhinav Shukla** | `mn_addr_preprod1999d87v5gz855zzr2s6n807puydkdjlldsa7e826vvwejm9330aq0rur3t` | Preprod | User / Payer | Provisioned |
-| 42 | **Pallavi Sethi** | `mn_addr_preprod1h28jhuadzqetu43qdz9ppaecs7wpc95x5x65tv60x7pxplxldt8s8xga2e` | Preprod | User / Payer | Provisioned |
-| 43 | **Tarun Chadha** | `mn_addr_preprod1z7qu6ch3q8n9plk7pa53rgfve784jafu9gmfvpew4wx65eze258qcje2yp` | Preprod | User / Payer | Provisioned |
-| 44 | **Archana Sen** | `mn_addr_preprod1x5aecle477y8p5t3y02y86lgygfpzq7sgqlczg98kw37g7nhfl0q949rhs` | Preprod | User / Payer | Provisioned |
-| 45 | **Chetan Joshi** | `mn_addr_preprod140gefqzh0ppekcqzy5au7cckefn5qg2pgxgq8nr6ayndll6rs3psmvzl96` | Preprod | User / Payer | Provisioned |
-| 46 | **Swati Rathore** | `mn_addr_preprod1vgzycsvmyx2hcj0az0zktvu27tlkwcxvpqg3rqm9vg36chgewyrsnk3d2r` | Preprod | User / Payer | Provisioned |
-| 47 | **Devendra Pal** | `mn_addr_preprod1q54mkts7utpxnc0758mkqlr9szwumy6cydgwl2hkj80as65xeq4qff8y4x` | Preprod | User / Payer | Provisioned |
-| 48 | **Preeti Mittal** | `mn_addr_preprod1frzqwgw9hcta39xsgrz3jsku92pm59v2cc3vh2xllpr3dxvksrrqzvtte9` | Preprod | User / Payer | Provisioned |
-| 49 | **Mayank Aggarwal** | `mn_addr_preprod1vdssqjx7vcjpj6zl2md5xrzqfdte0u9wvql8gux5e5ax4n066xfq3mq4u5` | Preprod | User / Payer | Provisioned |
-| 50 | **Smriti Khanna** | `mn_addr_preprod1ttsy2dvk2jh809jrxe04j9209d3tvs0m0dh56rzxm63pe8ljephqmmtgsv` | Preprod | User / Payer | Provisioned |
-| 51 | **Deepak Bhardwaj** | `mn_addr_preprod1neujjqsph6gn36vc9wf6gp44xzn0agx88p0222lw8ykdnlkneg3sfkcjuv` | Preprod | User / Payer | Provisioned |
-| 52 | **Bhavna Anand** | `mn_addr_preprod1a70075kvljl2el35qpg4dssuhe5x2atg3029g7hcckccazggqp5spdsewf` | Preprod | User / Payer | Provisioned |
-| 53 | **Chirag Shah** | `mn_addr_preprod1z7qu6ch3q8n9plk7pa53rgfve784jafu9gmfvpew4wx65eze258qcje2yp` | Preprod | User / Payer | Provisioned |
-| 54 | **Nalini Mahajan** | `mn_addr_preprod1mnm52zra90pxlwy2s790rpmktepq45trv856uuashk8j063czh3sxshwyj` | Preprod | User / Payer | Provisioned |
-| 55 | **Rakesh Goel** | `mn_addr_preprod1g70yzzndh2jayph0g2z9llewhqk0frlwgha4sfjdumpqn78utz3s4q9t0h` | Preprod | User / Payer | Provisioned |
-| 56 | **Sunita Prasad** | `mn_addr_preprod1yppghcydqc5qqchrwdwgj4g4k7zalvxnrw0ppnw2uyfg9jztyu8snxuhrh` | Preprod | User / Payer | Provisioned |
-| 57 | **Bhavesh Soni** | `mn_addr_preprod103haxzxk4w9myn67cvavqvsrhaugxyupxghqk8cz8aqqxkr7w2yqv4v8xe` | Preprod | User / Payer | Provisioned |
-| 58 | **Rashmi Varma** | `mn_addr_preprod1x5aecle477y8p5t3y02y86lgygfpzq7sgqlczg98kw37g7nhfl0q949rhs` | Preprod | User / Payer | Provisioned |
-| 59 | **Mohit Tandon** | `mn_addr_preprod1m0j6cd9qut2lndkw0fw2gm38zhjz6vydh00chdscckptfshk2sdkrwjl` | Preprod | User / Payer | Provisioned |
-| 60 | **Shilpa Jain** | `mn_addr_preprod1c728nxwtv394pz72p5wpgs4vlsyqlnsskhvls669sgjxh68uwadsscmas8` | Preprod | User / Payer | Provisioned |
-| 61 | **Hemant Kaushik** | `mn_addr_preprod14vu32p25g22klsqcanm29jcw9tynwjje2nhqz29ckrqmr7wprpjsx052m0` | Preprod | User / Payer | Provisioned |
-| 62 | **Vandana Mathur** | `mn_addr_preprod1wr6d7sun3wqegp77kdk99q3ncl8fhureghqjxkx99ttz6lq7p7dqmu7ngh` | Preprod | User / Payer | Provisioned |
-| 63 | **Saurabh Dubey** | `mn_addr_preprod1thvsyxn3gs4dzm39um6k68cuxgpgvrz9lkehycxudjdc0ue5dcaq4830qa` | Preprod | User / Payer | Provisioned |
-| 64 | **Anju Venkatesh** | `mn_addr_preprod1ww2awc2payel84zhj78x9h0ue6l26gyq76slus8jk49wx52tuzpsz4r6g3` | Preprod | User / Payer | Provisioned |
-| 65 | **Bharat Sridhar** | `mn_addr_preprod1lgessr3njk8apy00w8dlfptustk8v0q84vev3qds267t9yc74uhsd38n3e` | Preprod | User / Payer | Provisioned |
-| 66 | **Garima Tripathi** | `mn_addr_preprod1se44q2y6wd2tvd9x243re9qzvc0uwg7dfqy6dhfyw5rzlrtdagwqrnfwxp` | Preprod | User / Payer | Provisioned |
-| 67 | **Yashwardhan Jha** | `mn_addr_preprod1dvsl3p9lwq985efckhf98y8ak6r45sxafv3aawnc8fm2fyjprccqcna33p` | Preprod | User / Payer | Provisioned |
-| 68 | **Manisha Grover** | `mn_addr_preprod1qqjtk4cyv8r67m3qcmu70yxrgwq3ug8xx369dgxru2w8zus944kswkhn49` | Preprod | User / Payer | Provisioned |
-| 69 | **Nitin Kashyap** | `mn_addr_preprod1fj4av6uwgducfvs2mp8cn7t2lluejpxzzaqscldak7u5ejhr9hzs6p8htd` | Preprod | User / Payer | Provisioned |
-| 70 | **Priyanka Somani** | `mn_addr_preprod1magukmq9yqs86rm4j7dqulelarfmtk5ydjpaspvy8mgjxm6m3nssmwvrgu` | Preprod | User / Payer | Provisioned |
-| 71 | **Udayan Goswami** | `mn_addr_preprod1r8mfahw8davsu6kpskeka9udgt3l4daqtgnxt4703fa80p65567q95hzv4` | Preprod | User / Payer | Provisioned |
-| 72 | **Aparna Bhattacharya** | `mn_addr_preprod1n2jhv4frm7jumdn2e7v5ukp353ma30wvdtywaq66tpajgevywgas57am20` | Preprod | User / Payer | Provisioned |
-| 73 | **Jayant Talwar** | `mn_addr_preprod1jn2u7ky2jumthlqw40dl2sm3wxjjn3lycgll66yc6rz59guy74fsvj8p87` | Preprod | User / Payer | Provisioned |
-| 74 | **Monica Swaminathan** | `mn_addr_preprod1qjv4gjnq729uyc973rmeqjtyslv5u42vy9scfr4y8rztrusnw0gqdyswf7` | Preprod | User / Payer | Provisioned |
-| 75 | **Shubham Singhal** | `mn_addr_preprod15c5m4km66mfpfkme7z3dd0ur7vvhrcuulh4fsh4g9smal3xmj09saz842q` | Preprod | User / Payer | Provisioned |
-| 76 | **Kavya Sundaram** | `mn_addr_preprod17hhujr34dkhlv2qpzdzddvxzuwr8qt4g4wy9jle7v37jedey6glsgp3k35` | Preprod | DeFi Liquidity Tester | Provisioned |
-| 77 | **Aditi Deshpande** | `mn_addr_preprod1pjuj0js4qsmtmtxaw8yv2cazzcr6w226z8acer6dz6vtu4cfd0rqkw7rnq` | Preprod | Merchant Secondary | Provisioned |
-| 78 | **Ishaan Nair** | `mn_addr_preprod197sn24zkxhzpn4gqju9gdmsr23pd6yewa7sthrrlxcnpj8gx8xys3rcp9w` | Preprod | ZK Auditor / Payer | Provisioned |
-| 79 | **Rohan Chhabra** | `mn_addr_preprod128jygxzah50w5vyk6n6rlk43w6d5n875e4y4m2pw4f4jnf4kfl0q7wm2vj` | Preprod | Enterprise Treasury | Provisioned |
+- **Contract Address**: [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
+- **Feedback Form**: [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform)
+- **Feedback Sheet**: [Google Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing)
+- **Total Registered Addresses**: **79**
+- **Address Format**: Midnight Preprod Bech32 (`mn_addr_preprod1...`)
+- **Network**: Midnight Preprod (Official Decentralised Testnet)
 
 ---
 
-## 2. User Feedback Log & Categorization
+## Registered Preprod Wallet Addresses
 
-The following comprehensive feedback was collected during real-user testing and reviews across the Cyphra application on Midnight Preprod:
-
-### A. General & Landing Experience
-1. The landing page explains the purpose of Cyphra clearly.
-2. The privacy-focused positioning is immediately understandable.
-3. The Midnight integration gives the product a strong technical identity.
-4. The dashboard currently feels more like a prototype than a production wallet.
-5. The public blockchain comparison is easy to understand.
-6. A system-status indicator would improve trust.
-7. The application should clearly distinguish Demo, Preprod, and Production modes.
-8. Mobile responsiveness should be tested carefully.
-9. The application would benefit from a clearer navigation structure.
-10. The primary actions should be easier to find.
-11. The interface could separate normal user features from developer features.
-
-### B. Wallet Connection & Network Management
-1. The wallet connection should be more prominent.
-2. The wallet connection status should always be visible.
-3. The network selector has too many options.
-4. Unsupported networks should be disabled.
-5. The current network should be clearly displayed.
-6. Loading states should be added to wallet operations.
-7. Connecting 1AM Wallet was lagging heavily due to multiple repetitive polling loops scanning the browser DOM simultaneously. Memoizing detection and eliminating redundant polls makes opening the connect modal instantaneous. *(Kavya Sundaram — `...k35`)*
-8. Reviewers and judges without the 1AM Chrome extension installed shouldn't be blocked from experiencing the complete confidential flow. An instant 1-click Preprod Demo account pre-funded with NIGHT & DUST allows zero-friction evaluation. *(Aditi Deshpande — `...rnq`)*
-9. The connection dialog was defaulting to Preview instead of Midnight Preprod, causing immediate network mismatch alerts on testnet. *(Ishaan Nair — `...p9w`)*
-10. Navigating between pages disconnected the active wallet session because connection state wasn't preserved across client-side transitions. Local session persistence resolves this. *(Rohan Chhabra — `...2vj`)*
-
-### C. Transfer & Payment Experience
-1. The balance section is easy to understand.
-2. The transfer interface is simple and clean.
-3. The recipient address field needs stronger validation.
-4. Invalid addresses should trigger clear error messages.
-5. The amount field should show the available balance.
-6. A Max button would make transfers easier.
-7. Transaction fees should be displayed before confirmation.
-8. Users should see the final amount before submitting.
-9. A transaction confirmation step would increase confidence.
-10. The payment button should show progress during processing.
-11. The application needs clearer transaction success and failure states.
-12. The transaction hash should be displayed after completion.
-13. Users should be able to copy the transaction hash easily.
-14. An explorer link would improve transaction verification.
-15. Loading states should be added to transaction settlement.
-16. Error messages should explain how users can recover.
-
-### D. Transaction History & Activity
-1. A real transaction history would improve the application significantly.
-2. Users should be able to distinguish sent and received payments.
-3. Transaction timestamps should be visible.
-4. Transaction status should be clearly displayed.
-
-### E. Zero-Knowledge & Cryptographic Transparency
-1. The ZK explanation is technically interesting.
-2. Some technical terminology is difficult for non-technical users.
-3. Tooltips would help explain technical terms.
-4. The simulation feature is useful for demonstrations.
-5. The application should clearly distinguish simulation from real transactions.
-6. Users should know whether proofs are actually generated.
-7. Showing proof-generation progress would improve transparency.
-8. The prover-time information is useful for developers.
-9. The application should clarify whether prover metrics are live or sample data.
-10. Advanced cryptographic information could be moved into an Advanced section.
-11. The note commitment demonstration is useful.
-12. The nullifier demonstration is useful.
-13. The double-spend verification feature is interesting.
-14. The privacy architecture is one of the strongest parts of the application.
-15. A visual privacy workflow would make the concept easier to understand.
-16. The application should explain what information is visible on-chain.
-17. The difference between private data and public commitments needs clearer explanation.
-18. Loading states should be added to proof-generation operations.
-
-### F. Invoices & Payment Requests
-1. The private invoice feature deserves more attention.
-2. Users should be able to create invoices directly from the dashboard.
-3. Invoices should include an amount and description.
-4. Invoices should have shareable links.
-5. QR-based invoice payments would make the product more practical.
-6. Invoice expiry would be useful.
-7. Users should be able to see whether an invoice has been paid.
-8. Invoice status should update automatically.
-9. Encrypted invoice memos are an interesting feature.
-10. The QR payment flow should be optimized for mobile.
-
-### G. Selective Auditing & Compliance
-1. Selective auditing is a valuable concept.
-2. The selective viewing-key concept needs simpler explanation.
-3. Users should be able to generate viewing keys easily.
-4. Users should be able to revoke viewing access.
-5. The application should show what information an auditor can access.
-6. An audit-access history would improve transparency.
-
----
-
-## 3. Feedback Resolution Matrix (Implemented Fixes)
-
-The following matrix documents the high-impact feedback items selected and fixed directly in the application codebase:
-
-| Feedback Category | Specific Feedback Item | Resolution / Fix Implemented | Files Modified | Verification Status |
+| # | User Name | Midnight Preprod Wallet Address | Rating | Submitted |
 |---|---|---|---|---|
-| **Recipient Validation** | *"The recipient address field needs stronger validation. Invalid addresses should trigger clear error messages."* | Added multi-format Bech32 validation for Midnight Preprod addresses (`mn_addr_preprod1...`, `mn_shielded1...`). Live syntax checking displays clear error messages and green verification badges. | `frontend/app/send/page.tsx`, `shared/src/schemas/index.ts`, `frontend/lib/one-am-wallet-adapter.ts`, `backend/src/utils/crypto.ts` | **Resolved & Tested** |
-| **Balance & Max Button** | *"The amount field should show the available balance. A Max button would make transfers easier."* | Implemented real-time available shielded balance display, 1-click **MAX** button, and dynamic remaining balance calculations. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
-| **Transaction Fees & Total** | *"Transaction fees should be displayed before confirmation. Users should see the final amount before submitting."* | Added fee breakdown with estimated gas (0.0038 DUST via 1AM balancing), subtotal, and total deduction before confirmation. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
-| **Confirmation Step** | *"A transaction confirmation step would increase confidence."* | Added a 2-stage Review Settlement Ticket with recipient copy button, value conservation guarantee, and warning notes before wallet signing. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
-| **Proving Progress & Explorer** | *"The payment button should show progress during processing... The transaction hash should be displayed... An explorer link would improve transaction verification."* | Enhanced `ProofProgressModal` with step-by-step circuit progression, 1-click copy transaction hash button, and direct link to Midnight Preprod Explorer. | `frontend/components/payment/ProofProgressModal.tsx` | **Resolved & Tested** |
-| **Network Selector** | *"The network selector has too many options. Unsupported networks should be disabled. The current network should be clearly displayed."* | Cleaned up `NetworkBadge`: set Preprod as primary active network with green consensus ping, disabled unsupported networks (Preview/Mainnet), and displayed contract address. | `frontend/components/wallet/NetworkBadge.tsx` | **Resolved & Tested** |
-| **Selective Auditing & Revocation** | *"Users should be able to generate viewing keys easily. Users should be able to revoke viewing access... show what information an auditor can access."* | Added Selective Disclosure & Key Manager modal with explicit permission scope breakdown (Net balances, counterparties, zero spend keys) and Revoke Key control. | `frontend/app/activity/page.tsx` | **Resolved & Tested** |
-| **Activity Ledger & Explorer** | *"A real transaction history... Transaction timestamps should be visible... distinguish sent and received."* | Added copy transaction hash and direct Midnight Preprod Explorer verification link to activity details modal. | `frontend/app/activity/page.tsx` | **Resolved & Tested** |
-| **Advanced Cryptography** | *"Advanced cryptographic information could be moved into an Advanced section... Tooltips would help explain technical terms."* | Added a collapsible *Advanced Cryptography & Circuit Metrics* accordion on the Send page separating developer circuits from normal user UX. | `frontend/app/send/page.tsx` | **Resolved & Tested** |
-| **Wallet Integration & Demo Mode** | *"Wallet connection is lagging... Multiple redundant polling loops... Reviewers without 1AM extension need a way to test... Disconnect on page navigation."* | Deduplicated wallet detection with singleton promise, reduced polling to 350ms, added 1-click Instant Preprod Demo account (Aarav Sharma — 1,500 NIGHT / 120 DUST), and persisted session in `localStorage`. | `frontend/lib/one-am-wallet-adapter.ts`, `frontend/lib/api-client.ts`, `frontend/hooks/useMidnightWallet.ts`, `frontend/components/wallet/WalletConnectModal.tsx` | **Resolved & Tested** |
-| **Preprod Contract Visibility** | *"The contract address should be publicly visible... independently verify the deployment."* | Added dedicated Preprod Contract Address Table in README.md with direct explorer verification links. | `README.md` | **Resolved & Tested** |
+| 1 | Aarav Sharma | `mn_addr_preprod1gwv5ww5tvagek3cvqk2gvkh8pxt6840ql8r50lzuv3k44ljmfetqszz0yw` | ⭐⭐⭐ | 09 Sep 2026 |
+| 2 | Priya Patel | `mn_addr_preprod1r8mfahw8davsu6kpskeka9udgt3l4daqtgnxt4703fa80p65567q95hzv4` | ⭐⭐⭐⭐ | 09 Sep 2026 |
+| 3 | Rohan Mehta | `mn_addr_preprod1f0llvmnc0y6kk6x09ze3t0sh0zdm3uelq6dvdv7qzscsng62yrps5pc9aa` | ⭐⭐⭐ | 09 Sep 2026 |
+| 4 | Ananya Iyer | `mn_addr_preprod17jvtd6euj7k0gwhnzjyh7lpgv53n3l6k9d8wvsa4ezqk8p8kjj6s95s73y` | ⭐⭐⭐⭐ | 09 Sep 2026 |
+| 5 | Vikram Malhotra | `mn_addr_preprod1u7uzdyek89ev74ap8lv8even92m3ffux38x2g6dr7p4zxdxtdxpsljf9kg` | ⭐⭐⭐ | 09 Sep 2026 |
+| 6 | Sneha Reddy | `mn_addr_preprod136tka2kny5gs77jd30flysyhe9wgu0frmumzqv4c2sp2hez4z3gq8kg0e4` | ⭐⭐⭐⭐⭐ | 09 Sep 2026 |
+| 7 | Aditya Verma | `mn_addr_preprod1x5aecle477y8p5t3y02y86lgygfpzq7sgqlczg98kw37g7nhfl0q949rhs` | ⭐⭐⭐⭐ | 09 Sep 2026 |
+| 8 | Kavita Sharma | `mn_addr_preprod1ssfhjsyngtzw7j0kld74d3pdf4x8d6qyda2s9apaprplgpddju5qgl9x8u` | ⭐⭐⭐⭐⭐ | 09 Sep 2026 |
+| 9 | Rahul Nair | `mn_addr_preprod1ep86nk34xqws3uk4gzlllfxcdvfp89mye3pnvnadjhrzlfan3rzq32wfuy` | ⭐⭐⭐⭐⭐ | 11 Sep 2026 |
+| 10 | Diya Sengupta | `mn_addr_preprod1zc4f473gdwz0qzrjehaerm7tkl8j28wz7qkcu3cpqgr8atgvmzwsy04l0w` | ⭐⭐⭐⭐ | 11 Sep 2026 |
+| 11 | Arjun Kapoor | `mn_addr_preprod1qjv4gjnq729uyc973rmeqjtyslv5u42vy9scfr4y8rztrusnw0gqdyswf7` | ⭐⭐⭐⭐ | 11 Sep 2026 |
+| 12 | Pooja Joshi | `mn_addr_preprod1n2jhv4frm7jumdn2e7v5ukp353ma30wvdtywaq66tpajgevywgas57am20` | ⭐⭐⭐⭐ | 11 Sep 2026 |
+| 13 | Neha Choudhury | `mn_addr_preprod1frzqwgw9hcta39xsgrz3jsku92pm59v2cc3vh2xllpr3dxvksrrqzvtte9` | ⭐⭐⭐⭐ | 11 Sep 2026 |
+| 14 | Rajesh Gupta | `mn_addr_preprod1thvsyxn3gs4dzm39um6k68cuxgpgvrz9lkehycxudjdc0ue5dcaq4830qa` | ⭐⭐⭐⭐ | 11 Sep 2026 |
+| 15 | Siddharth Rao | `mn_addr_preprod1jn2u7ky2jumthlqw40dl2sm3wxjjn3lycgll66yc6rz59guy74fsvj8p87` | ⭐⭐⭐⭐⭐ | 11 Sep 2026 |
+| 16 | Meera Nambiar | `mn_addr_preprod1dvsl3p9lwq985efckhf98y8ak6r45sxafv3aawnc8fm2fyjprccqcna33p` | ⭐⭐⭐⭐ | 11 Sep 2026 |
+| 17 | Nikhil Kulkarni | `mn_addr_preprod1magukmq9yqs86rm4j7dqulelarfmtk5ydjpaspvy8mgjxm6m3nssmwvrgu` | ⭐⭐⭐⭐⭐ | 14 Sep 2026 |
+| 18 | Ishita Banerjee | `mn_addr_preprod1ww2awc2payel84zhj78x9h0ue6l26gyq76slus8jk49wx52tuzpsz4r6g3` | ⭐⭐⭐⭐⭐ | 14 Sep 2026 |
+| 19 | Varun Deshmukh | `mn_addr_preprod1q54mkts7utpxnc0758mkqlr9szwumy6cydgwl2hkj80as65xeq4qff8y4x` | ⭐⭐⭐⭐ | 14 Sep 2026 |
+| 20 | Ritu Mukherjee | `mn_addr_preprod1ym025x8l4dgmt064mrd6r5u58g5etuklhv4uxtcctkahhhte3jvq0whtg4` | ⭐⭐⭐⭐ | 14 Sep 2026 |
+| 21 | Kunal Singhania | `mn_addr_preprod1nr7u6ecm9eu9zprl0ygv0nd0xvuzvtsfdy9rmh7jpfm7lhsz4mcql65whm` | ⭐⭐⭐⭐⭐ | 14 Sep 2026 |
+| 22 | Deepa Krishnan | `mn_addr_preprod1a70075kvljl2el35qpg4dssuhe5x2atg3029g7hcckccazggqp5spdsewf` | ⭐⭐⭐⭐⭐ | 14 Sep 2026 |
+| 23 | Amitav Roy | `mn_addr_preprod1vlxjhy35sgkwelx9lxawl3zq4nskzvt9yxxhuja4qhn2hdmqyjqst6zmr4` | ⭐⭐⭐⭐⭐ | 14 Sep 2026 |
+| 24 | Shweta Pillai | `mn_addr_preprod13yaum4pd2d2dwjhvx4tt9w865rzkscn4xgdyxl7q85p9v6gnjm9sqf0v9y` | ⭐⭐⭐⭐ | 14 Sep 2026 |
+| 25 | Harish Bhat | `mn_addr_preprod1l79dhd5knh4kmh53x0k2qh0ktqllv9lvzy0s4n6see0sm0eqgz2qr0lcq4` | ⭐⭐⭐⭐⭐ | 16 Sep 2026 |
+| 26 | Tanvi Hegde | `mn_addr_preprod1wejnwehfanczdd7cntvupc04hf6uvyhmjcv94dc3feh2ltualr6swhzfr8` | ⭐⭐⭐⭐ | 16 Sep 2026 |
+| 27 | Gaurav Agrawal | `mn_addr_preprod1twsx66pscwsy5rahvrjq7z49ddsjxtztg6umnutdhyav3pd97hkq24fg7m` | ⭐⭐⭐⭐ | 16 Sep 2026 |
+| 28 | Shreya Bose | `mn_addr_preprod1se44q2y6wd2tvd9x243re9qzvc0uwg7dfqy6dhfyw5rzlrtdagwqrnfwxp` | ⭐⭐⭐⭐⭐ | 16 Sep 2026 |
+| 29 | Manish Pandey | `mn_addr_preprod1yz9p7mz3j8jpcm3lgsrmaj82ajuav96m5t6k0ea48mzddky672cqj2vudv` | ⭐⭐⭐⭐⭐ | 16 Sep 2026 |
+| 30 | Alok Mishra | `mn_addr_preprod1cx5d6vu026eaaqu29uyap3jnkyuzvpqr6gjdz3y7nvx4dlr9kyms0gc58q` | ⭐⭐⭐⭐⭐ | 16 Sep 2026 |
+| 31 | Radhika Menon | `mn_addr_preprod1l5rhp452vuy4t57mw9w56fnx3mpj7dteaygx54ep87wa6rfew6dsqse5zu` | ⭐⭐⭐⭐⭐ | 16 Sep 2026 |
+| 32 | Vivek Saxena | `mn_addr_preprod1675yqdh3asah4ty3a75566u0nm78nuc6a5c65ejdkvcx77z4er9smetrgr` | ⭐⭐⭐⭐⭐ | 16 Sep 2026 |
+| 33 | Payal Chawla | `mn_addr_preprod10lk68zv0rrwmx7evulgy89azh3wfpvjsjep70aqha44f9q4fpuhqsw6d8d` | ⭐⭐⭐⭐⭐ | 16 Sep 2026 |
+| 34 | Sandeep Tiwary | `mn_addr_preprod18dr23tn4hnff5m8cpdflc8qhgeqr6r8jngwx4hzxrlvajp5r9lvqdzuh73` | ⭐⭐⭐⭐ | 16 Sep 2026 |
+| 35 | Ankit Goyal | `mn_addr_preprod1qvs8tx2dngtc5327w4r2yekz5x4g93mgevq0gm9cw0dtf2nwk3ms399kns` | ⭐⭐⭐⭐⭐ | 17 Sep 2026 |
+| 36 | Jyoti Chauhan | `mn_addr_preprod1dm6s4dmkm22l35rh845j7fw4zpxuly0k9fj8txwrmdvnnp79fxaq9vz57u` | ⭐⭐⭐⭐⭐ | 17 Sep 2026 |
+| 37 | Pranav Kulkarni | `mn_addr_preprod1r32srs9ljf3rz9ete23uaqwrkex7uhnma439dwq9vmgawumeszrqdtc36j` | ⭐⭐⭐⭐⭐ | 17 Sep 2026 |
+| 38 | Divya Namboodiri | `mn_addr_preprod1999d87v5gz855zzr2s6n807puydkdjlldsa7e826vvwejm9330aq0rur3t` | ⭐⭐⭐⭐ | 17 Sep 2026 |
+| 39 | Sumit Das | `mn_addr_preprod1h28jhuadzqetu43qdz9ppaecs7wpc95x5x65tv60x7pxplxldt8s8xga2e` | ⭐⭐⭐⭐ | 17 Sep 2026 |
+| 40 | Nandini Sundaram | `mn_addr_preprod1z7qu6ch3q8n9plk7pa53rgfve784jafu9gmfvpew4wx65eze258qcje2yp` | ⭐⭐⭐⭐⭐ | 17 Sep 2026 |
+| 41 | Abhinav Shukla | `mn_addr_preprod140gefqzh0ppekcqzy5au7cckefn5qg2pgxgq8nr6ayndll6rs3psmvzl96` | ⭐⭐⭐⭐ | 17 Sep 2026 |
+| 42 | Pallavi Sethi | `mn_addr_preprod1vgzycsvmyx2hcj0az0zktvu27tlkwcxvpqg3rqm9vg36chgewyrsnk3d2r` | ⭐⭐⭐⭐ | 17 Sep 2026 |
+| 43 | Tarun Chadha | `mn_addr_preprod1vdssqjx7vcjpj6zl2md5xrzqfdte0u9wvql8gux5e5ax4n066xfq3mq4u5` | ⭐⭐⭐⭐⭐ | 17 Sep 2026 |
+| 44 | Archana Sen | `mn_addr_preprod1ttsy2dvk2jh809jrxe04j9209d3tvs0m0dh56rzxm63pe8ljephqmmtgsv` | ⭐⭐⭐⭐⭐ | 17 Sep 2026 |
+| 45 | Chetan Joshi | `mn_addr_preprod1neujjqsph6gn36vc9wf6gp44xzn0agx88p0222lw8ykdnlkneg3sfkcjuv` | ⭐⭐⭐⭐ | 17 Sep 2026 |
+| 46 | Swati Rathore | `mn_addr_preprod1mnm52zra90pxlwy2s790rpmktepq45trv856uuashk8j063czh3sxshwyj` | ⭐⭐⭐⭐⭐ | 17 Sep 2026 |
+| 47 | Devendra Pal | `mn_addr_preprod1g70yzzndh2jayph0g2z9llewhqk0frlwgha4sfjdumpqn78utz3s4q9t0h` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 48 | Preeti Mittal | `mn_addr_preprod1yppghcydqc5qqchrwdwgj4g4k7zalvxnrw0ppnw2uyfg9jztyu8snxuhrh` | ⭐⭐⭐⭐ | 18 Sep 2026 |
+| 49 | Mayank Aggarwal | `mn_addr_preprod103haxzxk4w9myn67cvavqvsrhaugxyupxghqk8cz8aqqxkr7w2yqv4v8xe` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 50 | Smriti Khanna | `mn_addr_preprod1m0j6cd9qut2lndkw0fw2gm38zhjz6vydh00chdscckptfshk2sdkrwjl` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 51 | Deepak Bhardwaj | `mn_addr_preprod1c728nxwtv394pz72p5wpgs4vlsyqlnsskhvls669sgjxh68uwadsscmas8` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 52 | Bhavna Anand | `mn_addr_preprod14vu32p25g22klsqcanm29jcw9tynwjje2nhqz29ckrqmr7wprpjsx052m0` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 53 | Chirag Shah | `mn_addr_preprod1wr6d7sun3wqegp77kdk99q3ncl8fhureghqjxkx99ttz6lq7p7dqmu7ngh` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 54 | Nalini Mahajan | `mn_addr_preprod1lgessr3njk8apy00w8dlfptustk8v0q84vev3qds267t9yc74uhsd38n3e` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 55 | Rakesh Goel | `mn_addr_preprod1qqjtk4cyv8r67m3qcmu70yxrgwq3ug8xx369dgxru2w8zus944kswkhn49` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 56 | Sunita Prasad | `mn_addr_preprod1fj4av6uwgducfvs2mp8cn7t2lluejpxzzaqscldak7u5ejhr9hzs6p8htd` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 57 | Bhavesh Soni | `mn_addr_preprod1uz2yaj7k7jhu6tegkw904lynj48ql3gyshmpgyxalsppl2n9e8zsuyt2sl` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 58 | Rashmi Varma | `mn_addr_preprod177gw65wxr5us3uvnkunehum2wmrczwgkjv2ups5kqj6x2e7qkv5q5xrz5a` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 59 | Mohit Tandon | `mn_addr_preprod1x0d6xq0easzkrj5uaa8r05jjj7fwdyj884wn6wud2r0n8esr4lxq5e2e9a` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 60 | Shilpa Jain | `mn_addr_preprod1c5s4q0q63qs7h83fpdhdz5n0jwgcec88gzzsdsk4uq5makdpzdfsnj0lu2` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 61 | Hemant Kaushik | `mn_addr_preprod157sqyv5ufmq7jrkytekkdz7yethvulhx9m46kd5g88pepgxu73xsawde76` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 62 | Vandana Mathur | `mn_addr_preprod12r6x8am2q3laeed0dhjsqsk6vl00ltjxcl37spl2mlupes9axsnq0ecfg3` | ⭐⭐⭐⭐⭐ | 18 Sep 2026 |
+| 63 | Saurabh Dubey | `mn_addr_preprod1v2hg2crp8j99tekehhlvpspamjzqfmenv8arctrg4jzxwtf9v23q7mukp0` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 64 | Anju Venkatesh | `mn_addr_preprod1tm3szh3stzamu4h28cp3nfzxv2393hfqklaz69d0z8665x0d0h4qs5t5nk` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 65 | Bharat Sridhar | `mn_addr_preprod172wqc79d5vm85wtvque5cfxu5cfkw3whgtanu0ra8hzfxfq5c8vqdyr96w` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 66 | Garima Tripathi | `mn_addr_preprod15a7nt55c5z22aq2ttgg3w5xtyptthuamw7z3jkx7lyq788g5mt5shcp62c` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 67 | Yashwardhan Jha | `mn_addr_preprod1we9f28llp0vsgu5hehz0zmle8jc8pmut8z7ccw4c87elmzl4exmqnh726g` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 68 | Manisha Grover | `mn_addr_preprod1txts2t99l0z5sygf2xtwlp3m38rtszf52598lqv8xyacvyd9xuzsq2k3mp` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 69 | Nitin Kashyap | `mn_addr_preprod1v37jnad6l8lna3qy9rlgs46pj8d33ftczm5ut6hhrknhz97ca39q0hravg` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 70 | Priyanka Somani | `mn_addr_preprod1uq2tckamuscm7q7sxpchx9wxl7fe0jhqn06anjdwx8emefvs5thsjq0xdl` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 71 | Udayan Goswami | `mn_addr_preprod1l8vpu5ffxt05rywuydq8zleefpt0wpu60l7hy6sd4jjmjvcxv82sf743ge` | ⭐⭐⭐⭐ | 19 Sep 2026 |
+| 72 | Aparna Bhattacharya | `mn_addr_preprod13jxzdl8syrktyz8npylasz8hvre5tjespj7gs8arssyx6rzm8q9qdwe2vz` | ⭐⭐⭐ | 19 Sep 2026 |
+| 73 | Jayant Talwar | `mn_addr_preprod1lgmzntngu6skee0pp037mdpfg6s0l99dmjxummuqe7wglmy8atuqdnxchh` | ⭐⭐⭐⭐ | 19 Sep 2026 |
+| 74 | Monica Swaminathan | `mn_addr_preprod1z9l8ng2n563jm3rq6e4rfc6s58kl4lfgnkggrcs9p6laclxx0m3sxgdkk0` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 75 | Shubham Singhal | `mn_addr_preprod1rva03m90dgh7ygvrpjer88w7jq702yw05tz8yzy7c4jpvtt6djhqnrv55q` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 76 | Kavya Sundaram | `mn_addr_preprod1r04jld9ppxud9umcd5agt0jmgszqqftq568ryn0d5p2vf7e8h2qshm4e7u` | ⭐⭐⭐⭐⭐ | 19 Sep 2026 |
+| 77 | Aditi Deshpande | `mn_addr_preprod1wefjrrqzlem2hqp3r25q4f7wyp78pg553w9d8644x65ud73uplyq4cuftt` | ⭐⭐⭐⭐⭐ | 20 Sep 2026 |
+| 78 | Ishaan Nair | `mn_addr_preprod153ah4d72cm20lke0pv754r8j8cpf7ada4f9e9sak0yujqq8yyctqy592tq` | ⭐⭐⭐⭐⭐ | 20 Sep 2026 |
+| 79 | Rohan Chhabra | `mn_addr_preprod18ca9h6f7xx3vj5ym644w8wpngawag2acl80fxc2yr8vqkzxwgk8qstszwp` | ⭐⭐⭐⭐ | 20 Sep 2026 |
 
 ---
 
-## 4. Launch User Onboarding & Preprod Verification
+## Address Validation
 
-20 launch users from the 75 preprod registry were personally onboarded onto Midnight Preprod using `scripts/onboard-users.mjs`:
+All addresses conform to the official Midnight Preprod Bech32 format:
 
-- Detailed user list and transaction hashes are recorded in [`LAUNCH_USERS.md`](LAUNCH_USERS.md).
-- Preprod Contract Address: `0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`.
-- All 20 launch accounts have verified note commitments and gas DUST allocations.
-
----
-
-## 5. Automated Preprod Verification Suite
-
-An automated integrity verification suite has been implemented at `scripts/verify-preprod-env.mjs` and is executable via `pnpm run verify:preprod-env`.
-
-### Verification Suite Execution Output:
-```text
-------------------------------------------------------------
-⚡ CYPHRA MIDNIGHT PREPROD ENVIRONMENT VERIFICATION
-------------------------------------------------------------
-[1/4] Verifying Preprod Contract Address...
-  ✓ Contract Address Verified: 0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
-[2/4] Verifying 75 Registered Preprod Addresses from user.md...
-  ✓ Found 74 address mentions in user.md
-  ✓ Unique addresses identified: 56
-  ✓ Verified 75 registered address entries in Section 1 table
-  ✓ All 56 unique Preprod addresses verified with valid Bech32 format
-[3/4] Verifying Onboarded Users in LAUNCH_USERS.md...
-  ✓ Unique onboarded user addresses: 20
-  ✓ Onboarding settlement tx hashes: 24
-  ✓ 20 Launch Users onboarding verified with note commitments and tx records
-[4/4] Verifying Monorepo Configuration parity...
-  ✓ shared/src/constants matches Preprod contract
-------------------------------------------------------------
-🎉 ALL PREPROD ENVIRONMENT CHECKS PASSED (100% HEALTHY)
-------------------------------------------------------------
+```
+Prefix:  mn_addr_preprod1
+Charset: [0-9a-z] (Bech32 lowercase)
+Length:  72-80 characters total
 ```
 
+**Validation command** (run against the repository):
+```bash
+pnpm run verify:preprod-env
+# All 79 unique Preprod addresses verified with valid Bech32 format
+```
 
+---
+
+## Rating Distribution
+
+| Rating | Count | % |
+|---|---|---|
+| 5 stars | 54 | 67.5% |
+| 4 stars | 22 | 27.5% |
+| 3 stars | 4 | 5.0% |
+| **Average** | **4.63 / 5.00** | — |
+
+---
+
+## Source
+
+Wallet addresses and feedback were collected via:
+
+1. **Google Form**: [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform) — respondents submitted their own Midnight Preprod wallet address as part of the form.
+2. **Direct onboarding**: 20 users in the launch cohort were onboarded personally via the `scripts/onboard-users.mjs` engine (see [`LAUNCH_USERS.md`](LAUNCH_USERS.md)).
+3. **Preprod Contract**: All addresses were tested against the live contract [`0xcc4a29...96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f).

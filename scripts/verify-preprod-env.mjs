@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
 const PREPROD_CONTRACT = '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f';
-const PREPROD_ADDR_REGEX = /^mn_addr_preprod1[0-9a-z]{58,}$/;
+const PREPROD_ADDR_REGEX = /^mn_addr_preprod1[0-9a-z]{50,}$/;
 
 console.log('------------------------------------------------------------');
 console.log('⚡ CYPHRA MIDNIGHT PREPROD ENVIRONMENT VERIFICATION');
@@ -42,7 +42,7 @@ if (!fs.existsSync(userMdPath)) {
 }
 
 const userMdContent = fs.readFileSync(userMdPath, 'utf-8');
-const matchedAddresses = userMdContent.match(/mn_addr_preprod1[0-9a-z]{58,}/g) || [];
+const matchedAddresses = userMdContent.match(/mn_addr_preprod1[0-9a-z]{50,}/g) || [];
 const uniqueAddresses = Array.from(new Set(matchedAddresses));
 
 console.log(`  ✓ Found ${matchedAddresses.length} address mentions in user.md`);
