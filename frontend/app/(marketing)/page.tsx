@@ -167,19 +167,19 @@ export default function MarketingPage() {
           >
             {/* Top Brand Sparkle Pill */}
             <motion.div variants={itemVariants}>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 border border-zinc-200 text-xs font-semibold text-zinc-800 transition-all mb-5 shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 border border-zinc-200 text-[11px] sm:text-xs font-semibold text-zinc-800 transition-all mb-5 shadow-xs max-w-full">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                 <span className="font-mono text-zinc-600">Midnight Preprod</span>
                 <span className="text-zinc-300">•</span>
-                <span>Official 1AM Wallet DApp Connector</span>
-                <ChevronRight className="w-3.5 h-3.5 text-zinc-500" />
+                <span className="truncate">Official 1AM Wallet Connector</span>
+                <ChevronRight className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
               </div>
             </motion.div>
 
             {/* Midnight Network Switcher */}
-            <motion.div variants={itemVariants} className="mb-8 flex flex-col items-center">
-              <div className="inline-flex items-center p-1.5 rounded-2xl bg-zinc-100/90 border border-zinc-200 shadow-xs backdrop-blur-sm">
-                <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider">
+            <motion.div variants={itemVariants} className="mb-6 sm:mb-8 flex flex-col items-center max-w-full px-2">
+              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-zinc-100/90 border border-zinc-200 shadow-xs backdrop-blur-sm max-w-full overflow-x-auto scrollbar-none">
+                <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider shrink-0">
                   <Globe className="w-3.5 h-3.5 text-zinc-700" />
                   <span>Network:</span>
                 </div>
@@ -192,7 +192,7 @@ export default function MarketingPage() {
                         type="button"
                         onClick={() => handleNetworkSelect(net.id)}
                         disabled={isSwitchingNetwork}
-                        className={`relative px-4 py-1.5 rounded-xl text-xs font-mono font-bold transition-all select-none cursor-pointer flex items-center gap-2 ${
+                        className={`relative px-2.5 sm:px-4 py-1.5 rounded-xl text-[11px] sm:text-xs font-mono font-bold transition-all select-none cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                           isSelected
                             ? 'text-black shadow-xs'
                             : 'text-zinc-600 hover:text-black hover:bg-zinc-200/50'
@@ -207,13 +207,13 @@ export default function MarketingPage() {
                           />
                         )}
                         <span
-                          className={`relative z-10 w-2 h-2 rounded-full ${
+                          className={`relative z-10 w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full ${
                             isSelected ? 'bg-black animate-pulse' : 'bg-zinc-400'
                           }`}
                         />
                         <span className="relative z-10">{net.label}</span>
                         <span
-                          className={`relative z-10 text-[9px] uppercase px-1.5 py-0.5 rounded font-sans font-bold tracking-wide ${
+                          className={`relative z-10 text-[9px] uppercase px-1.5 py-0.5 rounded font-sans font-bold tracking-wide hidden sm:inline-block ${
                             isSelected
                               ? 'bg-black/10 text-black'
                               : 'bg-zinc-200/80 text-zinc-600'
@@ -226,7 +226,7 @@ export default function MarketingPage() {
                   })}
                 </div>
               </div>
-              <div className="mt-2 text-[11px] font-mono text-zinc-500 flex items-center gap-1.5">
+              <div className="mt-2 text-[10px] sm:text-[11px] font-mono text-zinc-500 flex items-center justify-center gap-1.5 flex-wrap text-center px-4">
                 <span className="text-zinc-400">Target RPC:</span>
                 <span className="text-zinc-800 font-semibold">
                   {networkOptions.find((n) => n.id === activeNetwork)?.description}
@@ -235,7 +235,7 @@ export default function MarketingPage() {
             </motion.div>
 
             {/* Brand Logo Hero Icon */}
-            <motion.div variants={itemVariants} className="mb-6 flex justify-center">
+            <motion.div variants={itemVariants} className="mb-5 sm:mb-6 flex justify-center">
               <div className="relative inline-flex items-center justify-center transition-transform hover:scale-105 duration-300">
                 <CyphraLogoMark size={96} className="drop-shadow-[0_10px_28px_rgba(255,212,0,0.25)]" />
               </div>
@@ -244,17 +244,17 @@ export default function MarketingPage() {
             {/* Headline */}
             <motion.h1
               variants={itemVariants}
-              className="text-4xl sm:text-6xl md:text-7xl font-black tracking-[-0.03em] text-zinc-950 max-w-4xl mx-auto leading-[1.06]"
+              className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-zinc-950 max-w-4xl mx-auto leading-[1.08] px-2 break-words"
             >
               Confidential Payments for the Private Web
             </motion.h1>
 
-            {/* Subtitle */}
+            {/* Subtitle — Short, Punchy, Fintech-Grade */}
             <motion.p
               variants={itemVariants}
-              className="mt-6 text-base sm:text-lg md:text-xl text-zinc-600 max-w-2xl mx-auto font-normal leading-relaxed"
+              className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-zinc-600 max-w-xl mx-auto font-normal leading-relaxed px-4"
             >
-              Maintain shielded balances, execute zero-knowledge transfers, and issue private payment requests powered by <span className="font-semibold text-black">Midnight Network</span> and Compact 0.31.1 smart contracts.
+              Zero-knowledge confidential payments and private digital assets powered by <span className="font-semibold text-black">Midnight</span>.
             </motion.p>
 
             {/* Primary Action Buttons */}
@@ -293,15 +293,15 @@ export default function MarketingPage() {
             {/* Interactive Live Confidential Payment Sandbox */}
             <motion.div
               variants={itemVariants}
-              className="mt-14 w-full max-w-xl mx-auto text-left"
+              className="mt-10 sm:mt-14 w-full max-w-xl mx-auto text-left px-1 sm:px-0"
             >
-              <div className="rounded-3xl border border-zinc-200/90 bg-white p-6 shadow-card hover:shadow-card-hover transition-all duration-300 relative overflow-hidden">
+              <div className="rounded-2xl sm:rounded-3xl border border-zinc-200/90 bg-white p-4 sm:p-6 shadow-card hover:shadow-card-hover transition-all duration-300 relative overflow-hidden">
                 {/* Top hairline accent */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFD400] via-black to-[#FFD400]" />
 
-                <div className="flex items-center justify-between pb-4 border-b border-zinc-100">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-zinc-100">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black">
+                    <div className="w-8 h-8 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black shrink-0">
                       <Shield className="w-4 h-4" />
                     </div>
                     <div>
@@ -313,20 +313,20 @@ export default function MarketingPage() {
                       </p>
                     </div>
                   </div>
-                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-1.5 shadow-xs">
+                  <span className="text-[10px] sm:text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-1.5 shadow-xs shrink-0 self-start sm:self-auto">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     ZK-Encrypted
                   </span>
                 </div>
 
-                <div className="space-y-4 pt-4">
+                <div className="space-y-3.5 sm:space-y-4 pt-4">
                   {/* Recipient box */}
                   <div>
                     <div className="flex justify-between text-[11px] font-mono font-semibold text-zinc-500 mb-1">
                       <span>Recipient Address (Bech32)</span>
                       <span className="text-emerald-700 font-bold">Preprod Validated</span>
                     </div>
-                    <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200 font-mono text-xs text-zinc-800 flex items-center justify-between shadow-xs">
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-zinc-50 border border-zinc-200 font-mono text-[11px] sm:text-xs text-zinc-800 flex items-center justify-between shadow-xs">
                       <span className="truncate">mn_addr_preprod17hhujr34dkhlv2qpzdzddvxzuwr8qt...</span>
                       <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 ml-2" />
                     </div>
@@ -336,22 +336,22 @@ export default function MarketingPage() {
                   <div>
                     <div className="flex justify-between text-[11px] font-mono text-zinc-500 mb-1">
                       <span className="font-semibold">Transfer Amount</span>
-                      <span>Shielded Balance: 1,500.00 NIGHT</span>
+                      <span className="truncate">Shielded: 1,500 NIGHT</span>
                     </div>
-                    <div className="flex items-center gap-2 p-2 rounded-xl border border-zinc-200 bg-zinc-50/70">
+                    <div className="flex items-center gap-2 p-1.5 sm:p-2 rounded-xl border border-zinc-200 bg-zinc-50/70">
                       <input
                         type="text"
                         value={demoAmount}
                         onChange={(e) => setDemoAmount(e.target.value)}
-                        className="w-full bg-transparent font-mono text-xl font-black text-black px-2 outline-none"
+                        className="w-full bg-transparent font-mono text-lg sm:text-xl font-black text-black px-2 outline-none"
                       />
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 shrink-0">
                         {(['NIGHT', 'DUST', 'tCYPHRA'] as const).map((t) => (
                           <button
                             key={t}
                             type="button"
                             onClick={() => setDemoToken(t)}
-                            className={`px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                            className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-mono font-bold transition-all ${
                               demoToken === t
                                 ? 'bg-black text-white shadow-xs'
                                 : 'bg-white text-zinc-600 border border-zinc-200 hover:text-black hover:border-zinc-300'
@@ -366,9 +366,9 @@ export default function MarketingPage() {
 
                   {/* Public vs Auditor View Mode Toggle */}
                   <div className="pt-1">
-                    <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 mb-2">
-                      <span className="font-semibold uppercase tracking-wider">Live Ledger Visibility Toggle:</span>
-                      <div className="flex rounded-lg bg-zinc-100 p-0.5 border border-zinc-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[11px] font-mono text-zinc-500 mb-2">
+                      <span className="font-semibold uppercase tracking-wider text-[10px] sm:text-[11px]">Live Ledger Visibility:</span>
+                      <div className="flex rounded-lg bg-zinc-100 p-0.5 border border-zinc-200 shrink-0">
                         <button
                           type="button"
                           onClick={() => setActiveLedgerView('public')}
@@ -395,21 +395,21 @@ export default function MarketingPage() {
                     </div>
 
                     <div className="p-3 rounded-xl bg-zinc-950 text-zinc-100 font-mono text-xs border border-zinc-800 space-y-1.5">
-                      <div className="flex justify-between items-center text-[11px]">
+                      <div className="flex justify-between items-center text-[10px] sm:text-[11px]">
                         <span className="text-zinc-400">Sender Identity:</span>
-                        <span className="font-bold text-[#FFD400]">
+                        <span className="font-bold text-[#FFD400] truncate max-w-[140px] sm:max-w-none">
                           {activeLedgerView === 'public' ? '0x[ZERO_KNOWLEDGE_SHIELDED]' : 'Aarav Sharma (Witness 0x3f1a)'}
                         </span>
                       </div>
-                      <div className="flex justify-between items-center text-[11px]">
+                      <div className="flex justify-between items-center text-[10px] sm:text-[11px]">
                         <span className="text-zinc-400">Transfer Amount:</span>
                         <span className="font-bold text-emerald-400">
                           {activeLedgerView === 'public' ? '•••••••• (Encrypted)' : `${demoAmount} ${demoToken}`}
                         </span>
                       </div>
-                      <div className="flex justify-between items-center text-[11px]">
+                      <div className="flex justify-between items-center text-[10px] sm:text-[11px]">
                         <span className="text-zinc-400">Note Commitment:</span>
-                        <span className="text-zinc-400 text-[10px] truncate max-w-[210px]">
+                        <span className="text-zinc-400 text-[9px] sm:text-[10px] truncate max-w-[140px] sm:max-w-[210px]">
                           0x8f3c7e91b4a2d0c5...01fe
                         </span>
                       </div>
@@ -423,15 +423,15 @@ export default function MarketingPage() {
                       size="md"
                       onClick={runDemoProof}
                       disabled={isProvingDemo}
-                      className="w-full font-bold text-xs py-2.5 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-sm"
+                      className="w-full font-bold text-xs py-2.5 sm:py-3 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-sm"
                     >
                       {isProvingDemo ? (
-                        <span className="flex items-center gap-2">
-                          <Cpu className="w-3.5 h-3.5 animate-spin text-black" />
-                          Proving Step {demoStep}/4: {demoStep === 1 ? 'Witness Generation' : demoStep === 2 ? 'Constraint Checks' : demoStep === 3 ? 'Nullifier Anchor' : 'Preprod Ledger Settlement'}
+                        <span className="flex items-center justify-center gap-1.5 truncate">
+                          <Cpu className="w-3.5 h-3.5 animate-spin text-black shrink-0" />
+                          <span className="truncate">Step {demoStep}/4: {demoStep === 1 ? 'Witness Generation' : demoStep === 2 ? 'Constraint Checks' : demoStep === 3 ? 'Nullifier Anchor' : 'Preprod Ledger Settlement'}</span>
                         </span>
                       ) : (
-                        <span className="flex items-center gap-1.5">
+                        <span className="flex items-center justify-center gap-1.5">
                           <Play className="w-3.5 h-3.5 fill-black" /> Simulate Compact ZK Circuit Prover
                         </span>
                       )}
@@ -448,41 +448,41 @@ export default function MarketingPage() {
             {/* Protocol Metrics Bar */}
             <motion.div
               variants={itemVariants}
-              className="mt-14 pt-8 border-t border-zinc-200 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono text-zinc-700 w-full"
+              className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-zinc-200 grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 text-xs font-mono text-zinc-700 w-full"
             >
-              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
-                <span className="text-zinc-500 block mb-1 font-semibold text-[10px] uppercase">
+              <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
+                <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
                   Shielded Volume (7D)
                 </span>
-                <span className="text-black font-extrabold text-base tabular-nums">
+                <span className="text-black font-extrabold text-sm sm:text-base tabular-nums">
                   $<AnimatedCounter value={1845920} decimals={0} />
                 </span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
-                <span className="text-zinc-500 block mb-1 font-semibold text-[10px] uppercase">
+              <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
+                <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
                   Client WASM Prover
                 </span>
-                <span className="text-black font-extrabold text-base tabular-nums flex items-center gap-1">
-                  840ms <span className="text-xs font-semibold text-emerald-600">(-42%)</span>
+                <span className="text-black font-extrabold text-sm sm:text-base tabular-nums flex items-center gap-1">
+                  840ms <span className="text-[10px] sm:text-xs font-semibold text-emerald-600">(-42%)</span>
                 </span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
-                <span className="text-zinc-500 block mb-1 font-semibold text-[10px] uppercase">
+              <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
+                <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
                   Compiler & Primitive
                 </span>
-                <span className="text-black font-extrabold text-base tabular-nums">
+                <span className="text-black font-extrabold text-sm sm:text-base tabular-nums">
                   Compact 0.31.1 ZK
                 </span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
-                <span className="text-zinc-500 block mb-1 font-semibold text-[10px] uppercase">
+              <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
+                <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
                   1AM Connector
                 </span>
-                <span className="text-black font-extrabold text-base tabular-nums flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> v4.0.1 Official
+                <span className="text-black font-extrabold text-sm sm:text-base tabular-nums flex items-center gap-1 sm:gap-1.5">
+                  <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-emerald-500 shrink-0" /> v4.0.1 Official
                 </span>
               </div>
             </motion.div>
@@ -570,8 +570,8 @@ export default function MarketingPage() {
             </h2>
           </div>
 
-          <div className="rounded-2xl border border-zinc-200 overflow-hidden bg-white shadow-card">
-            <table className="w-full text-left border-collapse text-xs font-mono">
+          <div className="rounded-2xl border border-zinc-200 overflow-x-auto bg-white shadow-card">
+            <table className="w-full min-w-[540px] text-left border-collapse text-xs font-mono">
               <thead>
                 <tr className="border-b border-zinc-200 bg-zinc-50 text-zinc-700">
                   <th className="p-4 font-bold">CAPABILITY</th>
@@ -655,9 +655,9 @@ export default function MarketingPage() {
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-zinc-200/70 flex items-center justify-between text-[10px] font-mono text-zinc-500">
-                  <span className="truncate max-w-[240px]">Addr: {tester.address}</span>
-                  <span className="text-emerald-700 font-bold shrink-0">✓ Verified Preprod</span>
+                <div className="mt-4 pt-3 border-t border-zinc-200/70 flex items-center justify-between text-[10px] font-mono text-zinc-500 gap-2">
+                  <span className="truncate max-w-[130px] sm:max-w-[240px]">Addr: {tester.address}</span>
+                  <span className="text-emerald-700 font-bold shrink-0">✓ Verified</span>
                 </div>
               </div>
             ))}

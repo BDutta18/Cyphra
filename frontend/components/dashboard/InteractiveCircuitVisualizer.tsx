@@ -58,7 +58,7 @@ export function InteractiveCircuitVisualizer() {
       </div>
 
       {/* Circuit Type Tabs */}
-      <div className="flex items-center gap-2 pt-4 pb-1">
+      <div className="flex flex-wrap items-center gap-2 pt-4 pb-1">
         {(['send', 'invoice', 'mint'] as const).map((circ) => (
           <button
             key={circ}
