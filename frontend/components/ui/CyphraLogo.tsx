@@ -136,23 +136,20 @@ export function CyphraLogo({
   className = '',
   href,
   theme = 'auto',
-  showBadge = true,
 }: CyphraLogoProps) {
   const sizeMap = {
-    xs: { markSize: 20, fontSize: 'text-xs',   subSize: 'text-[8px]',  gap: 'gap-1.5' },
-    sm: { markSize: 26, fontSize: 'text-sm',   subSize: 'text-[9px]',  gap: 'gap-2'   },
-    md: { markSize: 34, fontSize: 'text-base', subSize: 'text-[10px]', gap: 'gap-2.5' },
-    lg: { markSize: 42, fontSize: 'text-xl',   subSize: 'text-xs',     gap: 'gap-3'   },
-    xl: { markSize: 56, fontSize: 'text-2xl',  subSize: 'text-xs',     gap: 'gap-3.5' },
+    xs: { markSize: 20, fontSize: 'text-xs',   gap: 'gap-1.5' },
+    sm: { markSize: 26, fontSize: 'text-sm',   gap: 'gap-2'   },
+    md: { markSize: 34, fontSize: 'text-lg',   gap: 'gap-2.5' },
+    lg: { markSize: 42, fontSize: 'text-xl',   gap: 'gap-3'   },
+    xl: { markSize: 56, fontSize: 'text-2xl',  gap: 'gap-3.5' },
   };
 
-  const { markSize, fontSize, subSize, gap } = sizeMap[size];
+  const { markSize, fontSize, gap } = sizeMap[size];
 
   // Theme-aware text colours
   const textPrimary =
-    theme === 'dark' ? 'text-white' : theme === 'light' ? 'text-zinc-950' : 'text-zinc-950';
-  const textMuted =
-    theme === 'dark' ? 'text-zinc-400' : 'text-zinc-500';
+    theme === 'dark' ? 'text-white' : 'text-zinc-950';
 
   const content = (
     <div className={`inline-flex items-center ${gap} ${className} group cursor-pointer select-none`}>
@@ -161,36 +158,14 @@ export function CyphraLogo({
         <CyphraLogoMark size={markSize} />
       </div>
 
-      {/* Typography Lockup */}
+      {/* Typography Lockup — only the brand name */}
       {variant !== 'mark' && (
-        <div className="flex flex-col leading-none">
-          <div className="flex items-center gap-1.5">
-            <span
-              className={`font-black tracking-wider font-sans ${fontSize} ${textPrimary}`}
-              style={{ letterSpacing: '0.08em' }}
-            >
-              CYPHRA
-            </span>
-
-            {/* ZK live pill — only on full + badge variants */}
-            {showBadge && (variant === 'full' || variant === 'badge') && (
-              <span className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider bg-zinc-100 text-zinc-700 border border-zinc-200 group-hover:border-[#FFD400]/70 group-hover:bg-[#FFD400]/10 transition-all duration-200">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                ZK
-              </span>
-            )}
-          </div>
-
-          {/* Subtitle — shown on full + compact */}
-          {(variant === 'full' || variant === 'compact') && (
-            <span
-              className={`font-mono font-semibold tracking-widest mt-0.5 uppercase ${subSize} ${textMuted}`}
-              style={{ letterSpacing: '0.12em' }}
-            >
-              Midnight Confidential
-            </span>
-          )}
-        </div>
+        <span
+          className={`font-black tracking-wider font-sans leading-none ${fontSize} ${textPrimary}`}
+          style={{ letterSpacing: '0.08em' }}
+        >
+          CYPHRA
+        </span>
       )}
     </div>
   );
