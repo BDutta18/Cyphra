@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Cpu, ArrowRight, Lock, Key, Check, RefreshCw } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { CyphraLogoMark } from '../ui/CyphraLogo';
 
 export function InteractiveCircuitVisualizer() {
   const [selectedCircuit, setSelectedCircuit] = useState<'send' | 'invoice' | 'mint'>('send');
@@ -36,7 +37,7 @@ export function InteractiveCircuitVisualizer() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-zinc-200">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-[#FFD400]" />
+            <CyphraLogoMark size={18} />
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500">
               Midnight Compact ZK Engine
             </span>

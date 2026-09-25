@@ -19,6 +19,7 @@ import { usePrivateBalance } from '../../hooks/usePrivateBalance';
 import { apiClient } from '../../lib/api-client';
 import { oneAMWallet } from '../../lib/one-am-wallet-adapter';
 import { TransactionActivity } from '../../lib/cyphra-types';
+import { CyphraLogoMark } from '../../components/ui/CyphraLogo';
 import {
   ArrowUpRight,
   ArrowDownLeft,
@@ -122,6 +123,7 @@ export default function DashboardPage() {
         >
           <div>
             <div className="flex items-center gap-2.5">
+              <CyphraLogoMark size={28} className="drop-shadow-xs" />
               <h1 className="text-xl font-black text-black tracking-tight font-sans">
                 Confidential Treasury
               </h1>

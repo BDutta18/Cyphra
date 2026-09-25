@@ -60,13 +60,20 @@ export function CyphraLogo({
         <CyphraLogoMark size={markSize} />
       </div>
 
-      {/* Typography Lockup — only the brand name */}
+      {/* Typography Lockup — brand name */}
       {variant !== 'mark' && (
         <span
           className={`font-black tracking-wider font-sans leading-none ${fontSize} ${textPrimary}`}
           style={{ letterSpacing: '0.08em' }}
         >
           CYPHRA
+        </span>
+      )}
+
+      {/* Optional micro network badge */}
+      {variant === 'badge' && (
+        <span className="text-[9px] font-mono font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#FFD400]/25 text-black border border-[#FFD400]/50 uppercase ml-0.5">
+          Preprod
         </span>
       )}
     </div>

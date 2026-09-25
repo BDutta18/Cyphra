@@ -14,6 +14,7 @@ import {
   Lock,
 } from 'lucide-react';
 import Link from 'next/link';
+import { CyphraLogoMark } from '../ui/CyphraLogo';
 
 export interface BalanceCardProps {
   shieldedNight: string;
@@ -77,8 +78,8 @@ export function BalanceCard({
       {/* ── Header ── */}
       <div className="flex items-center justify-between pb-4 border-b border-zinc-100 pt-1">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black shadow-xs">
-            <Shield className="w-4 h-4" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white to-zinc-50 border border-zinc-200/90 flex items-center justify-center p-1 shadow-xs shrink-0">
+            <CyphraLogoMark size={28} className="drop-shadow-xs" />
           </div>
           <div>
             <div className="flex items-center gap-2">
