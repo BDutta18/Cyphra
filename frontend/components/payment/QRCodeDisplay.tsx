@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import QRCode from 'qrcode';
-import Image from 'next/image';
+import { CyphraLogoMark } from '../ui/CyphraLogo';
 import { Button } from '../ui/Button';
 import { Copy, Check, Download, Share2 } from 'lucide-react';
 
@@ -84,14 +84,8 @@ export function QRCodeDisplay({
         <canvas ref={canvasRef} className="block max-w-full h-auto mx-auto" />
         {showLogo && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-8 h-8 rounded-md bg-black p-0.5 border border-[#FFD400] flex items-center justify-center shadow-md">
-              <Image
-                src="/logo.png"
-                alt="Cyphra Emblem"
-                width={24}
-                height={24}
-                className="object-contain"
-              />
+            <div className="w-9 h-9 rounded-xl bg-black p-1 border-2 border-[#FFD400] flex items-center justify-center shadow-lg">
+              <CyphraLogoMark size={22} />
             </div>
           </div>
         )}

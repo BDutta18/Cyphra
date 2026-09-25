@@ -114,14 +114,8 @@ export function WalletConnectModal({
         <div className="p-3.5 rounded-xl bg-zinc-50 border border-zinc-200 space-y-3">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center p-1.5 shadow-xs shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="1AM Wallet"
-                  width={30}
-                  height={30}
-                  className="object-contain"
-                />
+              <div className="w-10 h-10 rounded-xl bg-black border border-zinc-800 flex items-center justify-center p-1.5 shadow-xs shrink-0">
+                <Wallet className="w-5 h-5 text-[#FFD400]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">

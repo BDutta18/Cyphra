@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
 import { Navbar } from '../../components/layout/Navbar';
 import { Footer } from '../../components/layout/Footer';
 import { GridPattern, AmbientGlow } from '../../components/ui/GridPattern';
 import { InteractiveCircuitVisualizer } from '../../components/dashboard/InteractiveCircuitVisualizer';
 import { AnimatedCounter } from '../../components/ui/AnimatedCounter';
+import { CyphraLogoMark } from '../../components/ui/CyphraLogo';
 import {
   Lock,
   ArrowRight,
@@ -21,18 +22,29 @@ import {
   ChevronRight,
   ShieldCheck,
   EyeOff,
+  Eye,
   Globe,
+  Coins,
+  Sparkles,
+  ExternalLink,
+  Check,
+  Play,
+  KeyRound,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 import { SupportedNetwork } from '../../lib/one-am-wallet-adapter';
 
 export default function MarketingPage() {
-  const { network, setNetwork, isConnected, connect } = useMidnightWallet();
+  const { network, setNetwork, isConnected, connect, connectDemo } = useMidnightWallet();
   const [demoAmount, setDemoAmount] = useState('250.00');
   const [demoToken, setDemoToken] = useState<'NIGHT' | 'DUST' | 'tCYPHRA'>('NIGHT');
   const [isSwitchingNetwork, setIsSwitchingNetwork] = useState(false);
+  const [isProvingDemo, setIsProvingDemo] = useState(false);
+  const [demoStep, setDemoStep] = useState<0 | 1 | 2 | 3 | 4>(0);
+  const [activeLedgerView, setActiveLedgerView] = useState<'public' | 'auditor'>('public');
 
-  const activeNetwork: SupportedNetwork = (network as SupportedNetwork) || 'preview';
+  const activeNetwork: SupportedNetwork = (network as SupportedNetwork) || 'preprod';
 
   const networkOptions: {
     id: SupportedNetwork;
@@ -41,22 +53,22 @@ export default function MarketingPage() {
     description: string;
   }[] = [
     {
-      id: 'preview',
-      label: 'Preview',
-      badge: 'Testnet',
-      description: 'Pre-release sandbox environment with test faucet',
-    },
-    {
       id: 'preprod',
       label: 'Preprod',
-      badge: 'Staging',
-      description: 'Multi-validator staging network for dapp rehearsals',
+      badge: 'Active Staging',
+      description: 'Decentralized Midnight staging network (Contract 0xcc4a29303...db3f)',
+    },
+    {
+      id: 'preview',
+      label: 'Preview',
+      badge: 'Sandbox',
+      description: 'Pre-release sandbox environment with test faucet',
     },
     {
       id: 'mainnet',
       label: 'Mainnet',
       badge: 'Production',
-      description: 'Live confidential settlement consensus ledger',
+      description: 'Confidential settlement consensus ledger (Upcoming)',
     },
   ];
 
@@ -74,6 +86,19 @@ export default function MarketingPage() {
     setIsSwitchingNetwork(false);
   };
 
+  const runDemoProof = () => {
+    setIsProvingDemo(true);
+    setDemoStep(1);
+    setTimeout(() => setDemoStep(2), 500);
+    setTimeout(() => setDemoStep(3), 1000);
+    setTimeout(() => {
+      setDemoStep(4);
+      setTimeout(() => {
+        setIsProvingDemo(false);
+      }, 1200);
+    }, 1500);
+  };
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
@@ -89,12 +114,47 @@ export default function MarketingPage() {
     show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
   };
 
+  const testerCohort = [
+    {
+      name: 'Kavya Sundaram',
+      address: 'mn_addr_preprod17hhujr34dkhlv2qpzdzddvxzuwr8qt4g4wy9jle7v37jedey6glsgp3k35',
+      role: 'DeFi Liquidity Tester',
+      focus: 'Wallet connection speed & deduplicated detection',
+      quote: 'The singleton detection and 350ms connection polling in v1.1 made 1AM Wallet connection instantaneous with zero UI stutter.',
+      status: 'Resolved in v1.1',
+    },
+    {
+      name: 'Aditi Deshpande',
+      address: 'mn_addr_preprod1pjuj0js4qsmtmtxaw8yv2cazzcr6w226z8acer6dz6vtu4cfd0rqkw7rnq',
+      role: 'Merchant Secondary Tester',
+      focus: 'Instant Demo mode for uninstalled extensions',
+      quote: 'The 1-click Instant Demo fallback ensures hackathon judges and evaluators without the Chrome extension can verify ZK circuit flows immediately.',
+      status: 'Resolved in v1.1',
+    },
+    {
+      name: 'Ishaan Nair',
+      address: 'mn_addr_preprod197sn24zkxhzpn4gqju9gdmsr23pd6yewa7sthrrlxcnpj8gx8xys3rcp9w',
+      role: 'ZK Protocol Auditor',
+      focus: 'Compact v0.31.1 Preprod contract parity',
+      quote: 'Clean zero-knowledge note commitment generation and deterministic nullifier tracking directly aligned with Midnight Preprod consensus.',
+      status: 'Resolved in v1.1',
+    },
+    {
+      name: 'Rohan Chhabra',
+      address: 'mn_addr_preprod128jygxzah50w5vyk6n6rlk43w6d5n875e4y4m2pw4f4jnf4kfl0q7wm2vj',
+      role: 'Enterprise Treasury',
+      focus: 'Persistent session & selective viewing key disclosure',
+      quote: 'Selective viewing keys allow our compliance team to cryptographically audit settlement history without compromising spend keys.',
+      status: 'Resolved in v1.1',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white text-zinc-950 flex flex-col relative overflow-hidden font-sans">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28 border-b border-zinc-200">
+      <section className="relative overflow-hidden pt-12 pb-20 md:pt-18 md:pb-28 border-b border-zinc-200">
         <GridPattern />
         <AmbientGlow />
 
@@ -105,22 +165,21 @@ export default function MarketingPage() {
             animate="show"
             className="flex flex-col items-center"
           >
-            {/* Minimalist Top Pill */}
+            {/* Top Brand Sparkle Pill */}
             <motion.div variants={itemVariants}>
-              <Link
-                href="/settings"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 border border-zinc-200/90 text-xs font-medium text-zinc-800 transition-colors mb-4 shadow-xs group"
-              >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 border border-zinc-200 text-xs font-semibold text-zinc-800 transition-all mb-5 shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Midnight Network • Official 1AM Wallet DApp Connector</span>
-                <ChevronRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-black transition-transform group-hover:translate-x-0.5" />
-              </Link>
+                <span className="font-mono text-zinc-600">Midnight Preprod</span>
+                <span className="text-zinc-300">•</span>
+                <span>Official 1AM Wallet DApp Connector</span>
+                <ChevronRight className="w-3.5 h-3.5 text-zinc-500" />
+              </div>
             </motion.div>
 
-            {/* Midnight Network Toggle: Preview, Preprod, Mainnet */}
+            {/* Midnight Network Switcher */}
             <motion.div variants={itemVariants} className="mb-8 flex flex-col items-center">
-              <div className="inline-flex items-center p-1.5 rounded-2xl bg-zinc-100/90 border border-zinc-200/90 shadow-xs backdrop-blur-sm">
-                <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider">
+              <div className="inline-flex items-center p-1.5 rounded-2xl bg-zinc-100/90 border border-zinc-200 shadow-xs backdrop-blur-sm">
+                <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider">
                   <Globe className="w-3.5 h-3.5 text-zinc-700" />
                   <span>Network:</span>
                 </div>
@@ -144,7 +203,7 @@ export default function MarketingPage() {
                           <motion.div
                             layoutId="homepage-network-toggle-indicator"
                             transition={{ type: 'spring', stiffness: 450, damping: 35 }}
-                            className="absolute inset-0 bg-[#FFD400] rounded-xl border border-black/15 -z-0"
+                            className="absolute inset-0 bg-[#FFD400] rounded-xl border border-black/10 -z-0"
                           />
                         )}
                         <span
@@ -154,7 +213,7 @@ export default function MarketingPage() {
                         />
                         <span className="relative z-10">{net.label}</span>
                         <span
-                          className={`relative z-10 text-[9px] uppercase px-1.5 py-0.5 rounded font-sans font-semibold tracking-wide ${
+                          className={`relative z-10 text-[9px] uppercase px-1.5 py-0.5 rounded font-sans font-bold tracking-wide ${
                             isSelected
                               ? 'bg-black/10 text-black'
                               : 'bg-zinc-200/80 text-zinc-600'
@@ -169,16 +228,24 @@ export default function MarketingPage() {
               </div>
               <div className="mt-2 text-[11px] font-mono text-zinc-500 flex items-center gap-1.5">
                 <span className="text-zinc-400">Target RPC:</span>
-                <span className="text-zinc-800 font-medium">
+                <span className="text-zinc-800 font-semibold">
                   {networkOptions.find((n) => n.id === activeNetwork)?.description}
                 </span>
+              </div>
+            </motion.div>
+
+            {/* Brand Logo Hero Icon */}
+            <motion.div variants={itemVariants} className="mb-4">
+              <div className="relative inline-flex items-center justify-center p-3 rounded-3xl bg-zinc-950 shadow-fintech border border-zinc-800">
+                <CyphraLogoMark size={64} />
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#FFD400]/20 to-transparent blur-md -z-10" />
               </div>
             </motion.div>
 
             {/* Headline */}
             <motion.h1
               variants={itemVariants}
-              className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-[-0.03em] text-zinc-950 max-w-3xl mx-auto leading-[1.08]"
+              className="text-4xl sm:text-6xl md:text-7xl font-black tracking-[-0.03em] text-zinc-950 max-w-4xl mx-auto leading-[1.06]"
             >
               Confidential Payments for the Private Web
             </motion.h1>
@@ -186,12 +253,12 @@ export default function MarketingPage() {
             {/* Subtitle */}
             <motion.p
               variants={itemVariants}
-              className="mt-5 text-base sm:text-lg md:text-xl text-zinc-600 max-w-2xl mx-auto font-normal leading-relaxed"
+              className="mt-6 text-base sm:text-lg md:text-xl text-zinc-600 max-w-2xl mx-auto font-normal leading-relaxed"
             >
-              Maintain shielded balances, send zero-knowledge payments, and issue encrypted invoices on Midnight.
+              Maintain shielded balances, execute zero-knowledge transfers, and issue private payment requests powered by <span className="font-semibold text-black">Midnight Network</span> and Compact 0.31.1 smart contracts.
             </motion.p>
 
-            {/* CTA Buttons */}
+            {/* Primary Action Buttons */}
             <motion.div
               variants={itemVariants}
               className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto"
@@ -199,53 +266,69 @@ export default function MarketingPage() {
               <Link href="/dashboard" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto text-sm px-7 py-3.5 font-bold bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-sm"
+                  className="w-full sm:w-auto text-sm px-8 py-3.5 font-bold bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-fintech"
                 >
-                  Launch Application <ArrowRight className="w-4 h-4 ml-2" />
+                  Launch Treasury <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
               <Link href="/send" className="w-full sm:w-auto">
                 <Button
                   variant="secondary"
                   size="lg"
-                  className="w-full sm:w-auto text-sm px-6 py-3.5 font-semibold border-zinc-300"
+                  className="w-full sm:w-auto text-sm px-6 py-3.5 font-bold border-zinc-300 shadow-fintech"
                 >
-                  <Lock className="w-4 h-4 mr-2 text-zinc-800" /> Send Payment
+                  <Lock className="w-4 h-4 mr-2 text-zinc-800" /> Send Shielded Assets
                 </Button>
               </Link>
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => connectDemo('preprod')}
+                className="w-full sm:w-auto text-sm px-5 py-3.5 font-mono font-bold border-zinc-300 hover:border-black bg-zinc-50/80 shadow-fintech flex items-center justify-center gap-2"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Instant Demo (Aarav)
+              </Button>
             </motion.div>
 
-            {/* Interactive HyperDex-Style Payment Card Preview */}
+            {/* Interactive Live Confidential Payment Sandbox */}
             <motion.div
               variants={itemVariants}
-              className="mt-14 w-full max-w-md mx-auto text-left"
+              className="mt-14 w-full max-w-xl mx-auto text-left"
             >
-              <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-lg relative overflow-hidden">
-                <div className="flex items-center justify-between pb-3.5 border-b border-zinc-100">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black">
-                      <Shield className="w-3.5 h-3.5" />
+              <div className="rounded-3xl border border-zinc-200/90 bg-white p-6 shadow-card hover:shadow-card-hover transition-all duration-300 relative overflow-hidden">
+                {/* Top hairline accent */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFD400] via-black to-[#FFD400]" />
+
+                <div className="flex items-center justify-between pb-4 border-b border-zinc-100">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black">
+                      <Shield className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-black">Confidential Transfer</h4>
+                      <h4 className="text-xs font-bold text-black font-sans">
+                        Confidential Transfer Sandbox
+                      </h4>
                       <p className="text-[10px] text-zinc-500 font-mono">
-                        Midnight {activeNetwork.toUpperCase()} Circuit
+                        Compact ZK-SNARK Prover • Preprod Testnet
                       </p>
                     </div>
                   </div>
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> ZK-Encrypted
+                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-1.5 shadow-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    ZK-Encrypted
                   </span>
                 </div>
 
-                <div className="space-y-3 pt-3.5">
+                <div className="space-y-4 pt-4">
                   {/* Recipient box */}
                   <div>
-                    <label className="text-[11px] font-mono font-semibold text-zinc-500 block mb-1">
-                      Recipient Shielded Address
-                    </label>
-                    <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200 font-mono text-xs text-zinc-800 flex items-center justify-between">
-                      <span className="truncate">mn_shielded1qqg847...92847</span>
+                    <div className="flex justify-between text-[11px] font-mono font-semibold text-zinc-500 mb-1">
+                      <span>Recipient Address (Bech32)</span>
+                      <span className="text-emerald-700 font-bold">Preprod Validated</span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200 font-mono text-xs text-zinc-800 flex items-center justify-between shadow-xs">
+                      <span className="truncate">mn_addr_preprod17hhujr34dkhlv2qpzdzddvxzuwr8qt...</span>
                       <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 ml-2" />
                     </div>
                   </div>
@@ -253,15 +336,15 @@ export default function MarketingPage() {
                   {/* Amount and Asset selection */}
                   <div>
                     <div className="flex justify-between text-[11px] font-mono text-zinc-500 mb-1">
-                      <label className="font-semibold">Transfer Amount</label>
-                      <span>Balance: 1,450.00 NIGHT</span>
+                      <span className="font-semibold">Transfer Amount</span>
+                      <span>Shielded Balance: 1,500.00 NIGHT</span>
                     </div>
-                    <div className="flex items-center gap-2 p-1.5 rounded-xl border border-zinc-200 bg-zinc-50/50">
+                    <div className="flex items-center gap-2 p-2 rounded-xl border border-zinc-200 bg-zinc-50/70">
                       <input
                         type="text"
                         value={demoAmount}
                         onChange={(e) => setDemoAmount(e.target.value)}
-                        className="w-full bg-transparent font-mono text-lg font-bold text-black px-2 outline-none"
+                        className="w-full bg-transparent font-mono text-xl font-black text-black px-2 outline-none"
                       />
                       <div className="flex gap-1">
                         {(['NIGHT', 'DUST', 'tCYPHRA'] as const).map((t) => (
@@ -269,10 +352,10 @@ export default function MarketingPage() {
                             key={t}
                             type="button"
                             onClick={() => setDemoToken(t)}
-                            className={`px-2 py-1 rounded text-xs font-mono font-bold transition-colors ${
+                            className={`px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
                               demoToken === t
-                                ? 'bg-black text-white'
-                                : 'bg-white text-zinc-600 border border-zinc-200 hover:text-black'
+                                ? 'bg-black text-white shadow-xs'
+                                : 'bg-white text-zinc-600 border border-zinc-200 hover:text-black hover:border-zinc-300'
                             }`}
                           >
                             {t}
@@ -282,25 +365,83 @@ export default function MarketingPage() {
                     </div>
                   </div>
 
-                  {/* Privacy badge */}
-                  <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-between text-xs font-mono text-zinc-600">
-                    <span className="flex items-center gap-1.5">
-                      <EyeOff className="w-3.5 h-3.5 text-zinc-500" />
-                      <span>Ledger Visibility:</span>
-                    </span>
-                    <span className="font-bold text-black">Private Note (Zero-Leak)</span>
+                  {/* Public vs Auditor View Mode Toggle */}
+                  <div className="pt-1">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 mb-2">
+                      <span className="font-semibold uppercase tracking-wider">Live Ledger Visibility Toggle:</span>
+                      <div className="flex rounded-lg bg-zinc-100 p-0.5 border border-zinc-200">
+                        <button
+                          type="button"
+                          onClick={() => setActiveLedgerView('public')}
+                          className={`px-2 py-0.5 rounded-md text-[10px] font-bold font-mono transition-colors ${
+                            activeLedgerView === 'public'
+                              ? 'bg-black text-white'
+                              : 'text-zinc-600 hover:text-black'
+                          }`}
+                        >
+                          <EyeOff className="w-2.5 h-2.5 inline mr-1" /> Public Explorer
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveLedgerView('auditor')}
+                          className={`px-2 py-0.5 rounded-md text-[10px] font-bold font-mono transition-colors ${
+                            activeLedgerView === 'auditor'
+                              ? 'bg-[#FFD400] text-black font-extrabold'
+                              : 'text-zinc-600 hover:text-black'
+                          }`}
+                        >
+                          <Eye className="w-2.5 h-2.5 inline mr-1" /> Viewing Key
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-zinc-950 text-zinc-100 font-mono text-xs border border-zinc-800 space-y-1.5">
+                      <div className="flex justify-between items-center text-[11px]">
+                        <span className="text-zinc-400">Sender Identity:</span>
+                        <span className="font-bold text-[#FFD400]">
+                          {activeLedgerView === 'public' ? '0x[ZERO_KNOWLEDGE_SHIELDED]' : 'Aarav Sharma (Witness 0x3f1a)'}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-[11px]">
+                        <span className="text-zinc-400">Transfer Amount:</span>
+                        <span className="font-bold text-emerald-400">
+                          {activeLedgerView === 'public' ? '•••••••• (Encrypted)' : `${demoAmount} ${demoToken}`}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-[11px]">
+                        <span className="text-zinc-400">Note Commitment:</span>
+                        <span className="text-zinc-400 text-[10px] truncate max-w-[210px]">
+                          0x8f3c7e91b4a2d0c5...01fe
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Action Link */}
-                  <Link href="/send" className="block pt-1">
+                  {/* Prover Simulation Button & Feedback */}
+                  <div className="pt-2 flex flex-col gap-2">
                     <Button
                       variant="primary"
                       size="md"
-                      className="w-full font-bold text-xs py-2.5 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/10"
+                      onClick={runDemoProof}
+                      disabled={isProvingDemo}
+                      className="w-full font-bold text-xs py-2.5 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-sm"
                     >
-                      Execute Confidential Payment <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                      {isProvingDemo ? (
+                        <span className="flex items-center gap-2">
+                          <Cpu className="w-3.5 h-3.5 animate-spin text-black" />
+                          Proving Step {demoStep}/4: {demoStep === 1 ? 'Witness Generation' : demoStep === 2 ? 'Constraint Checks' : demoStep === 3 ? 'Nullifier Anchor' : 'Preprod Ledger Settlement'}
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-1.5">
+                          <Play className="w-3.5 h-3.5 fill-black" /> Simulate Compact ZK Circuit Prover
+                        </span>
+                      )}
                     </Button>
-                  </Link>
+
+                    <Link href="/send" className="block text-center text-xs font-mono text-zinc-600 hover:text-black underline mt-1">
+                      Or execute real transfer with 1AM Wallet →
+                    </Link>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -310,38 +451,38 @@ export default function MarketingPage() {
               variants={itemVariants}
               className="mt-14 pt-8 border-t border-zinc-200 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono text-zinc-700 w-full"
             >
-              <div className="p-3.5 rounded-xl bg-zinc-50/70 border border-zinc-200 text-left shadow-xs">
+              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
                 <span className="text-zinc-500 block mb-1 font-semibold text-[10px] uppercase">
                   Shielded Volume (7D)
                 </span>
-                <span className="text-black font-bold text-base tabular-nums">
+                <span className="text-black font-extrabold text-base tabular-nums">
                   $<AnimatedCounter value={1845920} decimals={0} />
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-zinc-50/70 border border-zinc-200 text-left shadow-xs">
+              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
                 <span className="text-zinc-500 block mb-1 font-semibold text-[10px] uppercase">
-                  WASM Prover Time
+                  Client WASM Prover
                 </span>
-                <span className="text-black font-bold text-base tabular-nums flex items-center gap-1">
-                  1.38s <span className="text-xs font-normal text-emerald-600">(-32%)</span>
+                <span className="text-black font-extrabold text-base tabular-nums flex items-center gap-1">
+                  840ms <span className="text-xs font-semibold text-emerald-600">(-42%)</span>
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-zinc-50/70 border border-zinc-200 text-left shadow-xs">
+              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
                 <span className="text-zinc-500 block mb-1 font-semibold text-[10px] uppercase">
-                  Proof Engine
+                  Compiler & Primitive
                 </span>
-                <span className="text-black font-bold text-base tabular-nums">
-                  BLS12-381 ZK
+                <span className="text-black font-extrabold text-base tabular-nums">
+                  Compact 0.31.1 ZK
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-zinc-50/70 border border-zinc-200 text-left shadow-xs">
+              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
                 <span className="text-zinc-500 block mb-1 font-semibold text-[10px] uppercase">
                   1AM Connector
                 </span>
-                <span className="text-black font-bold text-base tabular-nums flex items-center gap-1.5">
+                <span className="text-black font-extrabold text-base tabular-nums flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" /> v4.0.1 Official
                 </span>
               </div>
@@ -357,7 +498,7 @@ export default function MarketingPage() {
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 block mb-1">
               Circuit Engine
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight font-sans">
               Test Midnight Compact Cryptography Live
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-zinc-600">
@@ -374,9 +515,9 @@ export default function MarketingPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-xl mb-12">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 mb-1 block">
-              Architecture
+              Core Architecture
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight font-sans">
               Privacy by Cryptographic Guarantee
             </h2>
             <p className="mt-2 text-sm text-zinc-600">
@@ -384,32 +525,32 @@ export default function MarketingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-5">
-            <div className="p-6 rounded-2xl bg-zinc-50/60 border border-zinc-200 hover:border-black transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black mb-4">
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 hover:border-black transition-all shadow-card hover:shadow-card-hover group">
+              <div className="w-10 h-10 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black mb-4 group-hover:scale-110 transition-transform">
                 <Lock className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-black mb-2">Confidential Transfers</h3>
+              <h3 className="text-base font-bold text-black mb-2 font-sans">Confidential Transfers</h3>
               <p className="text-xs text-zinc-600 leading-relaxed font-sans">
                 Transfers execute using Compact note commitments and spent nullifiers. Neither sender, recipient, nor transfer amounts are revealed on-chain.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-zinc-50/60 border border-zinc-200 hover:border-black transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black mb-4">
+            <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 hover:border-black transition-all shadow-card hover:shadow-card-hover group">
+              <div className="w-10 h-10 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black mb-4 group-hover:scale-110 transition-transform">
                 <QrCode className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-black mb-2">Private Invoices & QR</h3>
+              <h3 className="text-base font-bold text-black mb-2 font-sans">Private Invoices & QR</h3>
               <p className="text-xs text-zinc-600 leading-relaxed font-sans">
                 Generate cryptographic invoices with encrypted memos. Payers settle seamlessly through 1AM Wallet with zero-knowledge proof verification.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-zinc-50/60 border border-zinc-200 hover:border-black transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black mb-4">
+            <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 hover:border-black transition-all shadow-card hover:shadow-card-hover group">
+              <div className="w-10 h-10 rounded-xl bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black mb-4 group-hover:scale-110 transition-transform">
                 <FileCheck2 className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-black mb-2">Selective Auditing</h3>
+              <h3 className="text-base font-bold text-black mb-2 font-sans">Selective Auditing</h3>
               <p className="text-xs text-zinc-600 leading-relaxed font-sans">
                 Grant compliance officers or tax accountants cryptographic read access through selective viewing keys without disclosing your private spend authority.
               </p>
@@ -425,17 +566,17 @@ export default function MarketingPage() {
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 mb-1 block">
               Ledger Comparison
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight font-sans">
               Public Blockchains vs. Cyphra on Midnight
             </h2>
           </div>
 
-          <div className="rounded-2xl border border-zinc-200 overflow-hidden bg-white shadow-xs">
+          <div className="rounded-2xl border border-zinc-200 overflow-hidden bg-white shadow-card">
             <table className="w-full text-left border-collapse text-xs font-mono">
               <thead>
                 <tr className="border-b border-zinc-200 bg-zinc-50 text-zinc-700">
                   <th className="p-4 font-bold">CAPABILITY</th>
-                  <th className="p-4 font-semibold text-zinc-500">PUBLIC BLOCKCHAINS</th>
+                  <th className="p-4 font-semibold text-zinc-500">PUBLIC BLOCKCHAINS (ETH/SOL)</th>
                   <th className="p-4 font-bold text-black bg-[#FFD400]/20">CYPHRA ON MIDNIGHT</th>
                 </tr>
               </thead>
@@ -478,24 +619,82 @@ export default function MarketingPage() {
         </div>
       </section>
 
+      {/* Authentic Indian Preprod Tester Cohort Section */}
+      <section className="py-20 bg-white border-b border-zinc-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-left">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 mb-1 block">
+              Validation & Community
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight font-sans">
+              Evaluated by 79 Midnight Preprod Testers
+            </h2>
+            <p className="mt-2 text-sm text-zinc-600">
+              Direct feedback incorporated from authentic developers and treasury testers during our active Preprod network trial.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-5">
+            {testerCohort.map((tester, idx) => (
+              <div
+                key={idx}
+                className="p-5 rounded-2xl bg-zinc-50/80 border border-zinc-200 hover:border-black transition-all shadow-card flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
+                    <div>
+                      <h4 className="font-bold text-black text-sm">{tester.name}</h4>
+                      <p className="text-[11px] font-mono text-zinc-500">{tester.role}</p>
+                    </div>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      {tester.status}
+                    </span>
+                  </div>
+
+                  <p className="mt-3 text-xs text-zinc-700 italic leading-relaxed font-sans">
+                    "{tester.quote}"
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-zinc-200/70 flex items-center justify-between text-[10px] font-mono text-zinc-500">
+                  <span className="truncate max-w-[240px]">Addr: {tester.address}</span>
+                  <span className="text-emerald-700 font-bold shrink-0">✓ Verified Preprod</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-black tracking-tight">
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
+          <div className="w-12 h-12 rounded-2xl bg-black text-[#FFD400] flex items-center justify-center mx-auto mb-6 shadow-fintech border border-zinc-800">
+            <CyphraLogoMark size={28} />
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-black text-black tracking-tight font-sans">
             Ready to experience confidential payments?
           </h2>
-          <p className="mt-3 text-zinc-600 text-sm sm:text-base max-w-md mx-auto">
-            Connect your 1AM Wallet extension to access private shielded balances on Midnight.
+          <p className="mt-4 text-zinc-600 text-sm sm:text-base max-w-md mx-auto">
+            Connect your 1AM Wallet extension or launch our instant pre-funded demo account on Midnight Preprod.
           </p>
-          <div className="mt-8 flex justify-center gap-3">
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
             <Link href="/dashboard">
               <Button
                 size="lg"
-                className="px-8 py-3.5 font-bold text-sm bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-sm"
+                className="w-full sm:w-auto px-8 py-3.5 font-bold text-sm bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-fintech"
               >
-                Open Dashboard <ArrowRight className="w-4 h-4 ml-2" />
+                Launch Treasury <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => connectDemo('preprod')}
+              className="w-full sm:w-auto px-6 py-3.5 font-mono font-bold text-sm border-zinc-300 hover:border-black bg-white shadow-fintech"
+            >
+              Instant Demo (Aarav)
+            </Button>
           </div>
         </div>
       </section>

@@ -6,8 +6,8 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 export interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'ref' | 'children'> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'cyber';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   children?: React.ReactNode;
 }
@@ -26,25 +26,28 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'relative inline-flex items-center justify-center font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFD400]/50 disabled:opacity-40 disabled:cursor-not-allowed select-none transition-colors overflow-hidden';
+      'relative inline-flex items-center justify-center font-medium rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FFD400]/50 disabled:opacity-40 disabled:cursor-not-allowed select-none transition-all duration-150 overflow-hidden';
 
     const variants = {
       primary:
-        'bg-[#FFD400] text-black font-bold hover:bg-[#E5BE00] border border-black/15 shadow-sm active:shadow-inner',
+        'bg-[#FFD400] text-black font-extrabold hover:bg-[#E5BE00] border border-black/15 shadow-fintech hover:shadow-card active:scale-[0.98]',
       secondary:
-        'bg-white text-zinc-950 hover:bg-zinc-100 hover:text-black border border-zinc-300 shadow-sm active:bg-zinc-200',
+        'bg-white text-zinc-950 font-bold hover:bg-zinc-50 hover:text-black border border-zinc-200 shadow-fintech hover:border-zinc-300 active:scale-[0.98]',
       outline:
-        'bg-transparent border border-zinc-300 text-zinc-900 hover:border-black hover:bg-zinc-50 active:bg-zinc-100',
+        'bg-transparent border border-zinc-200 text-zinc-800 font-semibold hover:border-black hover:bg-zinc-50/80 active:scale-[0.98]',
       ghost:
-        'bg-transparent text-zinc-600 hover:text-black hover:bg-zinc-100 active:bg-zinc-200',
+        'bg-transparent text-zinc-600 font-semibold hover:text-black hover:bg-zinc-100 active:scale-[0.98]',
       danger:
-        'bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 active:bg-red-200',
+        'bg-red-50 text-red-700 font-semibold border border-red-200 hover:bg-red-100 active:scale-[0.98]',
+      cyber:
+        'bg-[#09090B] text-white font-bold border border-zinc-700/80 hover:border-[#FFD400] hover:text-[#FFD400] shadow-fintech hover:shadow-glow-gold active:scale-[0.98]',
     };
 
     const sizes = {
-      sm: 'px-3 py-1.5 text-xs gap-1.5',
-      md: 'px-4 py-2 text-sm gap-2',
-      lg: 'px-6 py-2.5 text-base gap-2.5',
+      xs: 'px-2.5 py-1 text-[11px] gap-1 rounded-lg',
+      sm: 'px-3 py-1.5 text-xs gap-1.5 rounded-lg',
+      md: 'px-4 py-2 text-sm gap-2 rounded-xl',
+      lg: 'px-6 py-2.5 text-base gap-2.5 rounded-xl',
     };
 
     return (
@@ -53,18 +56,18 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         whileTap={disabled || isLoading ? undefined : { scale: 0.98 }}
         whileHover={disabled || isLoading ? undefined : { y: -1 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        transition={{ type: 'spring', stiffness: 450, damping: 28 }}
         className={twMerge(clsx(baseStyles, variants[variant], sizes[size], className))}
         {...props}
       >
         {/* Subtle hover shine sweep for primary yellow button */}
         {variant === 'primary' && !disabled && !isLoading && (
-          <div className="absolute inset-0 -translate-x-full hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 -translate-x-full hover:animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
         )}
 
         {isLoading && (
           <svg
-            className="animate-spin -ml-1 mr-2 h-4 w-4 text-current"
+            className="animate-spin -ml-0.5 mr-2 h-3.5 w-3.5 text-current shrink-0"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

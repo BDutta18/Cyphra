@@ -41,3 +41,30 @@ body {
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
+
+/* Modern frosted glass utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(228, 228, 231, 0.8);
+}
+
+.glass-obsidian {
+  background: rgba(9, 9, 11, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(39, 39, 42, 0.8);
+}
+
+/* Subtle circuit background grid */
+.circuit-grid {
+  background-size: 28px 28px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+/* Radial spotlight glow */
+.gold-spotlight {
+  background: radial-gradient(circle at 50% 0%, rgba(255, 212, 0, 0.15) 0%, transparent 70%);
+}

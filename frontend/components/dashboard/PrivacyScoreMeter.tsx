@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '../ui/Card';
-import { ShieldCheck, Lock, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, Lock, AlertTriangle, EyeOff, CheckCircle2 } from 'lucide-react';
 
 export interface PrivacyScoreMeterProps {
   shieldedNight: string;
@@ -21,52 +21,76 @@ export function PrivacyScoreMeter({
   const score = total > 0 ? Math.min(100, Math.round((sNum / total) * 100)) : 100;
 
   return (
-    <Card className="flex flex-col justify-between bg-white border border-zinc-200 shadow-sm">
-      <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
+    <Card className="flex flex-col justify-between bg-white border border-zinc-200/90 shadow-card h-full">
+      <div className="flex items-center justify-between pb-3.5 border-b border-zinc-100">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-black" />
-          <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-700 font-bold">Privacy Status</h3>
+          <div className="w-6 h-6 rounded-lg bg-[#FFD400]/20 border border-[#FFD400] flex items-center justify-center text-black">
+            <ShieldCheck className="w-3.5 h-3.5 text-black" />
+          </div>
+          <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-700 font-bold">Privacy Health</h3>
         </div>
         <span
-          className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded border flex items-center gap-1.5 ${
+          className={`text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full border flex items-center gap-1.5 shadow-xs ${
             score >= 80
-              ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
               : score >= 50
-              ? 'bg-[#FFD400] text-black border-black/20'
-              : 'bg-red-50 text-red-800 border-red-300'
+              ? 'bg-[#FFD400]/20 text-black border-[#FFD400]'
+              : 'bg-red-50 text-red-800 border-red-200'
           }`}
         >
           <span
             className={`w-1.5 h-1.5 rounded-full ${
-              score >= 80 ? 'bg-emerald-500 animate-pulse' : score >= 50 ? 'bg-black' : 'bg-red-500'
+              score >= 80 ? 'bg-emerald-500 animate-pulse' : score >= 50 ? 'bg-amber-500' : 'bg-red-500'
             }`}
           />
-          {score >= 80 ? 'Shielded 100%' : score >= 50 ? 'Partially Exposed' : 'Exposed L1'}
+          {score >= 80 ? 'Optimal (100%)' : score >= 50 ? 'Partially Shielded' : 'Exposed L1'}
         </span>
       </div>
 
       <div className="py-4">
         <div className="flex items-center justify-between mb-2 text-xs font-mono">
-          <span className="text-zinc-600">Shielded Ratio</span>
-          <span className="font-bold text-black tabular-nums">{score}%</span>
+          <span className="text-zinc-600 font-medium">Shielded Note Ratio</span>
+          <span className="font-extrabold text-black tabular-nums">{score}%</span>
         </div>
-        <div className="w-full h-2.5 bg-zinc-100 rounded-full overflow-hidden border border-zinc-200 flex">
+        <div className="w-full h-2.5 bg-zinc-100 rounded-full overflow-hidden border border-zinc-200/80 flex shadow-inner">
           <motion.div
-            className="h-full bg-[#FFD400]"
+            className="h-full bg-gradient-to-r from-[#FFD400] to-[#E6BF00]"
             initial={{ width: 0 }}
             animate={{ width: `${score}%` }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           />
           <motion.div
-            className="h-full bg-zinc-300"
+            className="h-full bg-zinc-200"
             initial={{ width: 0 }}
             animate={{ width: `${100 - score}%` }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           />
         </div>
+
+        {/* Cryptographic Protection Indicators */}
+        <div className="grid grid-cols-3 gap-2 mt-4 text-[10px] font-mono text-zinc-500">
+          <div className="p-2 rounded-lg bg-zinc-50 border border-zinc-200 text-center">
+            <span className="text-zinc-400 block text-[9px]">AMOUNTS</span>
+            <span className="font-bold text-black flex items-center justify-center gap-1 mt-0.5">
+              <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Hidden
+            </span>
+          </div>
+          <div className="p-2 rounded-lg bg-zinc-50 border border-zinc-200 text-center">
+            <span className="text-zinc-400 block text-[9px]">SENDER</span>
+            <span className="font-bold text-black flex items-center justify-center gap-1 mt-0.5">
+              <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Masked
+            </span>
+          </div>
+          <div className="p-2 rounded-lg bg-zinc-50 border border-zinc-200 text-center">
+            <span className="text-zinc-400 block text-[9px]">GRAPH</span>
+            <span className="font-bold text-black flex items-center justify-center gap-1 mt-0.5">
+              <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Unlinked
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div className="p-3 rounded-lg bg-zinc-50 border border-zinc-200 text-xs text-zinc-600 flex items-start gap-2.5">
+      <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200 text-xs text-zinc-600 flex items-start gap-2.5">
         {score === 100 ? (
           <>
             <Lock className="w-4 h-4 text-black shrink-0 mt-0.5" />

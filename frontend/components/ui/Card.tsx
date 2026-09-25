@@ -6,7 +6,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 export interface CardProps extends Omit<HTMLMotionProps<'div'>, 'ref' | 'children'> {
-  variant?: 'default' | 'accent' | 'subtle' | 'gold' | 'interactive';
+  variant?: 'default' | 'accent' | 'subtle' | 'gold' | 'interactive' | 'obsidian' | 'glass';
   interactive?: boolean;
   children?: React.ReactNode;
 }
@@ -14,12 +14,16 @@ export interface CardProps extends Omit<HTMLMotionProps<'div'>, 'ref' | 'childre
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'default', interactive = false, children, ...props }, ref) => {
     const variants = {
-      default: 'bg-white border border-zinc-200 shadow-sm',
-      accent: 'bg-white border-2 border-[#FFD400] shadow-sm',
-      gold: 'bg-white border border-[#FFD400] shadow-sm',
-      subtle: 'bg-[#FAFAFA] border border-zinc-200/80',
+      default: 'bg-white border border-zinc-200/90 shadow-card text-zinc-900',
+      accent: 'bg-white border-2 border-[#FFD400] shadow-card text-zinc-900',
+      gold: 'bg-white border border-[#FFD400] shadow-glow-gold/20 text-zinc-900',
+      subtle: 'bg-[#FAFAFA] border border-zinc-200/80 text-zinc-900',
       interactive:
-        'bg-white border border-zinc-200 hover:border-black hover:shadow-md cursor-pointer transition-colors',
+        'bg-white border border-zinc-200/90 hover:border-black/70 hover:shadow-card-hover cursor-pointer transition-all duration-200 text-zinc-900',
+      obsidian:
+        'bg-[#09090B] border border-zinc-800 text-white shadow-fintech',
+      glass:
+        'glass-panel text-zinc-900 shadow-card',
     };
 
     const isInteractive = interactive || variant === 'interactive';
@@ -27,11 +31,11 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     return (
       <motion.div
         ref={ref}
-        whileHover={isInteractive ? { y: -2, transition: { duration: 0.2 } } : undefined}
+        whileHover={isInteractive ? { y: -2, transition: { duration: 0.18 } } : undefined}
         whileTap={isInteractive ? { scale: 0.99 } : undefined}
         className={twMerge(
           clsx(
-            'rounded-xl p-6 text-zinc-900 transition-colors',
+            'rounded-2xl p-6 transition-all duration-200',
             variants[variant],
             className
           )

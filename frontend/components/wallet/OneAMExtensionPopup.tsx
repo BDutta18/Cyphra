@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import { CyphraLogoMark } from '../ui/CyphraLogo';
 import {
   Shield,
   ShieldCheck,
@@ -111,7 +111,7 @@ export function OneAMExtensionPopup({
           {/* DApp Connection Origin Card */}
           <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-black border border-zinc-700 flex items-center justify-center p-1.5 shrink-0">
-              <Image src="/logo.png" alt="Cyphra" width={28} height={28} className="object-contain" />
+              <CyphraLogoMark size={28} />
             </div>
             <div className="min-w-0 flex-1">
               <span className="text-[10px] font-mono uppercase tracking-wider text-[#FFD400] font-bold block">

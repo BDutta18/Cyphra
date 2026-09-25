@@ -1,7 +1,7 @@
 <svg width="480" height="120" viewBox="0 0 480 120" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <!-- Upper Gold Ribbon Gradient -->
-    <linearGradient id="brandGoldRibbon" x1="18" y1="12" x2="108" y2="76" gradientUnits="userSpaceOnUse">
+    <linearGradient id="goldRibbon" x1="18" y1="12" x2="108" y2="76" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#FFF275" />
       <stop offset="35%" stop-color="#FFD400" />
       <stop offset="85%" stop-color="#E6A800" />
@@ -9,7 +9,7 @@
     </linearGradient>
 
     <!-- Lower Platinum Ribbon Gradient -->
-    <linearGradient id="brandSilverRibbon" x1="10" y1="70" x2="105" y2="105" gradientUnits="userSpaceOnUse">
+    <linearGradient id="silverRibbon" x1="10" y1="70" x2="105" y2="105" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#FFFFFF" />
       <stop offset="40%" stop-color="#F4F4F5" />
       <stop offset="75%" stop-color="#D4D4D8" />
@@ -17,40 +17,52 @@
     </linearGradient>
 
     <!-- Inner Fold Shadow for 3D depth -->
-    <linearGradient id="brandFoldShadow" x1="22" y1="40" x2="55" y2="70" gradientUnits="userSpaceOnUse">
+    <linearGradient id="foldShadow" x1="22" y1="40" x2="55" y2="70" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#09090B" stop-opacity="0.85" />
       <stop offset="50%" stop-color="#18181B" stop-opacity="0.4" />
       <stop offset="100%" stop-color="#27272A" stop-opacity="0" />
     </linearGradient>
 
     <!-- Central ZK Spark Core Glow -->
-    <radialGradient id="brandCoreGlow" cx="60" cy="58" r="24" gradientUnits="userSpaceOnUse">
+    <radialGradient id="coreGlow" cx="60" cy="58" r="24" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#FFE033" stop-opacity="0.9" />
       <stop offset="45%" stop-color="#FFD400" stop-opacity="0.35" />
       <stop offset="100%" stop-color="#FFD400" stop-opacity="0" />
     </radialGradient>
 
-    <filter id="brandAmbientShadow" x="-10%" y="-10%" width="120%" height="120%">
+    <!-- Soft Ambient Drop Shadow -->
+    <filter id="ambientShadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.22" />
     </filter>
   </defs>
 
   <!-- Brand Mark (Left) -->
-  <g transform="translate(15, 6)" filter="url(#brandAmbientShadow)">
+  <g transform="translate(15, 6)" filter="url(#ambientShadow)">
+    <!-- Core Midnight Cavity Disc -->
     <circle cx="60" cy="58" r="32" fill="#09090B" />
+
+    <!-- Lower Platinum Ribbon Loop -->
     <path
       d="M 28 62 C 26 78, 38 98, 62 104 C 82 108, 102 96, 108 82 C 103 84, 88 88, 76 86 C 54 82, 42 70, 38 56 Z"
-      fill="url(#brandSilverRibbon)"
+      fill="url(#silverRibbon)"
     />
+
+    <!-- Upper Cyber Gold Ribbon Sweep -->
     <path
       d="M 104 36 C 96 16, 76 8, 54 10 C 28 12, 12 36, 14 62 C 16 78, 28 92, 38 98 C 30 84, 28 68, 32 52 C 38 34, 52 24, 70 24 C 86 24, 98 32, 104 36 Z"
-      fill="url(#brandGoldRibbon)"
+      fill="url(#goldRibbon)"
     />
+
+    <!-- 3D Depth Overlap Fold -->
     <path
       d="M 14 62 C 16 72, 22 82, 30 90 C 26 80, 26 68, 30 58 C 24 58, 18 60, 14 62 Z"
-      fill="url(#brandFoldShadow)"
+      fill="url(#foldShadow)"
     />
-    <circle cx="60" cy="58" r="20" fill="url(#brandCoreGlow)" />
+
+    <!-- Central Core Glow Aura -->
+    <circle cx="60" cy="58" r="20" fill="url(#coreGlow)" />
+
+    <!-- Central Zero-Knowledge 4-Pointed Star / Flare -->
     <path
       d="M 60 41 Q 60 58 43 58 Q 60 58 60 75 Q 60 58 77 58 Q 60 58 60 41 Z"
       fill="#FFD400"
@@ -58,7 +70,7 @@
     <circle cx="60" cy="58" r="2.5" fill="#FFFFFF" />
   </g>
 
-  <!-- Brand Typography -->
+  <!-- Brand Typography (Center / Right) -->
   <g transform="translate(145, 68)">
     <text font-family="'Inter', -apple-system, sans-serif" font-weight="900" font-size="46" letter-spacing="4" fill="#09090B">
       CYPHRA

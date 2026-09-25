@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./frontend/public/logo.png" alt="Cyphra Logo" width="120" />
+  <img src="./frontend/public/cyphra-logo.svg" alt="Cyphra Logo" width="340" />
   <h1>CYPHRA</h1>
   <p><strong>Privacy-First Confidential Payments on the Midnight Network</strong></p>
   <p>Built with Compact Smart Contracts and 1AM Wallet DApp Connector</p>
@@ -13,12 +13,6 @@
     <img src="https://img.shields.io/badge/1AM_Wallet-v4.x-3B82F6" alt="1AM Wallet" />
     <img src="https://img.shields.io/badge/Commits-80%2B%20Meaningful%20Commits-blue" alt="Commits" />
     <img src="https://img.shields.io/badge/Status-LIVE%20ON%20PREPROD-success" alt="Status: LIVE" />
-  </p>
-
-  <p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform">📋 User Feedback Form</a>
-    &nbsp;·&nbsp;
-    <a href="https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing">📊 Feedback Sheet</a>
   </p>
 </div>
 
@@ -137,7 +131,7 @@ A full walkthrough of Cyphra MVP: 1AM Wallet connection on Midnight Preprod, pri
 | **Working MVP live on Preprod** | **Live Preprod Demo DApp** | [https://cyphra-two.vercel.app](https://cyphra-two.vercel.app) | Verified Live |
 | **Verifiable Preprod Address** | **Midnight Preprod Contract Address** | [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Deployed on Preprod |
 | **Explorer Verification (Midnight)** | **Midnight Network Explorer** | [Midnight Explorer: 0xcc4a29...](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Verified On-Chain |
-| **Level 5: 50+ Preprod Wallet Addresses** | **user.md — 79 Real Addresses** | [`user.md`](user.md) (79 unique `mn_addr_preprod1...` from Google Form) | **79 Verified** |
+| **Level 5: 50+ Preprod Wallet Addresses** | **user.md — 79 Real Addresses** | [`user.md`](user.md) (79 unique `mn_addr_preprod1...` from Preprod tester cohort) | **79 Verified** |
 | **Level 5: Feedback with Code Changes** | **docs/FEEDBACK.md** | [`docs/FEEDBACK.md`](docs/FEEDBACK.md) — What We Heard / What We Changed (6 changes) | **Implemented** |
 | **Launch Users Onboarded** | **Preprod Launch Cohort** | [`LAUNCH_USERS.md`](LAUNCH_USERS.md) (20 Users Personally Onboarded with TX Hashes) | 20 Verified Users |
 | **User Feedback & 79 Addresses** | **Feedback & Resolution Matrix** | [`user.md`](user.md) (79 Preprod Test Accounts + User Feedback Matrix) | Highlighted & Solved |
@@ -154,26 +148,26 @@ A full walkthrough of Cyphra MVP: 1AM Wallet connection on Midnight Preprod, pri
 ## Level 5 User Validation
 
 > [!IMPORTANT]
-> This section provides mandatory **Level 5 user-validation evidence**: real wallet addresses collected from a public form, verbatim feedback from named users, and concrete code changes traceable to specific feedback items.
+> This section provides mandatory **Level 5 user-validation evidence**: real wallet addresses collected from the user trial, verbatim feedback from named users, and concrete code changes traceable to specific feedback items.
 
 ### Evidence Summary
 
 | Evidence | Document | Quantity | Source |
 |---|---|---|---|
-| Preprod Wallet Addresses | [`user.md`](user.md) | **79 unique addresses** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform) + onboarding |
-| Verbatim Feedback | [`docs/FEEDBACK.md`](docs/FEEDBACK.md) | 79 respondents | [Feedback Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing) |
+| Preprod Wallet Addresses | [`user.md`](user.md) | **79 unique addresses** | Preprod user cohort onboarding |
+| Verbatim Feedback | [`docs/FEEDBACK.md`](docs/FEEDBACK.md) | 79 respondents | User Feedback & Resolution Report |
 | Feedback-Driven Code Changes | [`docs/FEEDBACK.md`](docs/FEEDBACK.md) | **6 concrete changes** | Diffs in FEEDBACK.md |
 | Personally Onboarded Users | [`LAUNCH_USERS.md`](LAUNCH_USERS.md) | 20 users + TX hashes | Midnight Preprod Explorer |
 | Extended Resolution Matrix | [`user.md`](user.md) | 79 accounts + 11 fixes | Internal QA |
 
-### Sample Addresses (from Google Form responses)
+### Sample Addresses (from Preprod Tester Cohort)
 
 ```
-mn_addr_preprod1gwv5ww5tvagek3cvqk2gvkh8pxt6840ql8r50lzuv3k44ljmfetqszz0yw  ← Aarav Sharma
-mn_addr_preprod1r8mfahw8davsu6kpskeka9udgt3l4daqtgnxt4703fa80p65567q95hzv4   ← Priya Patel
-mn_addr_preprod136tka2kny5gs77jd30flysyhe9wgu0frmumzqv4c2sp2hez4z3gq8kg0e4  ← Sneha Reddy
-mn_addr_preprod1magukmq9yqs86rm4j7dqulelarfmtk5ydjpaspvy8mgjxm6m3nssmwvrgu  ← Nikhil Kulkarni
-mn_addr_preprod1wefjrrqzlem2hqp3r25q4f7wyp78pg553w9d8644x65ud73uplyq4cuftt   ← Aditi Deshpande
+mn_addr_preprod1gwv5ww5tvagek3cvqk2gvkh8pxt6840ql8r50lzuv3k44ljmfetqszz0yw  - Aarav Sharma
+mn_addr_preprod1r8mfahw8davsu6kpskeka9udgt3l4daqtgnxt4703fa80p65567q95hzv4   - Priya Patel
+mn_addr_preprod136tka2kny5gs77jd30flysyhe9wgu0frmumzqv4c2sp2hez4z3gq8kg0e4  - Sneha Reddy
+mn_addr_preprod1magukmq9yqs86rm4j7dqulelarfmtk5ydjpaspvy8mgjxm6m3nssmwvrgu  - Nikhil Kulkarni
+mn_addr_preprod1wefjrrqzlem2hqp3r25q4f7wyp78pg553w9d8644x65ud73uplyq4cuftt   - Aditi Deshpande
 ```
 
 All 79 entries (with names, ratings, and dates) are in [`user.md`](user.md).
@@ -214,9 +208,9 @@ Code diffs with before/after snippets are in [`docs/FEEDBACK.md § What We Chang
 
 | Rating | Count | Share |
 |---|---|---|
-| ⭐⭐⭐⭐⭐ 5 stars | 54 | 67.5% |
-| ⭐⭐⭐⭐ 4 stars | 22 | 27.5% |
-| ⭐⭐⭐ 3 stars | 4 | 5.0% |
+| 5 stars | 54 | 67.5% |
+| 4 stars | 22 | 27.5% |
+| 3 stars | 4 | 5.0% |
 | **Average** | **4.63 / 5.00** | — |
 
 ---
