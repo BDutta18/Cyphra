@@ -61,7 +61,7 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = 'md' }: Mod
             className={`relative w-full ${maxWs[maxWidth]} rounded-2xl bg-white border border-zinc-300 shadow-2xl p-6 overflow-hidden text-zinc-900 z-10`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-zinc-200">
+            <div className={`flex items-center ${title ? 'justify-between pb-3.5 mb-4 border-b border-zinc-200' : 'justify-end pb-1 mb-1'}`}>
               {title && <h3 className="text-base font-bold text-black tracking-tight">{title}</h3>}
               <button
                 onClick={onClose}

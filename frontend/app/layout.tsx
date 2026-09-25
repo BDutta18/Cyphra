@@ -1,5 +1,9 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
+
+export const viewport: Viewport = {
+  themeColor: '#FFD400',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://cyphra-two.vercel.app'),
@@ -9,20 +13,22 @@ export const metadata: Metadata = {
   keywords: ['Midnight', 'Zero-Knowledge', 'zkSNARKs', 'Privacy', 'Confidential Payments', 'Compact', '1AM Wallet'],
   authors: [{ name: 'Cyphra Protocol' }],
   icons: {
-    icon: '/cyphra-logo.svg',
-    shortcut: '/cyphra-logo.svg',
-    apple: '/cyphra-logo.svg',
+    icon:      '/cyphra-mark.svg',
+    shortcut:  '/cyphra-mark.svg',
+    apple:     '/cyphra-mark.svg',
   },
   openGraph: {
     title: 'Cyphra | Confidential Payments on Midnight',
-    description: 'Privacy-first confidential payment application built on Midnight Network with Compact 0.31.1 smart contracts.',
+    description:
+      'Privacy-first confidential payment application built on Midnight Network with Compact 0.31.1 smart contracts.',
     images: [{ url: '/cyphra-x-banner.svg', width: 1500, height: 500, alt: 'Cyphra Midnight Payments' }],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Cyphra | Confidential Payments on Midnight',
-    description: 'Zero-knowledge payments, private invoices, and selective compliance disclosure on Midnight Network.',
+    description:
+      'Zero-knowledge payments, private invoices, and selective compliance disclosure on Midnight Network.',
     images: ['/cyphra-x-banner.svg'],
   },
 };

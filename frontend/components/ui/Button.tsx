@@ -6,7 +6,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 export interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'ref' | 'children'> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'cyber';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'cyber' | 'gold';
   size?: 'xs' | 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   children?: React.ReactNode;
@@ -26,21 +26,30 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'relative inline-flex items-center justify-center font-medium rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FFD400]/50 disabled:opacity-40 disabled:cursor-not-allowed select-none transition-all duration-150 overflow-hidden';
+      'group relative inline-flex items-center justify-center font-medium rounded-xl ' +
+      'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD400]/60 ' +
+      'disabled:opacity-40 disabled:cursor-not-allowed select-none transition-all duration-150 overflow-hidden';
 
     const variants = {
       primary:
-        'bg-[#FFD400] text-black font-extrabold hover:bg-[#E5BE00] border border-black/15 shadow-fintech hover:shadow-card active:scale-[0.98]',
+        'bg-[#FFD400] text-black font-extrabold hover:bg-[#E5BE00] ' +
+        'border border-black/15 shadow-fintech hover:shadow-card active:scale-[0.97]',
       secondary:
-        'bg-white text-zinc-950 font-bold hover:bg-zinc-50 hover:text-black border border-zinc-200 shadow-fintech hover:border-zinc-300 active:scale-[0.98]',
+        'bg-white text-zinc-950 font-bold hover:bg-zinc-50 hover:text-black ' +
+        'border border-zinc-200 shadow-fintech hover:border-zinc-300 active:scale-[0.97]',
       outline:
-        'bg-transparent border border-zinc-200 text-zinc-800 font-semibold hover:border-black hover:bg-zinc-50/80 active:scale-[0.98]',
+        'bg-transparent border border-zinc-200 text-zinc-800 font-semibold ' +
+        'hover:border-black hover:bg-zinc-50/80 active:scale-[0.97]',
       ghost:
-        'bg-transparent text-zinc-600 font-semibold hover:text-black hover:bg-zinc-100 active:scale-[0.98]',
+        'bg-transparent text-zinc-600 font-semibold hover:text-black hover:bg-zinc-100 active:scale-[0.97]',
       danger:
-        'bg-red-50 text-red-700 font-semibold border border-red-200 hover:bg-red-100 active:scale-[0.98]',
+        'bg-red-50 text-red-700 font-semibold border border-red-200 hover:bg-red-100 active:scale-[0.97]',
       cyber:
-        'bg-[#09090B] text-white font-bold border border-zinc-700/80 hover:border-[#FFD400] hover:text-[#FFD400] shadow-fintech hover:shadow-glow-gold active:scale-[0.98]',
+        'bg-[#09090B] text-white font-bold border border-zinc-700/80 ' +
+        'hover:border-[#FFD400] hover:text-[#FFD400] shadow-fintech hover:shadow-glow-gold active:scale-[0.97]',
+      gold:
+        'bg-[#FFD400] text-black font-extrabold border border-black/15 ' +
+        'shadow-glow-gold hover:bg-[#E5BE00] hover:shadow-glow-gold-lg active:scale-[0.97]',
     };
 
     const sizes = {
@@ -50,20 +59,20 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       lg: 'px-6 py-2.5 text-base gap-2.5 rounded-xl',
     };
 
+    const showShimmer = (variant === 'primary' || variant === 'gold') && !disabled && !isLoading;
+
     return (
       <motion.button
         ref={ref}
         disabled={disabled || isLoading}
-        whileTap={disabled || isLoading ? undefined : { scale: 0.98 }}
+        whileTap={disabled || isLoading ? undefined : { scale: 0.97 }}
         whileHover={disabled || isLoading ? undefined : { y: -1 }}
-        transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+        transition={{ type: 'spring', stiffness: 480, damping: 30 }}
         className={twMerge(clsx(baseStyles, variants[variant], sizes[size], className))}
         {...props}
       >
-        {/* Subtle hover shine sweep for primary yellow button */}
-        {variant === 'primary' && !disabled && !isLoading && (
-          <div className="absolute inset-0 -translate-x-full hover:animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
-        )}
+        {/* Shimmer sweep on primary/gold buttons — CSS-driven, works on hover */}
+        {showShimmer && <span className="shimmer-sweep" aria-hidden="true" />}
 
         {isLoading && (
           <svg

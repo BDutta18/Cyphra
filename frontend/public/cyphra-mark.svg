@@ -1,0 +1,81 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cyphra Brand Mark">
+  <defs>
+    <!-- Upper Gold Ribbon Gradient -->
+    <linearGradient id="markGold" x1="18" y1="12" x2="108" y2="76" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFF275"/>
+      <stop offset="30%" stop-color="#FFD400"/>
+      <stop offset="80%" stop-color="#E6A800"/>
+      <stop offset="100%" stop-color="#B37D00"/>
+    </linearGradient>
+
+    <!-- Lower Platinum-Silver Ribbon Gradient -->
+    <linearGradient id="markSilver" x1="10" y1="68" x2="108" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="35%" stop-color="#F0F0F2"/>
+      <stop offset="70%" stop-color="#D1D1D6"/>
+      <stop offset="100%" stop-color="#8E8E99"/>
+    </linearGradient>
+
+    <!-- Inner Fold Depth Shadow -->
+    <linearGradient id="markFold" x1="18" y1="38" x2="52" y2="72" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#09090B" stop-opacity="0.9"/>
+      <stop offset="55%" stop-color="#18181B" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#27272A" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Central ZK Star Core Glow -->
+    <radialGradient id="markCoreGlow" cx="60" cy="58" r="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFE866" stop-opacity="0.95"/>
+      <stop offset="40%" stop-color="#FFD400" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FFD400" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Outer ambient glow filter -->
+    <filter id="markGlow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#FFD400" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#markGlow)">
+    <!-- Core midnight cavity disc — obsidian centre of the C -->
+    <circle cx="60" cy="58" r="31" fill="#09090B"/>
+
+    <!-- Lower platinum-silver ribbon loop (bottom curl of the C) -->
+    <path
+      d="M 27 63 C 24 80, 37 100, 62 106 C 84 110, 104 97, 109 82
+         C 104 85, 89 89, 76 87 C 53 83, 41 70, 37 55 Z"
+      fill="url(#markSilver)"
+    />
+
+    <!-- Upper cyber-gold ribbon sweep (top arc of the C) -->
+    <path
+      d="M 105 35 C 97 14, 76 6, 53 8 C 27 11, 11 35, 13 63
+         C 15 80, 27 94, 37 100 C 28 85, 27 68, 31 52
+         C 37 33, 52 22, 70 22 C 87 22, 99 31, 105 35 Z"
+      fill="url(#markGold)"
+    />
+
+    <!-- 3D fold shadow for ribbon depth -->
+    <path
+      d="M 13 63 C 15 74, 21 84, 30 92 C 25 81, 25 67, 29 57
+         C 23 57, 17 59, 13 63 Z"
+      fill="url(#markFold)"
+    />
+
+    <!-- Ambient core glow aura behind the star -->
+    <circle cx="60" cy="58" r="19" fill="url(#markCoreGlow)"/>
+
+    <!-- Central 4-pointed ZK zero-knowledge star flare -->
+    <path
+      d="M 60 39 Q 61 49 60 58 Q 70 57 80 58
+         Q 70 59 60 58 Q 61 67 60 77
+         Q 59 67 60 58 Q 50 59 40 58
+         Q 50 57 60 58 Q 59 49 60 39 Z"
+      fill="#FFD400"
+    />
+
+    <!-- Hot white centre point of the ZK spark -->
+    <circle cx="60" cy="58" r="2.5" fill="#FFFFFF"/>
+  </g>
+</svg>
