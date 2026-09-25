@@ -235,10 +235,9 @@ export default function MarketingPage() {
             </motion.div>
 
             {/* Brand Logo Hero Icon */}
-            <motion.div variants={itemVariants} className="mb-4">
-              <div className="relative inline-flex items-center justify-center p-3 rounded-3xl bg-zinc-950 shadow-fintech border border-zinc-800">
-                <CyphraLogoMark size={64} />
-                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#FFD400]/20 to-transparent blur-md -z-10" />
+            <motion.div variants={itemVariants} className="mb-6 flex justify-center">
+              <div className="relative inline-flex items-center justify-center transition-transform hover:scale-105 duration-300">
+                <CyphraLogoMark size={96} className="drop-shadow-[0_10px_28px_rgba(255,212,0,0.25)]" />
               </div>
             </motion.div>
 
@@ -669,8 +668,8 @@ export default function MarketingPage() {
       {/* CTA Section */}
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
-          <div className="w-12 h-12 rounded-2xl bg-black text-[#FFD400] flex items-center justify-center mx-auto mb-6 shadow-fintech border border-zinc-800">
-            <CyphraLogoMark size={28} />
+          <div className="flex items-center justify-center mx-auto mb-6">
+            <CyphraLogoMark size={52} className="drop-shadow-[0_6px_20px_rgba(255,212,0,0.25)]" />
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-black tracking-tight font-sans">
             Ready to experience confidential payments?

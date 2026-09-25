@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   keywords: ['Midnight', 'Zero-Knowledge', 'zkSNARKs', 'Privacy', 'Confidential Payments', 'Compact', '1AM Wallet'],
   authors: [{ name: 'Cyphra Protocol' }],
   icons: {
-    icon:      '/cyphra-mark.svg',
-    shortcut:  '/cyphra-mark.svg',
-    apple:     '/cyphra-mark.svg',
+    icon:      '/logo-transparent.png',
+    shortcut:  '/logo-transparent.png',
+    apple:     '/logo-transparent.png',
   },
   openGraph: {
     title: 'Cyphra | Confidential Payments on Midnight',

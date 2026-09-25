@@ -109,9 +109,8 @@ export function WalletConnectModal({
 
         {/* ── Branded Modal Header ── */}
         <div className="flex flex-col items-center pb-4 border-b border-zinc-100 -mt-1">
-          <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-zinc-950 border border-zinc-800 shadow-glow-gold mb-3">
-            <CyphraLogoMark size={38} />
-            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-b from-[#FFD400]/15 to-transparent blur-md -z-10" />
+          <div className="relative flex items-center justify-center mb-2.5">
+            <CyphraLogoMark size={52} className="drop-shadow-[0_4px_16px_rgba(255,212,0,0.22)]" />
           </div>
           <h2 className="text-base font-black text-black tracking-tight font-sans">Connect to Cyphra</h2>
           <p className="text-[11px] text-zinc-500 font-mono mt-0.5">Midnight Confidential Payments</p>
