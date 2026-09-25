@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./frontend/public/cyphra-logo.svg" alt="Cyphra Logo" width="340" />
+  <img src="./frontend/public/logo.png" alt="Cyphra Logo" width="130" style="border-radius: 26px;" />
   <h1>CYPHRA</h1>
   <p><strong>Privacy-First Confidential Payments on the Midnight Network</strong></p>
   <p>Built with Compact Smart Contracts and 1AM Wallet DApp Connector</p>
