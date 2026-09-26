@@ -513,9 +513,10 @@ export default function SendPage() {
                               reset();
                               await connectDemo('preprod');
                             }}
-                            className="bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold text-xs py-1.5 shadow-xs"
+                            className="bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold text-xs py-1.5 shadow-xs flex items-center justify-center gap-1.5"
                           >
-                            ⚡ Switch to Instant Preprod Demo Mode (0ms)
+                            <Zap className="w-3.5 h-3.5 fill-black" />
+                            <span>Switch to Sandbox Mode (Instant Settlement)</span>
                           </Button>
                         </div>
                       )}

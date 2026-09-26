@@ -14,6 +14,7 @@ import {
   Globe,
   Radio,
   Check,
+  Zap,
 } from 'lucide-react';
 import { useMidnightWallet } from '../../hooks/useMidnightWallet';
 import { SupportedNetwork } from '../../lib/one-am-wallet-adapter';
@@ -297,9 +298,10 @@ export function WalletConnectModal({
                       variant="primary"
                       size="sm"
                       onClick={handleConnectDemo}
-                      className="w-full bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold text-xs py-2 shadow-xs"
+                      className="w-full bg-[#FFD400] text-black hover:bg-[#E5BE00] font-bold text-xs py-2 shadow-xs flex items-center justify-center gap-1.5"
                     >
-                      ⚡ Skip sync — Use Instant Preprod Demo (Aarav Sharma)
+                      <Zap className="w-3.5 h-3.5 fill-black" />
+                      <span>Launch Sandbox Session (Bypass Sync)</span>
                     </Button>
                   </div>
                 </div>
@@ -360,10 +362,10 @@ export function WalletConnectModal({
               onClick={handleConnectDemo}
             >
               <Shield className="w-3.5 h-3.5 mr-1.5 text-emerald-600" />
-              Launch Instant Preprod Demo (Aarav Sharma)
+              Launch Interactive Sandbox Session
             </Button>
             <p className="text-[10px] text-zinc-500 text-center font-mono">
-              Zero-lag testing with 1,500 NIGHT &amp; 120 DUST pre-funded balance
+              Pre-funded testnet session with 1,500 NIGHT &amp; 120 DUST for instant circuit verification
             </p>
           </div>
         </div>

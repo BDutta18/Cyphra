@@ -158,7 +158,7 @@ export default function DashboardPage() {
                   className="text-xs font-mono font-bold border-zinc-300 hover:border-black bg-white text-zinc-900 shadow-xs flex items-center gap-1.5"
                 >
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Instant Demo (Aarav)
+                  Launch Sandbox Mode
                 </Button>
                 <Button
                   variant="primary"
