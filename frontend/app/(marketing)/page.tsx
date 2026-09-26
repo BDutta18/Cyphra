@@ -19,7 +19,6 @@ import {
   Shield,
   Zap,
   Cpu,
-  ChevronRight,
   ShieldCheck,
   EyeOff,
   Eye,
@@ -201,17 +200,6 @@ pnpm test`,
             animate="show"
             className="flex flex-col items-center"
           >
-            {/* Top Brand Sparkle Pill */}
-            <motion.div variants={itemVariants}>
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200/80 border border-zinc-200 text-[11px] sm:text-xs font-semibold text-zinc-800 transition-all mb-5 shadow-xs max-w-full">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                <span className="font-mono text-zinc-600">Midnight Preprod</span>
-                <span className="text-zinc-300">•</span>
-                <span className="truncate">Official 1AM Wallet Connector</span>
-                <ChevronRight className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
-              </div>
-            </motion.div>
-
             {/* Midnight Network Switcher */}
             <motion.div variants={itemVariants} className="mb-6 sm:mb-8 flex flex-col items-center max-w-full px-2">
               <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-zinc-100/90 border border-zinc-200 shadow-xs backdrop-blur-sm max-w-full overflow-x-auto scrollbar-none">
@@ -261,12 +249,6 @@ pnpm test`,
                     );
                   })}
                 </div>
-              </div>
-              <div className="mt-2 text-[10px] sm:text-[11px] font-mono text-zinc-500 flex items-center justify-center gap-1.5 flex-wrap text-center px-4">
-                <span className="text-zinc-400">Target RPC:</span>
-                <span className="text-zinc-800 font-semibold">
-                  {networkOptions.find((n) => n.id === activeNetwork)?.description}
-                </span>
               </div>
             </motion.div>
 
