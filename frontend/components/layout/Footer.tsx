@@ -73,7 +73,7 @@ export function Footer() {
               rel="noreferrer"
               className="text-zinc-700 hover:text-black hover:underline font-bold"
             >
-              Contract: 0xcc4a29303...db3f
+              Explorer Contract View
             </a>
             <span>•</span>
             <span>Ledger Consensus: Preprod</span>

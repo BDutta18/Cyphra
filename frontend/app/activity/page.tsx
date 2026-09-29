@@ -470,7 +470,7 @@ export default function ActivityPage() {
                   {generatedReport.complianceAttestation}
                 </p>
                 <span className="text-[10px] text-zinc-500 block font-sans">
-                  Status: Active • Verified against Compact contract <code>0xcc4a2930...</code>
+                  Status: Active • Verified on Midnight Preprod consensus ledger
                 </span>
               </div>
             )}

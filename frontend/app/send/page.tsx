@@ -607,7 +607,7 @@ export default function SendPage() {
               </div>
 
               <div className="text-[11px] text-zinc-500 font-sans leading-relaxed pt-1">
-                <strong>Zero-Knowledge Assurance:</strong> The receiver note commitment and change note commitment are computed off-chain inside the browser witness synthesizer. Only the nullifier and note commitments are posted to the Midnight Preprod smart contract (<code>0xcc4a29303...</code>).
+                <strong>Zero-Knowledge Assurance:</strong> The receiver note commitment and change note commitment are computed off-chain inside the browser witness synthesizer. Only the nullifier and note commitments are posted to the Midnight Preprod smart contract.
               </div>
             </div>
           )}

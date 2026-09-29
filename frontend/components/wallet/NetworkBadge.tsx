@@ -55,7 +55,7 @@ export function NetworkBadge() {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold tracking-wider bg-[#FFD400] hover:bg-[#E5BE00] text-black border border-black/15 shadow-xs transition-colors cursor-pointer"
-        title="Midnight Preprod Active Ledger (0xcc4a293...)"
+        title="Midnight Preprod Active Ledger"
       >
         <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
         <span>{displayNet}</span>
@@ -123,9 +123,16 @@ export function NetworkBadge() {
                 </button>
               );
             })}
-            <div className="p-2 border-t border-zinc-100 mt-1 bg-zinc-50 text-[10px] text-zinc-500 font-mono">
-              <span className="font-bold text-zinc-700 block">Contract:</span>
-              <span className="truncate block font-mono text-[9px] text-zinc-600">0xcc4a2930...db3f</span>
+            <div className="p-2 border-t border-zinc-100 mt-1 bg-zinc-50 text-[10px] text-zinc-500 font-mono flex items-center justify-between">
+              <span className="font-bold text-zinc-700">Contract State:</span>
+              <a
+                href="https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f"
+                target="_blank"
+                rel="noreferrer"
+                className="text-black hover:underline font-bold"
+              >
+                Explorer View →
+              </a>
             </div>
           </div>
         </>

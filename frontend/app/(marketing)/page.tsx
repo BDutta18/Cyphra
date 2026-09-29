@@ -8,7 +8,6 @@ import { Navbar } from '../../components/layout/Navbar';
 import { Footer } from '../../components/layout/Footer';
 import { GridPattern, AmbientGlow } from '../../components/ui/GridPattern';
 import { InteractiveCircuitVisualizer } from '../../components/dashboard/InteractiveCircuitVisualizer';
-import { AnimatedCounter } from '../../components/ui/AnimatedCounter';
 import { CyphraLogoMark } from '../../components/ui/CyphraLogo';
 import {
   Lock,
@@ -42,8 +41,6 @@ export default function MarketingPage() {
   const [demoAmount, setDemoAmount] = useState('250.00');
   const [demoToken, setDemoToken] = useState<'NIGHT' | 'DUST' | 'tCYPHRA'>('NIGHT');
   const [isSwitchingNetwork, setIsSwitchingNetwork] = useState(false);
-  const [isProvingDemo, setIsProvingDemo] = useState(false);
-  const [demoStep, setDemoStep] = useState<0 | 1 | 2 | 3 | 4>(0);
   const [activeLedgerView, setActiveLedgerView] = useState<'public' | 'auditor'>('public');
 
   const activeNetwork: SupportedNetwork = (network as SupportedNetwork) || 'preprod';
@@ -58,7 +55,7 @@ export default function MarketingPage() {
       id: 'preprod',
       label: 'Preprod',
       badge: 'Active Staging',
-      description: 'Decentralized Midnight staging network (Contract 0xcc4a29303...db3f)',
+      description: 'Decentralized Midnight staging network',
     },
     {
       id: 'preview',
@@ -86,19 +83,6 @@ export default function MarketingPage() {
       }
     }
     setIsSwitchingNetwork(false);
-  };
-
-  const runDemoProof = () => {
-    setIsProvingDemo(true);
-    setDemoStep(1);
-    setTimeout(() => setDemoStep(2), 500);
-    setTimeout(() => setDemoStep(3), 1000);
-    setTimeout(() => {
-      setDemoStep(4);
-      setTimeout(() => {
-        setIsProvingDemo(false);
-      }, 1200);
-    }, 1500);
   };
 
   const containerVariants: Variants = {
@@ -427,37 +411,34 @@ pnpm test`,
                       </div>
                       <div className="flex justify-between items-center text-[10px] sm:text-[11px]">
                         <span className="text-zinc-400">Note Commitment:</span>
-                        <span className="text-zinc-400 text-[9px] sm:text-[10px] truncate max-w-[140px] sm:max-w-[210px]">
-                          0x8f3c7e91b4a2d0c5...01fe
+                        <span className="text-zinc-400 text-[9px] sm:text-[10px] truncate max-w-[140px] sm:max-w-[210px] font-mono">
+                          Poseidon(owner_pk, amount, blinding_salt)
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Prover Simulation Button & Feedback */}
-                  <div className="pt-2 flex flex-col gap-2">
-                    <Button
-                      variant="primary"
-                      size="md"
-                      onClick={runDemoProof}
-                      disabled={isProvingDemo}
-                      className="w-full font-bold text-xs py-2.5 sm:py-3 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-sm"
-                    >
-                      {isProvingDemo ? (
-                        <span className="flex items-center justify-center gap-1.5 truncate">
-                          <Cpu className="w-3.5 h-3.5 animate-spin text-black shrink-0" />
-                          <span className="truncate">Step {demoStep}/4: {demoStep === 1 ? 'Witness Generation' : demoStep === 2 ? 'Constraint Checks' : demoStep === 3 ? 'Nullifier Anchor' : 'Preprod Ledger Settlement'}</span>
-                        </span>
-                      ) : (
-                        <span className="flex items-center justify-center gap-1.5">
-                          <Play className="w-3.5 h-3.5 fill-black" /> Simulate Compact ZK Circuit Prover
-                        </span>
-                      )}
-                    </Button>
-
-                    <Link href="/send" className="block text-center text-xs font-mono text-zinc-600 hover:text-black underline mt-1">
-                      Or execute real transfer with 1AM Wallet →
+                  {/* Direct Protocol Launch Actions */}
+                  <div className="pt-2 flex flex-col sm:flex-row gap-2">
+                    <Link href="/send" className="flex-1">
+                      <Button
+                        variant="primary"
+                        size="md"
+                        className="w-full font-bold text-xs py-2.5 sm:py-3 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-xs flex items-center justify-center gap-1.5"
+                      >
+                        <Shield className="w-3.5 h-3.5 text-black" />
+                        <span>Launch Confidential Transfer</span>
+                      </Button>
                     </Link>
+                    <Button
+                      variant="outline"
+                      size="md"
+                      onClick={() => connectDemo('preprod')}
+                      className="font-bold text-xs py-2.5 sm:py-3 border-zinc-300 hover:border-black bg-white text-zinc-900 shadow-xs flex items-center justify-center gap-1.5"
+                    >
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>Launch Sandbox Mode</span>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -470,25 +451,16 @@ pnpm test`,
             >
               <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
                 <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
-                  Shielded Volume (7D)
+                  Consensus Ledger
                 </span>
-                <span className="text-black font-extrabold text-sm sm:text-base tabular-nums">
-                  $<AnimatedCounter value={1845920} decimals={0} />
-                </span>
-              </div>
-
-              <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
-                <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
-                  Client WASM Prover
-                </span>
-                <span className="text-black font-extrabold text-sm sm:text-base tabular-nums flex items-center gap-1">
-                  840ms <span className="text-[10px] sm:text-xs font-semibold text-emerald-600">(-42%)</span>
+                <span className="text-black font-extrabold text-sm sm:text-base tabular-nums flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 animate-pulse" /> Midnight Preprod
                 </span>
               </div>
 
               <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
                 <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
-                  Compiler & Primitive
+                  Smart Contract
                 </span>
                 <span className="text-black font-extrabold text-sm sm:text-base tabular-nums">
                   Compact 0.31.1 ZK
@@ -497,10 +469,19 @@ pnpm test`,
 
               <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
                 <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
-                  1AM Connector
+                  Zero-Knowledge Scheme
+                </span>
+                <span className="text-black font-extrabold text-sm sm:text-base tabular-nums">
+                  Groth16 / BLS12-381
+                </span>
+              </div>
+
+              <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-50 border border-zinc-200 text-left shadow-xs">
+                <span className="text-zinc-500 block mb-0.5 sm:mb-1 font-semibold text-[9px] sm:text-[10px] uppercase">
+                  Double-Spend Guard
                 </span>
                 <span className="text-black font-extrabold text-sm sm:text-base tabular-nums flex items-center gap-1 sm:gap-1.5">
-                  <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-emerald-500 shrink-0" /> v4.0.1 Official
+                  Poseidon Nullifiers
                 </span>
               </div>
             </motion.div>
@@ -516,10 +497,10 @@ pnpm test`,
               Circuit Engine
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight font-sans">
-              Test Midnight Compact Cryptography Live
+              Compact 0.31.1 Formal Circuit Verification
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-              See how private witnesses, blinding factors, and spent nullifiers compute without revealing transaction amounts or wallet addresses to the public.
+              Inspect the formal zero-knowledge circuits, off-chain witnesses, and state transitions verified on the Midnight Preprod consensus ledger.
             </p>
           </div>
 

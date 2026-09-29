@@ -54,11 +54,6 @@ export function BalanceCard({
     : selectedAsset === 'DUST'  ? shieldedDust
     : shieldedtCyphra;
 
-  const estimatedUSD =
-    selectedAsset === 'NIGHT'    ? (parsedNight * 1.85).toFixed(2)
-    : selectedAsset === 'DUST'   ? (parsedDust * 0.12).toFixed(2)
-    : (parsedCyphra * 1.0).toFixed(2);
-
   const assetDot: Record<string, string> = {
     NIGHT:   'bg-[#FFD400]',
     DUST:    'bg-zinc-400',
@@ -157,11 +152,13 @@ export function BalanceCard({
                   {selectedAsset}
                 </span>
               </div>
-              <p className="text-xs text-zinc-500 font-mono mt-2 flex items-center gap-1.5">
-                <span className="text-zinc-400">≈</span>
-                <span className="font-semibold text-zinc-700 tabular-nums">${estimatedUSD} USD</span>
-                <span className="text-zinc-200">•</span>
-                <span className="text-emerald-700 font-semibold">100% Shielded</span>
+              <p className="text-xs text-zinc-500 font-mono mt-2 flex items-center gap-1.5 flex-wrap">
+                <span className="font-semibold text-zinc-700">Midnight Preprod Shielded Note</span>
+                <span className="text-zinc-300">•</span>
+                <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  100% Zero-Knowledge Protected
+                </span>
               </p>
             </motion.div>
           ) : (
