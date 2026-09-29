@@ -50,9 +50,11 @@ export function WalletConnectButton() {
             size="sm"
             isLoading={isConnecting}
             onClick={openConnectModal}
-            className="text-xs font-bold px-4 py-2 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-xs"
+            className="text-xs font-bold px-3 sm:px-4 py-2 bg-[#FFD400] text-black hover:bg-[#E5BE00] border border-black/15 shadow-xs whitespace-nowrap shrink-0"
           >
-            <Wallet className="w-3.5 h-3.5 mr-1.5" /> Connect 1AM Wallet
+            <Wallet className="w-3.5 h-3.5 mr-1.5 shrink-0" />
+            <span className="hidden sm:inline">Connect 1AM Wallet</span>
+            <span className="sm:hidden">Connect</span>
           </Button>
         </div>
 

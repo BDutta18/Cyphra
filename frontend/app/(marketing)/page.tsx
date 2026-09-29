@@ -21,7 +21,6 @@ import {
   ShieldCheck,
   EyeOff,
   Eye,
-  Globe,
   Coins,
   Sparkles,
   ExternalLink,
@@ -34,56 +33,12 @@ import {
   Code,
 } from 'lucide-react';
 import { useMidnightWallet } from '../../hooks/useMidnightWallet';
-import { SupportedNetwork } from '../../lib/one-am-wallet-adapter';
 
 export default function MarketingPage() {
-  const { network, setNetwork, isConnected, connect, connectDemo } = useMidnightWallet();
+  const { connectDemo } = useMidnightWallet();
   const [demoAmount, setDemoAmount] = useState('250.00');
   const [demoToken, setDemoToken] = useState<'NIGHT' | 'DUST' | 'tCYPHRA'>('NIGHT');
-  const [isSwitchingNetwork, setIsSwitchingNetwork] = useState(false);
   const [activeLedgerView, setActiveLedgerView] = useState<'public' | 'auditor'>('public');
-
-  const activeNetwork: SupportedNetwork = (network as SupportedNetwork) || 'preprod';
-
-  const networkOptions: {
-    id: SupportedNetwork;
-    label: string;
-    badge: string;
-    description: string;
-  }[] = [
-    {
-      id: 'preprod',
-      label: 'Preprod',
-      badge: 'Active Staging',
-      description: 'Decentralized Midnight staging network',
-    },
-    {
-      id: 'preview',
-      label: 'Preview',
-      badge: 'Sandbox',
-      description: 'Pre-release sandbox environment with test faucet',
-    },
-    {
-      id: 'mainnet',
-      label: 'Mainnet',
-      badge: 'Production',
-      description: 'Confidential settlement consensus ledger (Upcoming)',
-    },
-  ];
-
-  const handleNetworkSelect = async (net: SupportedNetwork) => {
-    if (net === activeNetwork) return;
-    setIsSwitchingNetwork(true);
-    setNetwork(net);
-    if (isConnected) {
-      try {
-        await connect(net);
-      } catch (e) {
-        console.warn('Network switch error:', e);
-      }
-    }
-    setIsSwitchingNetwork(false);
-  };
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -182,60 +137,8 @@ pnpm test`,
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="flex flex-col items-center"
+            className="flex flex-col items-center pt-2 sm:pt-6"
           >
-            {/* Midnight Network Switcher */}
-            <motion.div variants={itemVariants} className="mb-6 sm:mb-8 flex flex-col items-center max-w-full px-2">
-              <div className="inline-flex items-center p-1 sm:p-1.5 rounded-2xl bg-zinc-100/90 border border-zinc-200 shadow-xs backdrop-blur-sm max-w-full overflow-x-auto scrollbar-none">
-                <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider shrink-0">
-                  <Globe className="w-3.5 h-3.5 text-zinc-700" />
-                  <span>Network:</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  {networkOptions.map((net) => {
-                    const isSelected = activeNetwork === net.id;
-                    return (
-                      <button
-                        key={net.id}
-                        type="button"
-                        onClick={() => handleNetworkSelect(net.id)}
-                        disabled={isSwitchingNetwork}
-                        className={`relative px-2.5 sm:px-4 py-1.5 rounded-xl text-[11px] sm:text-xs font-mono font-bold transition-all select-none cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0 ${
-                          isSelected
-                            ? 'text-black shadow-xs'
-                            : 'text-zinc-600 hover:text-black hover:bg-zinc-200/50'
-                        }`}
-                        title={`Select Midnight ${net.label}`}
-                      >
-                        {isSelected && (
-                          <motion.div
-                            layoutId="homepage-network-toggle-indicator"
-                            transition={{ type: 'spring', stiffness: 450, damping: 35 }}
-                            className="absolute inset-0 bg-[#FFD400] rounded-xl border border-black/10 -z-0"
-                          />
-                        )}
-                        <span
-                          className={`relative z-10 w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full ${
-                            isSelected ? 'bg-black animate-pulse' : 'bg-zinc-400'
-                          }`}
-                        />
-                        <span className="relative z-10">{net.label}</span>
-                        <span
-                          className={`relative z-10 text-[9px] uppercase px-1.5 py-0.5 rounded font-sans font-bold tracking-wide hidden sm:inline-block ${
-                            isSelected
-                              ? 'bg-black/10 text-black'
-                              : 'bg-zinc-200/80 text-zinc-600'
-                          }`}
-                        >
-                          {net.badge}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </motion.div>
-
             {/* Brand Logo Hero Icon */}
             <motion.div variants={itemVariants} className="mb-5 sm:mb-6 flex justify-center">
               <div className="relative inline-flex items-center justify-center transition-transform hover:scale-105 duration-300">
