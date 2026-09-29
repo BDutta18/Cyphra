@@ -162,8 +162,8 @@ export function InteractiveCircuitVisualizer() {
               onClick={() => setSelectedCircuitId(circ.id)}
               className={`px-3 py-1.5 rounded-xl text-xs transition-all flex items-center gap-1.5 select-none ${
                 isSelected
-                  ? 'bg-black text-[#FFD400] font-bold shadow-xs'
-                  : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200/80 hover:text-black font-medium'
+                  ? 'bg-[#FFD400] text-black font-bold border border-black/15 shadow-xs'
+                  : 'bg-zinc-100/90 text-zinc-600 hover:bg-zinc-200/80 hover:text-black font-medium border border-transparent'
               }`}
             >
               <Cpu className="w-3.5 h-3.5 shrink-0" />
@@ -174,18 +174,20 @@ export function InteractiveCircuitVisualizer() {
         })}
       </div>
 
-      {/* Circuit Signature Banner */}
-      <div className="p-3.5 rounded-xl bg-zinc-950 text-zinc-100 text-xs border border-zinc-800 space-y-1.5 my-3">
+      {/* Circuit Signature Banner (Transparent) */}
+      <div className="p-3.5 sm:p-4 rounded-2xl bg-transparent border border-zinc-200/90 space-y-2 my-3 backdrop-blur-xs">
         <div className="flex items-center justify-between text-[11px]">
-          <span className="font-sans font-medium text-zinc-400">Compact 0.31.1 Formal Signature</span>
-          <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-[#FFD400]/20 text-[#FFD400] border border-[#FFD400]/40 uppercase tracking-wide">
+          <span className="font-sans font-medium text-zinc-500">Compact 0.31.1 Formal Signature</span>
+          <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#FFD400]/25 text-black border border-[#FFD400]/50 uppercase tracking-wide">
             {activeSpec.category}
           </span>
         </div>
-        <p className="font-mono text-xs text-emerald-400 font-bold overflow-x-auto whitespace-pre-wrap leading-relaxed tracking-tight">
-          {activeSpec.signature}
-        </p>
-        <p className="font-sans text-xs text-zinc-400 leading-normal pt-0.5">
+        <div className="p-2.5 rounded-xl bg-zinc-50/80 border border-zinc-200/80 overflow-x-auto">
+          <p className="font-mono text-xs text-emerald-800 font-bold whitespace-pre-wrap leading-relaxed tracking-tight">
+            {activeSpec.signature}
+          </p>
+        </div>
+        <p className="font-sans text-xs text-zinc-500 leading-relaxed pt-0.5">
           {activeSpec.description}
         </p>
       </div>
@@ -216,10 +218,10 @@ export function InteractiveCircuitVisualizer() {
         </div>
 
         {/* Column 2: R1CS Constraints (ZK Verifier) */}
-        <div className="p-4 rounded-xl bg-white border-2 border-black space-y-3 shadow-xs">
+        <div className="p-4 rounded-xl bg-white border-2 border-[#FFD400] space-y-3 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-sans font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-              <Cpu className="w-3.5 h-3.5 text-black" />
+            <span className="text-xs font-sans font-bold text-zinc-900 uppercase tracking-wider flex items-center gap-1.5">
+              <Cpu className="w-3.5 h-3.5 text-zinc-800" />
               2. ZK Arithmetic Constraints
             </span>
             <span className="text-[10px] font-sans px-2 py-0.5 rounded-md bg-[#FFD400] text-black font-extrabold shadow-2xs">
