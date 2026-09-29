@@ -258,7 +258,7 @@ pnpm test`,
                             onClick={() => setDemoToken(t)}
                             className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-mono font-bold transition-all ${
                               demoToken === t
-                                ? 'bg-black text-white shadow-xs'
+                                ? 'bg-[#FFD400] text-black border border-black/15 shadow-xs'
                                 : 'bg-white text-zinc-600 border border-zinc-200 hover:text-black hover:border-zinc-300'
                             }`}
                           >
@@ -273,48 +273,49 @@ pnpm test`,
                   <div className="pt-1">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[11px] font-mono text-zinc-500 mb-2">
                       <span className="font-semibold uppercase tracking-wider text-[10px] sm:text-[11px]">Live Ledger Visibility:</span>
-                      <div className="flex rounded-lg bg-zinc-100 p-0.5 border border-zinc-200 shrink-0">
+                      <div className="flex rounded-lg bg-zinc-100/90 p-0.5 border border-zinc-200 shrink-0">
                         <button
                           type="button"
                           onClick={() => setActiveLedgerView('public')}
-                          className={`px-2 py-0.5 rounded-md text-[10px] font-bold font-mono transition-colors ${
+                          className={`px-2.5 py-1 rounded-md text-[10px] font-bold font-mono transition-all ${
                             activeLedgerView === 'public'
-                              ? 'bg-black text-white'
+                              ? 'bg-white text-zinc-950 border border-zinc-200/90 shadow-xs'
                               : 'text-zinc-600 hover:text-black'
                           }`}
                         >
-                          <EyeOff className="w-2.5 h-2.5 inline mr-1" /> Public Explorer
+                          <EyeOff className="w-2.5 h-2.5 inline mr-1 text-zinc-500" /> Public Explorer
                         </button>
                         <button
                           type="button"
                           onClick={() => setActiveLedgerView('auditor')}
-                          className={`px-2 py-0.5 rounded-md text-[10px] font-bold font-mono transition-colors ${
+                          className={`px-2.5 py-1 rounded-md text-[10px] font-bold font-mono transition-all ${
                             activeLedgerView === 'auditor'
-                              ? 'bg-[#FFD400] text-black font-extrabold'
+                              ? 'bg-[#FFD400] text-black font-extrabold border border-black/10 shadow-xs'
                               : 'text-zinc-600 hover:text-black'
                           }`}
                         >
-                          <Eye className="w-2.5 h-2.5 inline mr-1" /> Viewing Key
+                          <Eye className="w-2.5 h-2.5 inline mr-1 text-black" /> Viewing Key
                         </button>
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-zinc-950 text-zinc-100 font-mono text-xs border border-zinc-800 space-y-1.5">
+                    {/* Transparent Live Ledger Template */}
+                    <div className="p-3 sm:p-3.5 rounded-2xl bg-transparent text-zinc-900 font-mono text-xs border border-zinc-200/90 space-y-2 backdrop-blur-xs">
                       <div className="flex justify-between items-center text-[10px] sm:text-[11px]">
-                        <span className="text-zinc-400">Sender Identity:</span>
-                        <span className="font-bold text-[#FFD400] truncate max-w-[140px] sm:max-w-none">
+                        <span className="text-zinc-500 font-medium">Sender Identity:</span>
+                        <span className="font-bold font-mono text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md border border-[#FFD400]/60 bg-[#FFD400]/20 text-zinc-900 truncate max-w-[170px] sm:max-w-none">
                           {activeLedgerView === 'public' ? '0x[ZERO_KNOWLEDGE_SHIELDED]' : 'Authorized Auditor (Viewing Key 0x3f1a)'}
                         </span>
                       </div>
                       <div className="flex justify-between items-center text-[10px] sm:text-[11px]">
-                        <span className="text-zinc-400">Transfer Amount:</span>
-                        <span className="font-bold text-emerald-400">
+                        <span className="text-zinc-500 font-medium">Transfer Amount:</span>
+                        <span className="font-bold font-mono text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md border border-emerald-300/80 bg-emerald-50/90 text-emerald-800">
                           {activeLedgerView === 'public' ? '•••••••• (Encrypted)' : `${demoAmount} ${demoToken}`}
                         </span>
                       </div>
                       <div className="flex justify-between items-center text-[10px] sm:text-[11px]">
-                        <span className="text-zinc-400">Note Commitment:</span>
-                        <span className="text-zinc-400 text-[9px] sm:text-[10px] truncate max-w-[140px] sm:max-w-[210px] font-mono">
+                        <span className="text-zinc-500 font-medium">Note Commitment:</span>
+                        <span className="text-zinc-600 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-md border border-zinc-200/80 bg-zinc-50/70 truncate max-w-[150px] sm:max-w-[240px] font-mono">
                           Poseidon(owner_pk, amount, blinding_salt)
                         </span>
                       </div>
