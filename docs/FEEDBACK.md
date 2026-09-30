@@ -4,7 +4,7 @@
 > [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform).
 > Raw responses are archived in the [Google Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing).
 
-- **Contract**: [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
+- **Contract**: [`0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad`](https://preprod.midnightexplorer.com/contracts/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad)
 - **Feedback period**: 09 Sep 2026 — 20 Sep 2026
 - **Total respondents**: 79 (wallet addresses in [`user.md`](../user.md))
 - **Average rating**: 4.63 / 5.00
@@ -417,7 +417,7 @@ Six changes were implemented directly in the codebase, each driven by a specific
 ```diff
 - const DEFAULT_NETWORK = 'preview';
 + const DEFAULT_NETWORK = 'preprod';
-+ const PREPROD_CONTRACT = '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f';
++ const PREPROD_CONTRACT = '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad';
 ```
 
 **Files**: `frontend/lib/one-am-wallet-adapter.ts`, `frontend/components/wallet/WalletConnectModal.tsx`
@@ -523,7 +523,7 @@ pnpm typecheck
 # 0 TypeScript errors across 4 workspace packages
 
 pnpm run verify:preprod-env
-# Contract Address Verified: 0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
+# Contract Address Verified: 0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad
 # All 79 Preprod addresses verified with valid Bech32 format
 ```
 
@@ -535,4 +535,4 @@ pnpm run verify:preprod-env
 - [LAUNCH_USERS.md](../LAUNCH_USERS.md) — 20 personally onboarded launch users with TX hashes
 - [Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform)
 - [Feedback Spreadsheet](https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing)
-- [Preprod Explorer](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
+- [Preprod Explorer](https://preprod.midnightexplorer.com/contracts/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad)
