@@ -79,16 +79,15 @@ export function HeroSection() {
             className={`font-heading font-black tracking-tight text-black transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
-            style={{ fontSize: "clamp(2rem, 5.5vw, 5rem)", lineHeight: 1.06 }}
+            style={{ fontSize: "clamp(1.6rem, 4vw, 3.8rem)", lineHeight: 1.1 }}
             spellCheck={false}
           >
             {/* Line 1 */}
-            <span className="block">The layer</span>
+            <span className="block">The layer to</span>
 
-            {/* Line 2 — animated rotating word */}
-            <span className="block" style={{ marginTop: "0.05em" }}>
-              <span className="inline-block mr-3">to</span>
-              <span key={wordIndex} className="inline-flex text-black">
+            {/* Line 2 — animated rotating word + suffix */}
+            <span className="block" style={{ marginTop: "0.04em" }}>
+              <span key={wordIndex} className="inline-flex text-black mr-3">
                 {words[wordIndex].split("").map((char, i) => (
                   <span
                     key={`${wordIndex}-${i}`}
@@ -99,11 +98,7 @@ export function HeroSection() {
                   </span>
                 ))}
               </span>
-            </span>
-
-            {/* Line 3 */}
-            <span className="block text-zinc-400 font-medium" style={{ marginTop: "0.05em" }}>
-              in Zero-Knowledge.
+              <span className="text-zinc-400 font-medium">in Zero-Knowledge.</span>
             </span>
           </h1>
         </div>
