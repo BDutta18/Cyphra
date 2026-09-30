@@ -47,13 +47,33 @@ Unlike legacy blockchains where user balances, counterparty addresses, and entir
 
 ---
 
+### 1. Homepage — Confidential Payments for the Private Web
+
+<p align="center">
+  <img src="./docs/screenshots/01-landing.png" alt="Cyphra Landing Page" width="820" />
+</p>
+
+The Cyphra homepage with animated hero, live Client Prover Simulator terminal, and official 1AM Wallet DApp Connector integration.
+
+---
+
+### 2. Dashboard — Confidential Treasury & ZK Proof Workflow
+
+<p align="center">
+  <img src="./docs/screenshots/02-dashboard.png" alt="Cyphra Dashboard" width="820" />
+</p>
+
+Dashboard showing the **Confidential Shielded Vault** (1,500 NIGHT · 120 DUST · 2,500 tCYPHRA), Privacy Health score **81%**, quick action cards (Send Confidential, Receive Payment, Request Payment, Shield Funds), and the full Zero-Knowledge architecture flow.
+
+---
+
 ### 🔗 Contract Deployment — Midnight Preprod Explorer
 
 <p align="center">
   <img src="./docs/screenshots/05-contract-preprod.png" alt="Cyphra Contract on Midnight Preprod Explorer" width="820" />
 </p>
 
-**Live verification on [midnightexplorer.com](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)** — Contract `0xcc4a2930…96db3f` status **● DEPLOYED**, deployed at Block **#2,518,562** on **Sep 12, 2026, 2:40 PM UTC** with full on-chain Ledger State.
+**Live verification on [midnightexplorer.com](https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad)** — Contract `0xd72f60d3…034ad` status **● DEPLOYED**, deployed at Block **#2,880,143** on **Sep 23, 2026, 9:22 PM UTC** with full on-chain Ledger State.
 
 ---
 
@@ -67,9 +87,12 @@ Unlike legacy blockchains where user balances, counterparty addresses, and entir
 |---|---|---|
 | **Network** | **Midnight Preprod** | Official decentralized Midnight test ledger |
 | **Contract Name** | `CyphraConfidentialPayment` | Privacy-preserving Compact smart contract |
-| **Contract Address** | [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | **Deployed Preprod Smart Contract** |
-| **Explorer Verification** | [Midnight Preprod Explorer](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Verified on-chain ledger state |
-| **1AM Explorer** | [1AM Explorer Contract View](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod) | 1AM DApp Connector contract index |
+| **Contract Address** | [`0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad`](https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad) | **Deployed Preprod Smart Contract** |
+| **Explorer Verification** | [Midnight Preprod Explorer](https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad) | Verified on-chain ledger state |
+| **1AM Explorer** | [1AM Explorer Contract View](https://explorer.1am.xyz/contract/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad?network=preprod) | 1AM DApp Connector contract index |
+| **Deployment Block** | **#2,880,143** | Block hash: `0xb63fcc7e…82373f99` |
+| **Deployed At** | **Sep 23, 2026, 9:22 PM UTC** | Timestamp confirmed on-chain |
+| **Deployment TX** | `0x37a67ec1cc1c96eeb898f652b0f49055cf4abad68a2423d83f7eddc7795355ad` | Deployment transaction hash |
 | **Ledger Version** | Midnight Ledger 8.0 Preprod | Consensus state machine |
 | **Compact Compiler** | Compact v0.31.1 (`.compact`) | Zero-knowledge intermediate representation |
 | **Active Circuits** | `deposit`, `confidentialTransfer`, `registerPaymentRequest`, `fulfillPaymentRequest`, `grantAuditorAccess`, `revokeAuditorAccess` | 6 full Groth16 cryptographic circuits |
@@ -81,7 +104,7 @@ Unlike legacy blockchains where user balances, counterparty addresses, and entir
 
 A full walkthrough of Cyphra MVP: 1AM Wallet connection on Midnight Preprod, private note commitment creation, confidential transfers, and QR payment request workflows.
 
-- 🎬 **Watch Demo**: [Screen_Recording_2026-09-17_230655.mp4](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4)
+- 🎬 **Watch Demo**: [Cyphra MVP Walkthrough](https://drive.google.com/file/d/1MzidnKIqmZnQtFFP-OLMwdHGjNPe6Bps/view?usp=sharing)
 
 ---
 
@@ -90,15 +113,15 @@ A full walkthrough of Cyphra MVP: 1AM Wallet connection on Midnight Preprod, pri
 | Requirement to Pass | Submission Item | Details / Link | Status |
 |---|---|---|---|
 | **Working MVP live on Preprod** | **Live Preprod Demo DApp** | [https://cyphra-two.vercel.app](https://cyphra-two.vercel.app) | Verified Live |
-| **Verifiable Preprod Address** | **Midnight Preprod Contract Address** | [`0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Deployed on Preprod |
-| **Explorer Verification (Midnight)** | **Midnight Network Explorer** | [Midnight Explorer: 0xcc4a29...](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f) | Verified On-Chain |
+| **Verifiable Preprod Address** | **Midnight Preprod Contract Address** | [`0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad`](https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad) | Deployed on Preprod |
+| **Explorer Verification (Midnight)** | **Midnight Network Explorer** | [Midnight Explorer: 0xd72f60d3...](https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad) | Verified On-Chain |
 | **Level 5: 50+ Preprod Wallet Addresses** | **user.md — 79 Real Addresses** | [`user.md`](user.md) (79 unique `mn_addr_preprod1...` from Preprod tester cohort) | **79 Verified** |
 | **Level 5: Feedback with Code Changes** | **docs/FEEDBACK.md** | [`docs/FEEDBACK.md`](docs/FEEDBACK.md) — What We Heard / What We Changed (6 changes) | **Implemented** |
 | **Launch Users Onboarded** | **Preprod Launch Cohort** | [`LAUNCH_USERS.md`](LAUNCH_USERS.md) (20 Users Personally Onboarded with TX Hashes) | 20 Verified Users |
 | **User Feedback & 79 Addresses** | **Feedback & Resolution Matrix** | [`user.md`](user.md) (79 Preprod Test Accounts + User Feedback Matrix) | Highlighted & Solved |
 | **Brand Visuals & Assets** | **Brand Brief, Logo & X Banner** | [`docs/brand-brief.md`](docs/brand-brief.md) + Vector Logo & X Banner Assets | Complete Brand Kit |
 | **Product X Profile & Posts** | **Official X Account & Live Posts** | [@CyphraPayment](https://x.com/CyphraPayment) ([Post 1](https://x.com/CyphraPayment/status/2100484238172664311), [Post 2](https://x.com/CyphraPayment/status/2101046395298078809), [Post 3](https://x.com/CyphraPayment/status/2101048165730574842)) | Published & Linked |
-| **Demo Video of the MVP** | **High-Definition Walkthrough** | [Watch MVP Demo Video](https://res.cloudinary.com/wt88ln1l/video/upload/v1789666881/Screen_Recording_2026-09-17_230655.mp4) | High Quality (Cloudinary MP4) |
+| **Demo Video of the MVP** | **High-Definition Walkthrough** | [Watch MVP Demo Video](https://drive.google.com/file/d/1MzidnKIqmZnQtFFP-OLMwdHGjNPe6Bps/view?usp=sharing) | Google Drive MP4 |
 | **Public GitHub Repository** | **Source Code & Documentation** | [https://github.com/BDutta18/Cyphra](https://github.com/BDutta18/Cyphra) | Public Monorepo |
 | **CI/CD Pipeline** | **GitHub Actions CI/CD** | [CI Workflow](https://github.com/BDutta18/Cyphra/actions/workflows/ci.yml) & [Preprod Deployment](https://github.com/BDutta18/Cyphra/actions/workflows/preprod.yml) | Passing (100% Green) |
 | **Meaningful Commits** | **Commit History** | 80+ atomic commits across contracts, frontend, backend & onboarding | Minimum 15 Exceeded |
@@ -279,8 +302,8 @@ Default Preprod settings in `.env`:
 MIDNIGHT_NETWORK=preprod
 MIDNIGHT_RPC_URL=https://rpc.preprod.midnight.network
 MIDNIGHT_INDEXER_URI=https://indexer.preprod.midnight.network/api/v4/graphql
-CONTRACT_ADDRESS=0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
-NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS=0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
+CONTRACT_ADDRESS=0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad
+NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS=0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad
 NEXT_PUBLIC_MIDNIGHT_NETWORK=preprod
 NEXT_PUBLIC_API_URL=http://localhost:4000
 ```
@@ -393,12 +416,12 @@ The contract is live on the official Midnight Preprod network:
 
 - **Contract Address**:
   ```
-  0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
+  0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad
   ```
 - **1AM Explorer Verification Link**:
-  [https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod](https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod)
+  [https://explorer.1am.xyz/contract/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad?network=preprod](https://explorer.1am.xyz/contract/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad?network=preprod)
 - **Midnight Explorer Verification Link**:
-  [https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f](https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f)
+  [https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad](https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad)
 
 To run the on-chain preprod deployment script with your own wallet:
 ```powershell

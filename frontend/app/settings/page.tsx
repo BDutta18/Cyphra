@@ -139,13 +139,13 @@ export default function SettingsPage() {
             <div>
               <span className="text-zinc-500 block mb-1 font-semibold">Contract Address:</span>
               <div className="p-2 rounded-lg bg-zinc-50 border border-zinc-200 font-mono text-[11px] text-black break-all select-all font-bold">
-                0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f
+                0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
               <a
-                href="https://explorer.1am.xyz/contract/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f?network=preprod"
+                href="https://explorer.1am.xyz/contract/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad?network=preprod"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-2.5 rounded-lg border border-zinc-200 hover:border-black bg-zinc-50 hover:bg-zinc-100 transition-colors font-sans text-xs font-semibold text-black"
@@ -155,7 +155,7 @@ export default function SettingsPage() {
               </a>
 
               <a
-                href="https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f"
+                href="https://preprod.midnightexplorer.com/contracts/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-2.5 rounded-lg border border-zinc-200 hover:border-black bg-zinc-50 hover:bg-zinc-100 transition-colors font-sans text-xs font-semibold text-black"

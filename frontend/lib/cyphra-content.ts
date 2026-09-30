@@ -26,7 +26,7 @@ export const CYPHRA_CONTENT = {
     xProfileHandle: "@CyphraPayment",
     feedbackForm: "https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform",
     feedbackSheet: "https://docs.google.com/spreadsheets/d/13xJHXvW1zvbJI4OaE25Wh2Gar39tL4_U0Vgl0ia4zy8/edit?usp=sharing",
-    preprodExplorer: "https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f",
+    preprodExplorer: "https://preprod.midnightexplorer.com/contracts/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad",
     oneAmWallet: "https://1am.xyz",
     faucetUrl: "https://faucet.preprod.midnight.network",
   },
@@ -58,7 +58,7 @@ export const CYPHRA_CONTENT = {
   contract: {
     network: "Midnight Preprod Testnet",
     version: "Compact 0.31.1 Standard",
-    address: "0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f",
+    address: "0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad",
     status: "🟢 ACTIVE PREPROD CONTRACT",
     source: "contracts/cyphra/src/cyphra.compact",
     circuits: [

@@ -139,7 +139,7 @@ export function ProofProgressModal({ isOpen, step, onClose, txHash }: ProofProgr
                       <Copy className="w-3 h-3" /> Copy Hash
                     </button>
                     <a
-                      href={`https://preprod.midnightexplorer.com/contracts/0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f`}
+                      href={`https://preprod.midnightexplorer.com/contracts/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#FFD400] hover:bg-[#E5BE00] text-black border border-black/15 transition-colors flex items-center gap-1"
