@@ -87,23 +87,16 @@ export function HeroSection() {
             {/* Line 2 — animated rotating word with gold bar */}
             <span className="block" style={{ marginTop: "0.05em" }}>
               <span className="inline-block mr-3">to</span>
-              <span className="relative inline-block text-black" style={{ isolation: "isolate" }}>
-                <span key={wordIndex} className="relative inline-flex" style={{ zIndex: 1 }}>
-                  {words[wordIndex].split("").map((char, i) => (
-                    <span
-                      key={`${wordIndex}-${i}`}
-                      className="inline-block animate-char-in"
-                      style={{ animationDelay: `${i * 45}ms` }}
-                    >
-                      {char}
-                    </span>
-                  ))}
-                </span>
-                {/* Gold bar behind animated word */}
-                <span
-                  className="absolute left-0 right-0 bg-[#FFD400] rounded-sm"
-                  style={{ bottom: "-0.06em", height: "0.26em", zIndex: 0 }}
-                />
+              <span key={wordIndex} className="inline-flex text-black">
+                {words[wordIndex].split("").map((char, i) => (
+                  <span
+                    key={`${wordIndex}-${i}`}
+                    className="inline-block animate-char-in"
+                    style={{ animationDelay: `${i * 45}ms` }}
+                  >
+                    {char}
+                  </span>
+                ))}
               </span>
             </span>
 
