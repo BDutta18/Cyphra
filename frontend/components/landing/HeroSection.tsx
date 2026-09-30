@@ -79,7 +79,7 @@ export function HeroSection() {
             className={`font-heading font-black tracking-tight text-black transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
-            style={{ fontSize: "clamp(1.6rem, 4vw, 3.8rem)", lineHeight: 1.1 }}
+            style={{ fontSize: "clamp(2rem, 5vw, 4.8rem)", lineHeight: 1.1 }}
             spellCheck={false}
           >
             {/* Line 1 */}
