@@ -70,8 +70,16 @@ export function Navbar() {
             <CyphraLogo variant="full" size="sm" href="/" />
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-0.5 relative" aria-label="Main navigation">
+          {/* Desktop Center: Clean Breadcrumb / Active Module Indicator */}
+          <div className="hidden lg:flex items-center gap-2 text-xs font-semibold px-3.5 py-1.5 rounded-full bg-zinc-50 border border-zinc-200/80 shadow-2xs font-mono">
+            <span className="text-zinc-400">/</span>
+            <span className="text-zinc-950 font-bold capitalize">
+              {navItems.find((n) => n.href === pathname)?.label || 'Treasury'}
+            </span>
+          </div>
+
+          {/* Medium Screen Navigation Links (when sidebar is hidden on md) */}
+          <nav className="hidden md:flex lg:hidden items-center gap-0.5 relative" aria-label="Main navigation">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -79,7 +87,7 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors select-none ${
+                  className={`relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors select-none ${
                     isActive
                       ? 'text-black'
                       : 'text-zinc-500 hover:text-black hover:bg-zinc-100/80'
@@ -89,7 +97,7 @@ export function Navbar() {
                     <motion.div
                       layoutId="navbar-active-pill"
                       transition={{ type: 'spring', stiffness: 440, damping: 34 }}
-                      className="absolute inset-0 bg-[#FFD400] rounded-lg border border-black/10 shadow-sm -z-0"
+                      className="absolute inset-0 bg-[#FFD400] rounded-lg border border-black/10 shadow-xs -z-0"
                     />
                   )}
                   <span className="relative z-10 flex items-center gap-1.5">
