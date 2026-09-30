@@ -79,12 +79,13 @@ export function HeroSection() {
             className={`font-heading font-black tracking-tight text-black transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
-            style={{ fontSize: "clamp(2.8rem, 9vw, 8.5rem)", lineHeight: 1.0 }}
+            style={{ fontSize: "clamp(2rem, 5.5vw, 5rem)", lineHeight: 1.06 }}
+            spellCheck={false}
           >
             {/* Line 1 */}
             <span className="block">The layer</span>
 
-            {/* Line 2 — animated rotating word with gold bar */}
+            {/* Line 2 — animated rotating word */}
             <span className="block" style={{ marginTop: "0.05em" }}>
               <span className="inline-block mr-3">to</span>
               <span key={wordIndex} className="inline-flex text-black">
