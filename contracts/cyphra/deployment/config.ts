@@ -78,7 +78,7 @@ export const deploymentConfigs: Record<string, DeploymentConfig> = {
     contractAddress:
       process.env.CONTRACT_ADDRESS ||
       process.env.CYPHRA_CONTRACT_ADDRESS ||
-      '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f',
+      '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad',
     gasLimit: 50_000_000n,
   },
 

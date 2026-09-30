@@ -26,7 +26,7 @@ async function main() {
 
   const config = deploymentConfigs[network] ?? deploymentConfigs.preprod;
   const deployerAddress = process.env.MIDNIGHT_DEPLOYER_ADDRESS || 'mn_addr_preprod1ccryaa8je09fvvz0ktyxx4ns79fqhcddnxvpf2jlk4l6qyq78e4sl8lkxl';
-  const contractAddress = config.contractAddress || '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f';
+  const contractAddress = config.contractAddress || '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad';
   console.log('====================================================');
   console.log(`CYPHRA Smart Contract Deployment — Midnight ${network.toUpperCase()}`);
   console.log('====================================================');

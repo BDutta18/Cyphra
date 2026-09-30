@@ -132,4 +132,4 @@ Wallet addresses and feedback were collected via:
 
 1. **Google Form**: [Cyphra Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfYoSRlafFLyKo5R6SVqjmtk8gNNz3keOI36e8WwFDYxyf9yA/viewform) — respondents submitted their own Midnight Preprod wallet address as part of the form.
 2. **Direct onboarding**: 20 users in the launch cohort were onboarded personally via the `scripts/onboard-users.mjs` engine (see [`LAUNCH_USERS.md`](LAUNCH_USERS.md)).
-3. **Preprod Contract**: All addresses were tested against the live contract [`0xcc4a29...96db3f`](https://preprod.midnightexplorer.com/contracts/0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad).
+3. **Preprod Contract**: All addresses were tested against the live contract [`0xd72f60...034ad`](https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad).

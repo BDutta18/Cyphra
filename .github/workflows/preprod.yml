@@ -56,8 +56,10 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
-      - name: Build Shared
-        run: pnpm --filter @cyphra/shared run build
+      - name: Build Shared & Contracts
+        run: |
+          pnpm --filter @cyphra/shared run build
+          pnpm --filter @cyphra/contracts run build
 
       - name: Test
         run: pnpm test
