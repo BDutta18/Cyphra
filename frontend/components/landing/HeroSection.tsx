@@ -73,28 +73,30 @@ export function HeroSection() {
           </span>
         </div>
 
-        {/* Main Headline (Clean & Compact) */}
-        <div className="mb-6 max-w-4xl">
+        {/* Main Headline (Previous Font Restored, No Yellow Underline) */}
+        <div className="mb-8">
           <h1
-            className={`text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-black leading-tight transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            className={`text-[clamp(2.75rem,8.5vw,7.5rem)] font-heading leading-[0.92] tracking-tight text-black transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <span>The layer to </span>
-            <span className="inline-block text-black">
-              <span key={wordIndex} className="inline-flex text-black">
-                {words[wordIndex].split("").map((char, i) => (
-                  <span
-                    key={`${wordIndex}-${i}`}
-                    className="inline-block animate-char-in"
-                    style={{ animationDelay: `${i * 35}ms` }}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </span>
-            </span>{" "}
-            <span className="text-zinc-400 font-bold">in Zero-Knowledge.</span>
+            <span className="block">The layer to</span>
+            <span className="block mt-1">
+              <span className="relative inline-block">
+                <span key={wordIndex} className="inline-flex text-black">
+                  {words[wordIndex].split("").map((char, i) => (
+                    <span
+                      key={`${wordIndex}-${i}`}
+                      className="inline-block animate-char-in"
+                      style={{ animationDelay: `${i * 45}ms` }}
+                    >
+                      {char}
+                    </span>
+                  ))}
+                </span>
+              </span>{" "}
+              <span className="text-zinc-400 font-normal">in Zero-Knowledge.</span>
+            </span>
           </h1>
         </div>
 
