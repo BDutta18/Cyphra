@@ -1,64 +1,105 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { CYPHRA_CONTENT } from '../../lib/cyphra-content';
-import { ArrowRight, Code, Zap, Clock, ShieldCheck } from 'lucide-react';
+import { useState } from "react";
+import { ArrowRight, Clock, Code2, Check, Copy } from "lucide-react";
+
+const steps = [
+  {
+    number: "01",
+    badge: "Local WASM",
+    title: "Synthesize Private Witness",
+    description: "Generate spending keys, Poseidon blinding salts, and payment terms in local browser memory with zero network egress.",
+    latency: "~45ms (Local Memory)",
+    code: `// 1. Synthesize Off-Chain Witness
+const witness = await cyphra.synthesizeWitness({
+  amount: 250n,
+  recipient: recipientShieldedPk,
+  memo: "Private Settlement #0829"
+});`,
+  },
+  {
+    number: "02",
+    badge: "Compact 0.31.1",
+    title: "Compile Succinct Groth16 Proof",
+    description: "The Compact circuit generates a zk-SNARK proof verifying value conservation and note ownership without disclosing amounts.",
+    latency: "~840ms (Local Prover)",
+    code: `// 2. Groth16 zk-SNARK Prover
+const proof = await compactProver.confidentialTransfer({
+  nullifier: computeNullifier(witness.spendingKey, inputNote.nonce),
+  newCommitment: poseidonHash(recipientPk, 250n, salt1),
+  changeCommitment: poseidonHash(myPk, changeAmount, salt2)
+});`,
+  },
+  {
+    number: "03",
+    badge: "Consensus",
+    title: "Midnight Preprod Settlement",
+    description: "The proof submits to Midnight. Consensus verifies constraints, records spent nullifiers, and inserts fresh commitments.",
+    latency: "~12s (Block Finality)",
+    code: `// 3. Midnight Preprod On-Chain State Update
+const tx = await midnightContract.confidentialTransfer(
+  proof.nullifier,
+  proof.newCommitment,
+  proof.changeCommitment
+);
+// Ledger Outcome: Nullifier spent | MEV: $0.00 | Balances: Hidden`,
+  },
+];
 
 export function HowItWorksSection() {
-  const [selectedStep, setSelectedStep] = useState(0);
-  const steps = CYPHRA_CONTENT.howItWorks;
-  const activeStep = steps[selectedStep];
+  const [activeStep, setActiveStep] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const current = steps[activeStep];
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(current.code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <section id="how-it-works" className="py-20 lg:py-28 bg-[#FAFAFC] border-t border-zinc-200/80 font-sans">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
-        {/* Section Header */}
-        <div className="max-w-2xl mb-12">
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-zinc-500 font-bold mb-3">
-            <span className="w-6 h-px bg-[#FFD400]" />
-            <span>Zero-Knowledge Lifecycle</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-950 tracking-tight leading-[1.08]">
-            How Cyphra settles payments without leaking balances.
+    <section id="how-it-works" className="py-20 lg:py-28 bg-[#FAFAFA] border-t border-black/[0.06] font-sans">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+        {/* Header */}
+        <div className="max-w-2xl mb-14">
+          <span className="inline-flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-zinc-500 font-semibold mb-3">
+            <span className="w-8 h-px bg-[#FFD400]" />
+            Execution Flow
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-black tracking-tight leading-tight">
+            How It Works in <br />
+            <span className="text-zinc-500">Three Mathematical Steps.</span>
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-zinc-600 font-sans">
-            Witnesses are synthesized client-side in the 1AM Wallet. Only succinct Groth16 mathematical proofs touch the public consensus ledger.
-          </p>
         </div>
 
-        {/* Interactive Step Navigator */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+        {/* Step Selector Pills */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {steps.map((step, idx) => {
-            const isSelected = selectedStep === idx;
+            const isActive = activeStep === idx;
             return (
               <button
                 key={step.number}
                 type="button"
-                onClick={() => setSelectedStep(idx)}
-                className={`p-5 rounded-3xl border text-left transition-all cursor-pointer ${
-                  isSelected
-                    ? 'bg-white border-[#FFD400] shadow-md ring-2 ring-[#FFD400]/40'
-                    : 'bg-white/80 border-zinc-200/80 hover:bg-white hover:border-zinc-300 shadow-2xs'
+                onClick={() => setActiveStep(idx)}
+                className={`p-6 rounded-3xl border text-left transition-all cursor-pointer ${
+                  isActive
+                    ? "bg-white border-[#FFD400] shadow-sm ring-2 ring-[#FFD400]/40"
+                    : "bg-white/70 border-black/[0.06] hover:bg-white hover:border-black/15"
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono text-xs font-bold text-zinc-400">
-                    Step {step.number}
-                  </span>
+                  <span className="font-mono text-xs font-bold text-zinc-400">Step {step.number}</span>
                   <span
                     className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase ${
-                      isSelected
-                        ? 'bg-[#FFD400] text-black border border-black/10'
-                        : 'bg-zinc-100 text-zinc-600'
+                      isActive ? "bg-[#FFD400] text-black" : "bg-zinc-100 text-zinc-600"
                     }`}
                   >
                     {step.badge}
                   </span>
                 </div>
-                <h3 className="font-sans font-bold text-sm sm:text-base text-zinc-950 mb-1 leading-snug">
-                  {step.title}
-                </h3>
-                <span className="text-xs text-zinc-500 font-mono block">
+                <h3 className="font-heading font-bold text-base text-black mb-1 leading-snug">{step.title}</h3>
+                <span className="text-xs text-zinc-500 font-mono flex items-center gap-1.5 mt-2">
+                  <Clock className="w-3.5 h-3.5 text-zinc-400" />
                   {step.latency}
                 </span>
               </button>
@@ -66,57 +107,53 @@ export function HowItWorksSection() {
           })}
         </div>
 
-        {/* Selected Step Deep Dive Cockpit */}
-        <div className="bg-white border border-zinc-200/90 rounded-3xl p-6 sm:p-8 shadow-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left 6 cols: Description & Formula */}
-            <div className="lg:col-span-6 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFD400]/20 border border-[#FFD400]/50 text-xs font-mono font-bold text-zinc-900">
-                <span>Phase {activeStep.number}: {activeStep.badge}</span>
+        {/* Step Deep-Dive Container */}
+        <div className="bg-white border border-black/[0.07] rounded-3xl p-6 sm:p-10 shadow-xs">
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
+            {/* Left 5 cols: Step Info */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-300/60 text-xs font-mono font-bold text-zinc-900">
+                Phase {current.number}: {current.badge}
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight font-sans">
-                {activeStep.title}
+              <h3 className="text-2xl sm:text-3xl font-heading font-black text-black tracking-tight leading-snug">
+                {current.title}
               </h3>
 
               <p className="text-sm sm:text-base text-zinc-600 leading-relaxed font-sans">
-                {activeStep.description}
+                {current.description}
               </p>
 
-              {/* Mathematical Cryptographic Formula */}
-              <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 font-mono text-xs sm:text-sm text-zinc-800 space-y-1">
-                <span className="text-[10px] font-sans font-semibold uppercase tracking-wider text-zinc-400 block">
-                  Cryptographic Relation
-                </span>
-                <div className="font-mono text-zinc-900 font-bold overflow-x-auto py-1">
-                  <code>{activeStep.formula}</code>
-                </div>
-              </div>
-
-              <div className="pt-2 flex items-center gap-4 text-xs font-mono text-zinc-500">
-                <span className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-zinc-400" />
-                  Latency: <strong className="text-zinc-800">{activeStep.latency}</strong>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Compact 0.31.1 Verifiable</span>
-                </span>
+              <div className="pt-2 flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setActiveStep((prev) => (prev + 1) % steps.length)}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black hover:bg-zinc-800 text-white text-xs font-semibold uppercase tracking-wider transition-all"
+                >
+                  <span>Next Step</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#FFD400]" />
+                </button>
               </div>
             </div>
 
-            {/* Right 6 cols: Code Execution Snippet */}
-            <div className="lg:col-span-6">
-              <div className="rounded-2xl border border-zinc-200/90 bg-zinc-950 text-zinc-100 overflow-hidden shadow-md font-mono text-xs">
-                <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-900 border-b border-zinc-800 text-[11px] text-zinc-400">
-                  <div className="flex items-center gap-2">
-                    <Code className="w-3.5 h-3.5 text-[#FFD400]" />
-                    <span>Client Prover Executable</span>
-                  </div>
-                  <span className="text-emerald-400 font-bold font-mono">Verified Compact</span>
+            {/* Right 7 cols: Code Box */}
+            <div className="lg:col-span-7">
+              <div className="rounded-2xl bg-zinc-950 text-zinc-100 p-5 font-mono text-xs border border-zinc-800 shadow-md">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-zinc-800 text-[11px] text-zinc-400">
+                  <span className="flex items-center gap-2">
+                    <Code2 className="w-3.5 h-3.5 text-[#FFD400]" />
+                    <span>settlement_lifecycle.ts</span>
+                  </span>
+                  <button
+                    onClick={handleCopy}
+                    className="hover:text-white transition-colors cursor-pointer flex items-center gap-1"
+                  >
+                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copied ? "Copied" : "Copy"}</span>
+                  </button>
                 </div>
-                <pre className="p-4 sm:p-5 text-emerald-400 font-mono text-[11px] sm:text-xs leading-relaxed overflow-x-auto whitespace-pre">
-                  {activeStep.codeSnippet}
+                <pre className="overflow-x-auto leading-relaxed text-zinc-200">
+                  <code>{current.code}</code>
                 </pre>
               </div>
             </div>

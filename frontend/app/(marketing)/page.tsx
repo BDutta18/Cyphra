@@ -2,45 +2,41 @@
 
 import { Navigation } from "@/components/landing/Navigation";
 import { HeroSection } from "@/components/landing/HeroSection";
+import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
-import { ArchitectureSection } from "@/components/landing/ArchitectureSection";
 import { PrivacyModelSection } from "@/components/landing/PrivacyModelSection";
 import { DocsSection } from "@/components/landing/DocsSection";
-import { FeedbackSection } from "@/components/landing/FeedbackSection";
 import { CtaSection } from "@/components/landing/CtaSection";
 import { FooterSection } from "@/components/landing/FooterSection";
 
 export default function MarketingPage() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-white text-zinc-950 font-sans selection:bg-[#FFD400] selection:text-black">
-      {/* Floating Glass Pill Navigation */}
+    <div className="relative min-h-screen overflow-x-hidden bg-white text-black font-sans selection:bg-[#FFD400] selection:text-black">
+      {/* 1. Glassy Navbar with ONLY Logo and Name Cyphra on Top Left */}
       <Navigation />
 
-      {/* Main Landing Page Flow (TradeXchain Architecture) */}
+      {/* Main Landing Flow (Minimal Text, Maximum Visual Polish) */}
       <main className="flex-1">
-        {/* 1. Hero Section with 3D ASCII Sphere, Char-in Headline, Simulator Terminal & Floating Marquee */}
+        {/* 2. Grand Hero with Rotating Char-in Words, Simulator Terminal, & Marquee */}
         <HeroSection />
 
-        {/* 2. Interactive Execution Cockpit with Formula & Proving Terminal */}
+        {/* 3. Core Capabilities with Animated Geometric Visuals */}
+        <FeaturesSection />
+
+        {/* 4. Execution Flow in Three Mathematical Steps */}
         <HowItWorksSection />
 
-        {/* 3. System Architecture & Real-time Protocol Subsystems Board */}
-        <ArchitectureSection />
-
-        {/* 4. Privacy Model Bento Grid: What Stays Private vs What Is Public vs What You Prove */}
+        {/* 5. Midnight Dual-Ledger Privacy Bento Grid */}
         <PrivacyModelSection />
 
-        {/* 5. Interactive Docs Hub: SDK Quickstart, Compact Circuits, Invariants & Security */}
+        {/* 6. Developer Quickstart SDK & Compact Circuits */}
         <DocsSection />
 
-        {/* 6. Level 5 Verified User Feedback: 79 Respondents, 4.63/5 Rating, What We Heard / Changed */}
-        <FeedbackSection />
-
-        {/* 7. Call To Action Spotlight Card with 3D Wireframe ASCII Sphere */}
+        {/* 7. Call To Action with 3D ASCII Wireframe Sphere */}
         <CtaSection />
       </main>
 
-      {/* 8. Luxury Footer with Midnight Preprod Explorer links and official handles */}
+      {/* 8. Minimalist Brand Footer */}
       <FooterSection />
     </div>
   );

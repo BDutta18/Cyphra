@@ -2,21 +2,20 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, ArrowRight } from "lucide-react";
 import { useMidnightWallet } from "@/hooks/useMidnightWallet";
-import { CYPHRA_CONTENT } from "@/lib/cyphra-content";
 
 const navLinks = [
+  { name: "Features", href: "#features" },
   { name: "How It Works", href: "#how-it-works" },
-  { name: "Architecture", href: "#architecture" },
-  { name: "Privacy Model", href: "#privacy-model" },
+  { name: "Privacy", href: "#privacy" },
   { name: "Docs", href: "#docs" },
 ];
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isConnected, account, openConnectModal } = useMidnightWallet();
+  const { isConnected, account } = useMidnightWallet();
   const address = account?.shieldedAddress || account?.unshieldedAddress;
 
   useEffect(() => {
@@ -36,8 +35,8 @@ export function Navigation() {
       <nav
         className={`mx-auto transition-all duration-500 rounded-full ${
           isScrolled || isMobileMenuOpen
-            ? "bg-white/90 backdrop-blur-xl border border-zinc-200/90 shadow-md max-w-[1280px]"
-            : "bg-white/95 backdrop-blur-xl border border-zinc-200/80 shadow-xs max-w-[1400px]"
+            ? "bg-white/70 backdrop-blur-2xl border border-black/[0.08] shadow-md max-w-[1240px]"
+            : "bg-white/60 backdrop-blur-xl border border-black/[0.05] shadow-xs max-w-[1400px]"
         }`}
       >
         <div
@@ -45,41 +44,31 @@ export function Navigation() {
             isScrolled ? "h-14" : "h-20"
           }`}
         >
-          {/* Logo */}
-          <Link href="/" className="flex items-center group py-2" aria-label="Cyphra Home">
-            <div className="flex items-center gap-3">
-              <div className="h-10 sm:h-11 px-2.5 rounded-2xl bg-white border border-zinc-200 shadow-2xs flex items-center justify-center shrink-0 group-hover:border-[#FFD400] transition-colors">
-                <img
-                  src="/logo-transparent.png"
-                  alt="Cyphra Logo"
-                  className={`transition-all duration-500 object-contain ${
-                    isScrolled ? "h-7" : "h-8"
-                  }`}
-                />
-              </div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs sm:text-sm font-black text-zinc-950 tracking-wider font-sans leading-none">
-                    CYPHRA
-                  </span>
-                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#FFD400] text-black uppercase tracking-wider border border-black/10">
-                    Preprod
-                  </span>
-                </div>
-                <span className="text-[10px] text-zinc-500 font-medium hidden sm:block">
-                  Confidential Settlement Protocol
-                </span>
-              </div>
-            </div>
+          {/* Top Left: ONLY Logo and Name Cyphra (Nothing Else) */}
+          <Link href="/" className="flex items-center gap-2.5 group select-none" aria-label="Cyphra">
+            <img
+              src="/logo-transparent.png"
+              alt="Cyphra"
+              className={`transition-all duration-300 object-contain ${
+                isScrolled ? "w-7 h-7" : "w-8 h-8"
+              }`}
+            />
+            <span
+              className={`font-heading font-extrabold tracking-tight text-black transition-all duration-300 ${
+                isScrolled ? "text-xl" : "text-2xl"
+              }`}
+            >
+              Cyphra
+            </span>
           </Link>
 
-          {/* Desktop Navigation Links: How It Works, Architecture, Privacy Model, Docs */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation Links */}
+          <div className="hidden md:flex items-center gap-8 lg:gap-10">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-xs font-mono font-medium text-zinc-600 hover:text-zinc-950 transition-colors duration-200 relative group uppercase tracking-wider"
+                className="text-sm font-medium text-zinc-600 hover:text-black transition-colors duration-200 relative group"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FFD400] transition-all duration-300 group-hover:w-full rounded-full" />
@@ -88,64 +77,48 @@ export function Navigation() {
           </div>
 
           {/* Desktop Top Right: GitHub ↗ and Launch App */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4">
             <a
               href="https://github.com/BDutta18/Cyphra"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-mono font-semibold text-zinc-600 hover:text-zinc-950 flex items-center gap-1 transition-colors px-3 py-1.5 rounded-full hover:bg-zinc-100 uppercase tracking-wider"
+              className="text-sm font-medium text-zinc-600 hover:text-black flex items-center gap-1 transition-colors"
             >
               GitHub
-              <ArrowUpRight size={13} />
+              <ArrowUpRight size={14} />
             </a>
 
-            {isConnected ? (
-              <Link
-                href="/dashboard"
-                className={`bg-zinc-950 hover:bg-zinc-800 text-white rounded-full font-mono text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-sm flex items-center gap-2 cursor-pointer ${
-                  isScrolled ? "px-4 h-9" : "px-5 h-10"
-                }`}
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>
-                  {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "Treasury"}
-                </span>
-              </Link>
-            ) : (
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={openConnectModal}
-                  className={`bg-[#FFD400] hover:bg-[#E5BE00] text-black border border-black/15 rounded-full font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm flex items-center gap-1.5 cursor-pointer ${
-                    isScrolled ? "px-4 h-9" : "px-5 h-10"
-                  }`}
-                >
-                  <ShieldCheck size={14} className="text-zinc-900" />
-                  <span>Connect Wallet</span>
-                </button>
-                <Link
-                  href="/dashboard"
-                  className={`bg-zinc-950 hover:bg-zinc-800 text-white rounded-full font-mono text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-sm flex items-center gap-1.5 cursor-pointer ${
-                    isScrolled ? "px-4 h-9" : "px-5 h-10"
-                  }`}
-                >
+            <Link
+              href="/dashboard"
+              className={`bg-black hover:bg-zinc-800 text-white rounded-full font-medium transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2 ${
+                isScrolled ? "px-5 h-9 text-xs" : "px-6 h-10 text-sm"
+              }`}
+            >
+              {isConnected ? (
+                <>
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>{address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "Dashboard"}</span>
+                </>
+              ) : (
+                <>
                   <span>Launch App</span>
-                </Link>
-              </div>
-            )}
+                  <ArrowRight size={14} className="text-[#FFD400]" />
+                </>
+              )}
+            </Link>
           </div>
 
-          {/* Mobile Hamburger Toggle */}
+          {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
             <Link
               href="/dashboard"
-              className="bg-[#FFD400] text-black text-[11px] font-mono font-bold px-3 py-1.5 rounded-full uppercase tracking-wider"
+              className="bg-black text-white text-xs font-medium px-4 py-1.5 rounded-full"
             >
               Launch
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-zinc-700 hover:text-black hover:bg-zinc-100 rounded-full transition-colors cursor-pointer"
+              className="p-2 text-zinc-700 hover:text-black rounded-full transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -153,16 +126,16 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-zinc-200/80 px-6 py-5 bg-white/95 backdrop-blur-xl rounded-b-3xl space-y-4">
-            <div className="flex flex-col space-y-3 font-mono text-xs uppercase tracking-wider">
+          <div className="md:hidden border-t border-black/[0.06] px-6 py-5 bg-white/95 backdrop-blur-2xl rounded-b-3xl space-y-4">
+            <div className="flex flex-col space-y-3 text-sm font-medium">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-zinc-600 hover:text-zinc-950 py-1 transition-colors"
+                  className="text-zinc-600 hover:text-black py-1 transition-colors"
                 >
                   {link.name}
                 </a>
@@ -171,18 +144,18 @@ export function Navigation() {
                 href="https://github.com/BDutta18/Cyphra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-600 hover:text-zinc-950 py-1 flex items-center gap-1 transition-colors"
+                className="text-zinc-600 hover:text-black py-1 flex items-center gap-1 transition-colors"
               >
                 GitHub
-                <ArrowUpRight size={13} />
+                <ArrowUpRight size={14} />
               </a>
             </div>
 
-            <div className="pt-3 border-t border-zinc-100 flex flex-col gap-2">
+            <div className="pt-3 border-t border-zinc-100">
               <Link
                 href="/dashboard"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full bg-zinc-950 text-white rounded-full py-2.5 text-center font-mono text-xs font-semibold uppercase tracking-wider"
+                className="w-full bg-black text-white rounded-full py-2.5 text-center text-sm font-medium block"
               >
                 Launch Cyphra App
               </Link>
