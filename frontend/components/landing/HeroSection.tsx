@@ -73,18 +73,21 @@ export function HeroSection() {
           </span>
         </div>
 
-        {/* Main Headline — Modu-X402 floating display style */}
+        {/* Main Headline — 3-line Modu-X402 floating display style */}
         <div className="mb-8">
           <h1
             className={`font-heading font-black tracking-tight text-black transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
-            style={{ fontSize: "clamp(2.6rem, 8vw, 7.5rem)", lineHeight: 1.04 }}
+            style={{ fontSize: "clamp(2.8rem, 9vw, 8.5rem)", lineHeight: 1.0 }}
           >
-            <span className="block">The layer to</span>
-            <span className="block" style={{ marginTop: "0.06em" }}>
-              {/* isolation-isolate creates a new stacking context so -z-[1] stays inside the word */}
-              <span className="relative inline-block text-black mr-3" style={{ isolation: "isolate" }}>
+            {/* Line 1 */}
+            <span className="block">The layer</span>
+
+            {/* Line 2 — animated rotating word with gold bar */}
+            <span className="block" style={{ marginTop: "0.05em" }}>
+              <span className="inline-block mr-3">to</span>
+              <span className="relative inline-block text-black" style={{ isolation: "isolate" }}>
                 <span key={wordIndex} className="relative inline-flex" style={{ zIndex: 1 }}>
                   {words[wordIndex].split("").map((char, i) => (
                     <span
@@ -96,13 +99,17 @@ export function HeroSection() {
                     </span>
                   ))}
                 </span>
-                {/* Smooth gold bar behind the animated word — no wavy lines */}
+                {/* Gold bar behind animated word */}
                 <span
                   className="absolute left-0 right-0 bg-[#FFD400] rounded-sm"
-                  style={{ bottom: "-0.08em", height: "0.28em", zIndex: 0 }}
+                  style={{ bottom: "-0.06em", height: "0.26em", zIndex: 0 }}
                 />
               </span>
-              <span className="text-zinc-400 font-medium">in Zero-Knowledge.</span>
+            </span>
+
+            {/* Line 3 */}
+            <span className="block text-zinc-400 font-medium" style={{ marginTop: "0.05em" }}>
+              in Zero-Knowledge.
             </span>
           </h1>
         </div>
