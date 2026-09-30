@@ -94,7 +94,7 @@ export function FooterSection() {
                 href={`https://preprod.midnightexplorer.com/contracts/${contract.address}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1 text-[11px] font-mono text-zinc-800 hover:text-black font-semibold underline decoration-[#FFD400] transition-colors"
+                className="inline-flex items-center gap-1 text-[11px] font-mono text-zinc-800 hover:text-black font-semibold hover:underline transition-colors"
               >
                 Midnight Explorer ↗
               </a>

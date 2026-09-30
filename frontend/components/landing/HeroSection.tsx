@@ -63,25 +63,25 @@ export function HeroSection() {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 pt-8 pb-12">
         {/* Eyebrow */}
         <div
-          className={`mb-6 transition-all duration-700 ${
+          className={`mb-5 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
           <span className="inline-flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-zinc-600 font-semibold">
-            <span className="w-8 h-px bg-[#FFD400]" />
+            <span className="w-8 h-px bg-black/40" />
             Zero-Knowledge Settlement Protocol
           </span>
         </div>
 
-        {/* Main Headline (Shorter font, No Yellow Underline) */}
+        {/* Main Headline (Clean & Compact) */}
         <div className="mb-6 max-w-4xl">
           <h1
-            className={`text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-black leading-[1.08] transition-all duration-700 ${
+            className={`text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-black leading-tight transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
             <span>The layer to </span>
-            <span className="inline-block">
+            <span className="inline-block text-black">
               <span key={wordIndex} className="inline-flex text-black">
                 {words[wordIndex].split("").map((char, i) => (
                   <span

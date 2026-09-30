@@ -46,45 +46,6 @@ Unlike legacy blockchains where user balances, counterparty addresses, and entir
    - Privacy does not preclude compliance. Users can generate cryptographically verified auditor view proofs for tax reporting and regulatory compliance without exposing their master spend keys.
 
 ---
-### 1. Homepage — Confidential Payments for the Private Web
-
-<p align="center">
-  <img src="./docs/screenshots/01-landing.png" alt="Cyphra Landing Page" width="820" />
-</p>
-
-The Cyphra homepage with multi-network switcher (Preview Testnet → Preprod Staging → Mainnet Production), live block ticker, and official 1AM Wallet DApp Connector integration banner.
-
----
-
-### 2. Dashboard — Shielded Settlement Volume & ZK Proof Workflow
-
-<p align="center">
-  <img src="./docs/screenshots/02-dashboard.png" alt="Cyphra Dashboard" width="820" />
-</p>
-
-Dashboard showing 7-day shielded settlement volume (**\$22,800 +15.2%**, 72 proofs verified), quick action cards (Send Confidential, Receive, Request Payment, Shield Funds), and the full Zero-Knowledge Privacy Architecture step-by-step flow (Private Witness Generation → Groth16 zk-SNARK Proving → On-Chain State Transition).
-
----
-
-### 3. Send — Confidential ZK Transfer
-
-<p align="center">
-  <img src="./docs/screenshots/03-send.png" alt="Cyphra Send Confidential Payment" width="820" />
-</p>
-
-3-step send flow: **Details & Fee → Review & Confirm → Midnight Proof**. Supports Midnight Preprod unshielded (`mn_addr_preprod1…`) and shielded (`mn_shielded1…`) addresses with one-click autofill chips, asset selector (NIGHT / DUST / tCYPHRA), optional encrypted private memo, and estimated network fee in DUST.
-
----
-
-### 4. Receive — Shielded QR & Permanent Midnight Identifier
-
-<p align="center">
-  <img src="./docs/screenshots/04-receive.png" alt="Cyphra Receive Confidential Payments" width="820" />
-</p>
-
-High-resolution QR code for the permanent shielded Midnight address with one-click Copy URI, Share, and Download actions. Displays the full `mn_addr_preprod1…` unshielded address for direct peer-to-peer transfers.
-
----
 
 ### 🔗 Contract Deployment — Midnight Preprod Explorer
 
