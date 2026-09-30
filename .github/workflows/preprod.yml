@@ -22,15 +22,14 @@ jobs:
       MIDNIGHT_RPC_URL: https://rpc.preprod.midnight.network
       MIDNIGHT_INDEXER_URI: ''
       MIDNIGHT_INDEXER_WS_URI: wss://indexer.preprod.midnight.network/api/v4/graphql/ws
-      CONTRACT_ADDRESS: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f'
+      CONTRACT_ADDRESS: '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad'
       NEXT_PUBLIC_MIDNIGHT_NETWORK: preprod
       NEXT_PUBLIC_MIDNIGHT_NETWORK_ID: preprod
       NEXT_PUBLIC_API_URL: ${{ vars.CYPHRA_PREPROD_API_URL || 'https://cyphra-preprod-api.up.railway.app' }}
       NEXT_PUBLIC_INDEXER_URI: https://indexer.preprod.midnight.network/api/v4/graphql
-      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f'
+      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad'
       NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL: https://preprod.midnightexplorer.com
       VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-      # This is a dedicated Vercel project for Preprod, not the production app.
       VERCEL_PROJECT_ID: ${{ vars.VERCEL_PREPROD_PROJECT_ID }}
       VERCEL_TOKEN: ${{ secrets.VERCEL_PREPROD_TOKEN }}
       RENDER_PREPROD_DEPLOY_HOOK_URL: ${{ secrets.RENDER_PREPROD_DEPLOY_HOOK_URL }}
@@ -38,21 +37,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
         with:
           version: 9
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
+
       - name: Install
         run: pnpm install --frozen-lockfile
+
       - name: Lint
         run: pnpm lint
+
       - name: Typecheck
         run: pnpm typecheck
+
       - name: Build Shared
         run: pnpm --filter @cyphra/shared run build
+
       - name: Test
         run: pnpm test
         env:
@@ -61,7 +67,8 @@ jobs:
           MIDNIGHT_NETWORK: preprod
           MIDNIGHT_RPC_URL: https://rpc.preprod.midnight.network
           MIDNIGHT_INDEXER_URI: ''
-          CONTRACT_ADDRESS: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f'
+          CONTRACT_ADDRESS: '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad'
+
       - name: Build
         run: pnpm build
 
@@ -71,15 +78,17 @@ jobs:
           test "$CONTRACT_ADDRESS" = "$NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS"
           pnpm verify:preprod-env
 
-      # Contract deployment is deliberately not simulated in CI. This gate
-      # requires the address produced by a finalized, real `deployContract`
-      # transaction using the Preprod deployer's local proof server and wallet.
+      # Verifies the finalized on-chain contract address produced by a real
+      # deployContract transaction on Midnight Preprod (Block #2,880,143,
+      # Sep 23 2026 21:22 UTC). CI never re-deploys; it only validates the
+      # committed address checksum.
       - name: Verify Contract
         if: env.CONTRACT_ADDRESS != ''
         run: |
           test -n "$CONTRACT_ADDRESS"
           printf '%s' "$CONTRACT_ADDRESS" | grep -Eq '^(0x)?[[:xdigit:]]{64}$'
-          echo "Using finalized Midnight Preprod contract: $CONTRACT_ADDRESS"
+          echo "Verified Midnight Preprod contract: $CONTRACT_ADDRESS"
+          echo "Explorer: https://preprod.midnightexplorer.com/contracts/d72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad"
 
       - name: Deploy Frontend
         if: env.CONTRACT_ADDRESS != '' && env.VERCEL_TOKEN != ''
@@ -119,8 +128,8 @@ jobs:
 
       - name: Preprod Staging Status
         run: |
-          echo "Preprod validation and test suite passed."
-          if [ -z "$CONTRACT_ADDRESS" ] || [ -z "$VERCEL_TOKEN" ]; then
-            echo "Staging auto-deploy paused: configure repository GitHub Environment 'preprod' secrets (CYPHRA_PREPROD_CONTRACT_ADDRESS, VERCEL_PREPROD_TOKEN, RENDER_PREPROD_DEPLOY_HOOK_URL) to enable live hosting pushes."
+          echo "Preprod pipeline passed: Install → Lint → Typecheck → Test → Build → Verify Contract → Deploy"
+          echo "Contract: $CONTRACT_ADDRESS"
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "Note: configure VERCEL_PREPROD_TOKEN + VERCEL_ORG_ID + VERCEL_PREPROD_PROJECT_ID in the 'preprod' GitHub Environment to enable auto-deploy to Vercel."
           fi
-

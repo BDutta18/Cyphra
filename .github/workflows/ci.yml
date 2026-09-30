@@ -16,12 +16,12 @@ jobs:
       MIDNIGHT_NETWORK: preprod
       MIDNIGHT_RPC_URL: https://rpc.preprod.midnight.network
       MIDNIGHT_INDEXER_URI: ''
-      CONTRACT_ADDRESS: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f'
+      CONTRACT_ADDRESS: '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad'
       NEXT_PUBLIC_MIDNIGHT_NETWORK: preprod
       NEXT_PUBLIC_MIDNIGHT_NETWORK_ID: preprod
       NEXT_PUBLIC_API_URL: 'https://cyphra-preprod-api.up.railway.app'
       NEXT_PUBLIC_INDEXER_URI: https://indexer.preprod.midnight.network/api/v4/graphql
-      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f'
+      NEXT_PUBLIC_CYPHRA_CONTRACT_ADDRESS: '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad'
       NEXT_PUBLIC_MIDNIGHT_EXPLORER_URL: https://preprod.midnightexplorer.com
 
     steps:
@@ -59,7 +59,7 @@ jobs:
           MIDNIGHT_NETWORK: preprod
           MIDNIGHT_RPC_URL: https://rpc.preprod.midnight.network
           MIDNIGHT_INDEXER_URI: ''
-          CONTRACT_ADDRESS: '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f'
+          CONTRACT_ADDRESS: '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad'
 
       - name: Build All Workspaces
         run: pnpm build

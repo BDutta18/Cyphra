@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
-const PREPROD_CONTRACT = '0xcc4a29303a6521ef0881444ce30550d1dabccdd5d70da8c78463bb54ef96db3f';
+const PREPROD_CONTRACT = '0xd72f60d3f297dc84078e19677b60e88759f9982a3ea3dbf87a387814cda034ad';
 const PREPROD_ADDR_REGEX = /^mn_addr_preprod1[0-9a-z]{50,}$/;
 
 console.log('------------------------------------------------------------');
