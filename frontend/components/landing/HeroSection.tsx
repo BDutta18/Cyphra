@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Zap } from "lucide-react";
-import { AnimatedPrism } from "../canvas/AnimatedPrism";
+import { AnimatedSphere } from "../canvas/AnimatedSphere";
 import { MacbookTerminal } from "../terminal/MacbookTerminal";
 import { useMidnightWallet } from "@/hooks/useMidnightWallet";
 
@@ -37,9 +37,9 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-28 pb-12 bg-white text-black font-sans">
-      {/* 3D Wireframe ASCII Prism in upper-right corner (Black Color) */}
-      <div className="absolute right-[-4%] sm:right-[-2%] top-10 sm:top-14 w-[480px] h-[480px] lg:w-[660px] lg:h-[660px] opacity-45 pointer-events-none">
-        <AnimatedPrism />
+      {/* 3D Wireframe ASCII Sphere in upper-right corner */}
+      <div className="absolute right-[-6%] top-16 w-[520px] h-[520px] lg:w-[720px] lg:h-[720px] opacity-25 pointer-events-none">
+        <AnimatedSphere />
       </div>
 
       {/* Subtle crisp architectural grid lines */}
@@ -73,28 +73,32 @@ export function HeroSection() {
           </span>
         </div>
 
-        {/* Main Headline (Shorter font, No Yellow Underline) */}
-        <div className="mb-6 max-w-4xl">
+        {/* Main Headline */}
+        <div className="mb-8">
           <h1
-            className={`text-3xl sm:text-5xl lg:text-6xl font-heading font-black tracking-tight text-black leading-[1.08] transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            className={`text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] font-heading font-black leading-[1.12] sm:leading-[1.06] tracking-tight text-black transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <span>The layer to </span>
-            <span className="inline-block">
-              <span key={wordIndex} className="inline-flex text-black">
-                {words[wordIndex].split("").map((char, i) => (
-                  <span
-                    key={`${wordIndex}-${i}`}
-                    className="inline-block animate-char-in"
-                    style={{ animationDelay: `${i * 35}ms` }}
-                  >
-                    {char}
-                  </span>
-                ))}
+            <span className="block">The layer to</span>
+            <span className="block mt-1 sm:mt-2">
+              <span className="relative inline-block text-black mr-3">
+                <span key={wordIndex} className="inline-flex">
+                  {words[wordIndex].split("").map((char, i) => (
+                    <span
+                      key={`${wordIndex}-${i}`}
+                      className="inline-block animate-char-in"
+                      style={{ animationDelay: `${i * 45}ms` }}
+                    >
+                      {char}
+                    </span>
+                  ))}
+                </span>
+                {/* Modu-X402 inspired smooth gold highlight underline */}
+                <span className="absolute -bottom-1 left-0 right-0 h-3 sm:h-4 bg-[#FFD400] -z-10 rounded-xs" />
               </span>
-            </span>{" "}
-            <span className="text-zinc-400 font-bold">in Zero-Knowledge.</span>
+              <span className="text-zinc-500 font-medium">in Zero-Knowledge.</span>
+            </span>
           </h1>
         </div>
 

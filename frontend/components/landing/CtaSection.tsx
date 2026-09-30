@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, BookOpen, ShieldCheck } from "lucide-react";
-import { AnimatedPrism } from "../canvas/AnimatedPrism";
+import { AnimatedSphere } from "../canvas/AnimatedSphere";
 
 export function CtaSection() {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
@@ -68,9 +68,9 @@ export function CtaSection() {
               </div>
             </div>
 
-            {/* Right Wireframe ASCII Geometry (3D Prism in Black) */}
-            <div className="w-[260px] h-[260px] lg:w-[320px] lg:h-[320px] shrink-0 opacity-80 pointer-events-none">
-              <AnimatedPrism />
+            {/* Right Wireframe ASCII Geometry */}
+            <div className="w-[260px] h-[260px] lg:w-[320px] lg:h-[320px] shrink-0 opacity-90 pointer-events-none">
+              <AnimatedSphere />
             </div>
           </div>
         </div>
