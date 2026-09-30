@@ -18,23 +18,29 @@ const TEST_NULLIFIER = '0123456789abcdef0123456789abcdef0123456789abcdef01234567
 const TEST_COMMITMENT = 'fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210';
 
 before(async () => {
-  await new Promise<void>((resolve) => {
-    server = app.listen(0, () => {
+  await new Promise<void>((resolve, reject) => {
+    server = app.listen(0, '127.0.0.1', () => {
       const addr = server.address();
       if (addr && typeof addr === 'object') {
         baseUrl = `http://127.0.0.1:${addr.port}`;
       }
       resolve();
     });
+    server.on('error', reject);
   });
 });
 
 after(async () => {
   await new Promise<void>((resolve) => {
-    if (server && 'closeAllConnections' in server) {
+    if (!server) return resolve();
+    const timer = setTimeout(() => resolve(), 2000);
+    if ('closeAllConnections' in server) {
       (server as unknown as { closeAllConnections: () => void }).closeAllConnections();
     }
-    server.close(() => resolve());
+    server.close(() => {
+      clearTimeout(timer);
+      resolve();
+    });
   });
 });
 
