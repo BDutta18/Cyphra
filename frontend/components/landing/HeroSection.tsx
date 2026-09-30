@@ -73,17 +73,19 @@ export function HeroSection() {
           </span>
         </div>
 
-        {/* Main Headline */}
+        {/* Main Headline — Modu-X402 floating display style */}
         <div className="mb-8">
           <h1
-            className={`text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] font-heading font-black leading-[1.12] sm:leading-[1.06] tracking-tight text-black transition-all duration-1000 ${
+            className={`font-heading font-black tracking-tight text-black transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
+            style={{ fontSize: "clamp(2.6rem, 8vw, 7.5rem)", lineHeight: 1.04 }}
           >
             <span className="block">The layer to</span>
-            <span className="block mt-1 sm:mt-2">
-              <span className="relative inline-block text-black mr-3">
-                <span key={wordIndex} className="inline-flex">
+            <span className="block" style={{ marginTop: "0.06em" }}>
+              {/* isolation-isolate creates a new stacking context so -z-[1] stays inside the word */}
+              <span className="relative inline-block text-black mr-3" style={{ isolation: "isolate" }}>
+                <span key={wordIndex} className="relative inline-flex" style={{ zIndex: 1 }}>
                   {words[wordIndex].split("").map((char, i) => (
                     <span
                       key={`${wordIndex}-${i}`}
@@ -94,10 +96,13 @@ export function HeroSection() {
                     </span>
                   ))}
                 </span>
-                {/* Modu-X402 inspired smooth gold highlight underline */}
-                <span className="absolute -bottom-1 left-0 right-0 h-3 sm:h-4 bg-[#FFD400] -z-10 rounded-xs" />
+                {/* Smooth gold bar behind the animated word — no wavy lines */}
+                <span
+                  className="absolute left-0 right-0 bg-[#FFD400] rounded-sm"
+                  style={{ bottom: "-0.08em", height: "0.28em", zIndex: 0 }}
+                />
               </span>
-              <span className="text-zinc-500 font-medium">in Zero-Knowledge.</span>
+              <span className="text-zinc-400 font-medium">in Zero-Knowledge.</span>
             </span>
           </h1>
         </div>
